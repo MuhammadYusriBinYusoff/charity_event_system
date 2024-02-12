@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -112,6 +113,32 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            Image.asset(
+              'assets/images/spiral-logo.png',
+              fit: BoxFit.cover,
+            ),
+            // SvgPicture.asset(
+            //   'assets/images/test.svg',
+            //   width: 24, // Adjust the width as needed
+            //   height: 24, // Adjust the height as needed
+            // ),
+            // SvgPicture.asset(
+            //   'assets/images/star.svg',
+            //   color: Colors.black,
+            //   width: 24, // Adjust the width as needed
+            //   height: 24, // Adjust the height as needed
+            // ),
+            // SvgPicture.asset(
+            //   'assets/images/test2.svg',
+            //   width: 24, // Adjust the width as needed
+            //   height: 24, // Adjust the height as needed
+            // ),
+            // SvgPicture.asset(
+            //   'assets/images/kaba icon.svg',
+            //   width: 24, // Adjust the width as needed
+            //   height: 24, // Adjust the height as needed
+            // ),
+            // const ImageIcon(AssetImage('assets/images/spiral-logo.svg')),
           ],
         ),
       ),
