@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="charity_event_system"
+        android:label="SpiraCare"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

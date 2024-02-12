@@ -122,12 +122,16 @@ class _MyHomePageState extends State<MyHomePage> {
             //   width: 24, // Adjust the width as needed
             //   height: 24, // Adjust the height as needed
             // ),
-            // SvgPicture.asset(
-            //   'assets/images/star.svg',
-            //   color: Colors.black,
-            //   width: 24, // Adjust the width as needed
-            //   height: 24, // Adjust the height as needed
-            // ),
+            SvgPicture.asset(
+              'assets/images/sss.svg',
+              width: 100, // Adjust the width as needed
+              height: 100, // Adjust the height as needed
+            ),
+            SvgPicture.asset(
+              'assets/images/spiral-logo.svg',
+              width: 100, // Adjust the width as needed
+              height: 100, // Adjust the height as needed
+            ),
             // SvgPicture.asset(
             //   'assets/images/test2.svg',
             //   width: 24, // Adjust the width as needed
