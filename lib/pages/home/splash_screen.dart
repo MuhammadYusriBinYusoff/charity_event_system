@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
-import 'package:charity_event_system/home.dart';
+import 'package:charity_event_system/common/resources/resources.dart';
+import 'package:charity_event_system/pages/home/home.dart';
+import 'package:charity_event_system/pages/widgets/spacer_v.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -37,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FlutterSplashScreen.scale(
-        backgroundColor: myColor,
+        backgroundColor: Palette.purpleMain,
         childWidget: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,6 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 100,
               ),
             ),
+            SpacerV(value: Dimens.space4),
             Text(
               "SpiraCare",
               style: splashPageTitleStyle,
