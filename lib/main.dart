@@ -1,3 +1,4 @@
+import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/home/splash_screen.dart';
 import 'package:charity_event_system/pages/localization/locales.dart';
 import 'package:flutter/material.dart';
@@ -35,9 +36,9 @@ class _MyAppState extends State<MyApp> {
       builder: (_, __) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: Translation.splashTitle.getString(context),
+          title: 'SpiraCare',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            colorScheme: ColorScheme.fromSeed(seedColor: Palette.purpleMain),
             useMaterial3: true,
           ),
           supportedLocales: localization.supportedLocales,
@@ -50,7 +51,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void configureLocalization(){
-    localization.init(mapLocales: LOCALES, initLanguageCode: "en");
+    localization.init(mapLocales: LOCALES, initLanguageCode: "my");
     localization.onTranslatedLanguage = onTranslatedLanguage;
   }
 
