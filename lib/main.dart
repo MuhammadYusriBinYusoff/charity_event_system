@@ -1,5 +1,7 @@
 import 'package:charity_event_system/pages/home/splash_screen.dart';
+import 'package:charity_event_system/pages/localization/locales.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
@@ -7,8 +9,21 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final FlutterLocalization localization = FlutterLocalization.instance;
+
+  @override
+  void initState(){
+    configureLocalization();
+    super.initState();
+  }
 
   // This widget is the root of your application.
   @override
@@ -20,17 +35,33 @@ class MyApp extends StatelessWidget {
       builder: (_, __) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'SpiraCare',
+          title: Translation.splashTitle.getString(context),
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
+          supportedLocales: localization.supportedLocales,
+          localizationsDelegates: localization.localizationsDelegates,
           home: const SplashScreen(),
         );
       },
-      child: const SizedBox.shrink(), // Placeholder child widget to satisfy the builder signature
+      child: const SizedBox.shrink(),
     );
   }
+
+  void configureLocalization(){
+    localization.init(mapLocales: LOCALES, initLanguageCode: "en");
+    localization.onTranslatedLanguage = onTranslatedLanguage;
+  }
+
+  void onTranslatedLanguage(Locale? locale){
+    setState(() {
+      
+    });
+  }
+
+
+
 }
 
 
