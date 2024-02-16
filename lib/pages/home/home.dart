@@ -1,4 +1,5 @@
 import 'package:charity_event_system/common/resources/resources.dart';
+import 'package:charity_event_system/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -71,8 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Text(
+              HiveTranslationsBoxMixin.tr?.account?.aboutToDelete ?? "You have pushed the button this many timess:",
             ),
             Text(
               '$_counter',
