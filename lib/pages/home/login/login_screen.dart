@@ -1,4 +1,5 @@
 import 'package:charity_event_system/common/resources/resources.dart';
+import 'package:charity_event_system/pages/home/sign%20up/organization_signup_screen.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -82,6 +83,10 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () {
                       // Add your navigation logic here
                       print('Navigate to sign up screen');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SignUpPage()),
+                      );
                     },
                     child: Text(
                       Translation.loginQuestion.getString(context),

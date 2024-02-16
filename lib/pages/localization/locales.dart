@@ -22,6 +22,14 @@ mixin Translation{
   static const String loginPassword = 'loginPassword';
   static const String loginQuestion = "loginQuestion?";
 
+  //For Signup
+  static const String signupTitle = 'signUpTitle';
+  static const String organizationName = 'organizationName';
+  static const String organizationContact = 'organizationContact';
+  static const String organizationAdress = 'organizationAdress';
+  static const String organizationLink = 'organizationLink';
+  static const String next = 'next';
+
   static const Map<String,dynamic> EN = {
     //For Splashpage
     splashTitle: 'SpiraCare',
@@ -34,7 +42,16 @@ mixin Translation{
     loginTitle: 'Log in',
     loginEmail: 'E-mail',
     loginPassword: 'Password',
-    loginQuestion: 'Don’t have an account?'
+    loginQuestion: 'Don’t have an account?',
+    
+    //For Signup page
+    signupTitle: 'Sign-Up',
+    organizationName: 'Organization Name',
+    organizationContact: 'Organization Contact',
+    organizationAdress: 'Adress',
+    organizationLink: 'Website Link',
+    next: 'Next'
+
   };
 
   static const Map<String,dynamic> MY = {
@@ -49,7 +66,15 @@ mixin Translation{
     loginTitle: 'Log masuk',
     loginEmail: 'E-mel',
     loginPassword: 'Kata laluan',
-    loginQuestion: 'Tiada akaun?'
+    loginQuestion: 'Tiada akaun?',
+
+    //For Signup page
+    signupTitle: 'Pendaftaran',
+    organizationName: 'Nama Organisasi',
+    organizationContact: 'Hubungi Organisasi',
+    organizationAdress: 'Alamat',
+    organizationLink: 'Link Website',
+    next: 'Seterusnya'
     
   };
 }
