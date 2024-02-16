@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/home/home.dart';
+import 'package:charity_event_system/pages/localization/locales.dart';
 import 'package:charity_event_system/pages/widgets/spacer_v.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 
@@ -33,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigatetohome() async {
     await Future.delayed(const Duration(seconds: 3), () {});
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => MyHomePage(title: "SSSSS")));
+        MaterialPageRoute(builder: (context) => MyHomePage(title: Translation.title.getString(context))));
   }
 
   @override
