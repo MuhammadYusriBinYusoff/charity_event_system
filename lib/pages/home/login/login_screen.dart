@@ -63,6 +63,11 @@ class _LoginPageState extends State<LoginPage> {
                         String password = _passwordController.text;
                         // You can add your login logic here
                         print('Username: $username, Password: $password');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyHomePage(title:Translation.splashTitle.getString(context))),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Palette.purpleMain,
@@ -85,7 +90,8 @@ class _LoginPageState extends State<LoginPage> {
                       print('Navigate to sign up screen');
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const SignUpPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const SignUpPage()),
                       );
                     },
                     child: Text(

@@ -29,6 +29,12 @@ mixin Translation{
   static const String organizationAdress = 'organizationAdress';
   static const String organizationLink = 'organizationLink';
   static const String next = 'next';
+  static const String picFullname = 'picFullname';
+  static const String picContact = 'picContact';
+  static const String picIcNumber = 'picIcNumber';
+  static const String picAdress = 'picAdress';
+  static const String picEmail = 'picEmail';
+  static const String picPassword = 'picPassword';
 
   static const Map<String,dynamic> EN = {
     //For Splashpage
@@ -50,7 +56,13 @@ mixin Translation{
     organizationContact: 'Organization Contact',
     organizationAdress: 'Adress',
     organizationLink: 'Website Link',
-    next: 'Next'
+    next: 'Next',
+    picFullname: 'PIC Fullname',
+    picContact: 'Contact Number',
+    picIcNumber: 'Ic Number',
+    picAdress: 'Adress',
+    picEmail: 'E-mail',
+    picPassword: 'Password'
 
   };
 
@@ -74,7 +86,13 @@ mixin Translation{
     organizationContact: 'Hubungi Organisasi',
     organizationAdress: 'Alamat',
     organizationLink: 'Link Website',
-    next: 'Seterusnya'
+    next: 'Seterusnya',
+    picFullname: 'Nama Penuh PIC',
+    picContact: 'Nomber Contact',
+    picIcNumber: 'Nombor IC',
+    picAdress: 'Alamat',
+    picEmail: 'E-mel',
+    picPassword: 'Kata laluan'
     
   };
 }

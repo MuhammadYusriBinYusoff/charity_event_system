@@ -1,4 +1,5 @@
 import 'package:charity_event_system/common/common.dart';
+import 'package:charity_event_system/pages/home/sign%20up/pic_signup_screen.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -65,6 +66,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   // You can add your login logic here
                   print(
                       'Name: $orgaizationName, Contact: $organizationContact, Adress: $organizationAdress, Link: $organizationLink');
+
+                  Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PICSignUpPage()),
+                      );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Palette.purpleMain,
