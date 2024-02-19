@@ -1,12 +1,42 @@
+import 'dart:io';
+
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/home/splash_screen.dart';
 import 'package:charity_event_system/pages/localization/locales.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyC_F9Oo1xbH3LkFtU1CCGzH7yyBu8xJqK0",
+          appId: "1:576604151770:web:96e83733fdabc60878eae3",
+          messagingSenderId: "576604151770",
+          projectId: "charity-event-cems"),
+    );
+  } else if (Platform.isAndroid) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyBgcuSX1pc9vGhK3oBwXMqLXc3nzhUXGkE",
+          appId: "1:576604151770:android:29bec06e84ecb5f778eae3",
+          messagingSenderId: "576604151770",
+          projectId: "charity-event-cems"),
+    );
+  } else {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyCAO2135TE70U5dQZQPl65UvyTzsS618Pg",
+          appId: "1:576604151770:ios:d52ffff2b08ac50578eae3",
+          messagingSenderId: "576604151770",
+          projectId: "charity-event-cems"),
+    );
+  }
+
   runApp(const MyApp());
 }
 
@@ -21,7 +51,7 @@ class _MyAppState extends State<MyApp> {
   final FlutterLocalization localization = FlutterLocalization.instance;
 
   @override
-  void initState(){
+  void initState() {
     configureLocalization();
     super.initState();
   }
@@ -50,19 +80,12 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void configureLocalization(){
+  void configureLocalization() {
     localization.init(mapLocales: LOCALES, initLanguageCode: "my");
     localization.onTranslatedLanguage = onTranslatedLanguage;
   }
 
-  void onTranslatedLanguage(Locale? locale){
-    setState(() {
-      
-    });
+  void onTranslatedLanguage(Locale? locale) {
+    setState(() {});
   }
-
-
-
 }
-
-

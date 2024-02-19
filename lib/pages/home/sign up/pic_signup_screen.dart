@@ -1,5 +1,6 @@
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/pages.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
@@ -11,18 +12,12 @@ class PICSignUpPage extends StatefulWidget {
 }
 
 class _PICSignUpPageState extends State<PICSignUpPage> {
-  final TextEditingController _picNameController =
-      TextEditingController();
-  final TextEditingController _picContactController =
-      TextEditingController();
-  final TextEditingController _picIcController =
-      TextEditingController();
-  final TextEditingController _picAdressController =
-      TextEditingController();
-  final TextEditingController _picEmailController =
-      TextEditingController();
-  final TextEditingController _picPasswordController =
-      TextEditingController();
+  final TextEditingController _picNameController = TextEditingController();
+  final TextEditingController _picContactController = TextEditingController();
+  final TextEditingController _picIcController = TextEditingController();
+  final TextEditingController _picAdressController = TextEditingController();
+  final TextEditingController _picEmailController = TextEditingController();
+  final TextEditingController _picPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +67,20 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () {
+                    FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                            email: _picEmailController.text,
+                            password: _picPasswordController.text)
+                        .then(
+                          (value) => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          ),
+                        ).onError((error, stackTrace){
+                          print("Error ${error.toString()}");
+                        });
+
                     // String orgaizationName = _organizationNameController.text;
                     // String organizationContact =
                     //     _organizationContactController.text;

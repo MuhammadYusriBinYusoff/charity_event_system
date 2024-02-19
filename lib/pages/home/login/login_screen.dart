@@ -1,6 +1,7 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/home/sign%20up/organization_signup_screen.dart';
 import 'package:charity_event_system/pages/pages.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -63,10 +64,27 @@ class _LoginPageState extends State<LoginPage> {
                         String password = _passwordController.text;
                         // You can add your login logic here
                         print('Username: $username, Password: $password');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MyHomePage(title:Translation.splashTitle.getString(context))),
+
+                        FirebaseAuth.instance
+                            .signInWithEmailAndPassword(
+                          email: _usernameController.text,
+                          password: _passwordController.text,
+                        )
+                            .then(
+                          (value) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyHomePage(
+                                    title: Translation.splashTitle
+                                        .getString(context)),
+                              ),
+                            );
+                          },
+                        ).onError(
+                          (error, stackTrace) {
+                            print("Error ${error.toString()}");
+                          },
                         );
                       },
                       style: ElevatedButton.styleFrom(
