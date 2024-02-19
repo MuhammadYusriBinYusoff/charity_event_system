@@ -1,6 +1,7 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/home/sign%20up/organization_signup_screen.dart';
 import 'package:charity_event_system/pages/pages.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -58,16 +59,62 @@ class _LoginPageState extends State<LoginPage> {
                     width: double.infinity,
                     height: Dimens.space40,
                     child: ElevatedButton(
-                      onPressed: () {
-                        String username = _usernameController.text;
-                        String password = _passwordController.text;
-                        // You can add your login logic here
-                        print('Username: $username, Password: $password');
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MyHomePage(title:Translation.splashTitle.getString(context))),
-                        );
+                      onPressed: () async {
+                        try {
+                          await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                            email: _usernameController.text,
+                            password: _passwordController.text,
+                          );
+
+                          // If sign-in is successful, navigate to the next screen
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MyHomePage(
+                                title:
+                                    Translation.splashTitle.getString(context),
+                              ),
+                            ),
+                          );
+                        } catch (error) {
+                          print("Error: $error");
+                          // Handle specific Firebase authentication exceptions
+                          String errorMessage =
+                              Translation.generalErrorMsg.getString(context);
+                          if (error is FirebaseAuthException) {
+                            switch (error.code) {
+                              case 'invalid-credential':
+                                errorMessage =
+                                    Translation.credentialErrorMsg.getString(context);
+                                break;
+                              default:
+                                errorMessage =
+                                    Translation.authenticationErrorMsg.getString(context);
+                                break;
+                            }
+                          }
+                          // ignore: use_build_context_synchronously
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text(Translation.errorTitle.getString(context), style: textStyle),
+                                content: Text(errorMessage),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // Dismiss the dialog
+                                    },
+                                    child: Text(Translation.ok.getString(context), style: textStyle),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Palette.purpleMain,

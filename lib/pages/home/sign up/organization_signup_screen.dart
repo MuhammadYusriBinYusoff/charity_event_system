@@ -57,7 +57,7 @@ class _SignUpPageState extends State<SignUpPage> {
               height: Dimens.space40,
               child: ElevatedButton(
                 onPressed: () {
-                  String orgaizationName = _organizationNameController.text;
+                  String organizationName = _organizationNameController.text;
                   String organizationContact =
                       _organizationContactController.text;
                   String organizationAdress =
@@ -65,12 +65,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   String organizationLink = _organizationLinkController.text;
                   // You can add your login logic here
                   print(
-                      'Name: $orgaizationName, Contact: $organizationContact, Adress: $organizationAdress, Link: $organizationLink');
+                      'Name: $organizationName, Contact: $organizationContact, Adress: $organizationAdress, Link: $organizationLink');
 
                   Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const PICSignUpPage()),
-                      );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PICSignUpPage(
+                              organizationName: organizationName,
+                              organizationContact: organizationContact,
+                              organizationAddress: organizationAdress,
+                              organizationLink: organizationLink,
+                            )),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Palette.purpleMain,

@@ -36,6 +36,13 @@ mixin Translation{
   static const String picEmail = 'picEmail';
   static const String picPassword = 'picPassword';
 
+  //Error handling
+  static const String errorTitle = "errorTitle";
+  static const String generalErrorMsg = "generalErrorMsg";
+  static const String credentialErrorMsg = "credentialErrorMsg";
+  static const String authenticationErrorMsg = "authenticationErrorMsg";
+  static const String ok = "ok";
+
   static const Map<String,dynamic> EN = {
     //For Splashpage
     splashTitle: 'SpiraCare',
@@ -62,7 +69,15 @@ mixin Translation{
     picIcNumber: 'Ic Number',
     picAdress: 'Adress',
     picEmail: 'E-mail',
-    picPassword: 'Password'
+    picPassword: 'Password',
+
+    //Error Handling
+    errorTitle: 'Error',
+    generalErrorMsg: 'An error occurred. Please try again.',
+    credentialErrorMsg: 'Invalid credentials. Please try again.',
+    authenticationErrorMsg: 'Authentication failed. Please try again later.',
+    ok: 'Ok',
+
 
   };
 
@@ -92,7 +107,14 @@ mixin Translation{
     picIcNumber: 'Nombor IC',
     picAdress: 'Alamat',
     picEmail: 'E-mel',
-    picPassword: 'Kata laluan'
+    picPassword: 'Kata laluan',
+
+    //Error Handling
+    errorTitle: 'Ralat',
+    generalErrorMsg: 'Ralat berlaku. Sila cuba lagi.',
+    credentialErrorMsg: 'Bukti kelayakan tidak sah. Sila cuba lagi.',
+    authenticationErrorMsg: 'Pengesahan gagal. Sila cuba sebentar lagi.',
+    ok: 'Baik',
     
   };
 }

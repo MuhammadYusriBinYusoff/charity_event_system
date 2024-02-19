@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "576604151770",
+    "project_id": "charity-event-cems",
+    "storage_bucket": "charity-event-cems.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576604151770:android:29bec06e84ecb5f778eae3",
+        "android_client_info": {
+          "package_name": "com.example.charity_event_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgcuSX1pc9vGhK3oBwXMqLXc3nzhUXGkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
