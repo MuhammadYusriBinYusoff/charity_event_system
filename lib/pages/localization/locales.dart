@@ -35,6 +35,10 @@ mixin Translation{
   static const String picAdress = 'picAdress';
   static const String picEmail = 'picEmail';
   static const String picPassword = 'picPassword';
+  static const String askWho = 'askWho';
+  static const String askWhoSubtitle = 'askWhoSubtitle';
+  static const String askDonor = "askDonor";
+  static const String askOrganizer = "askOrganizer";
 
   //Error handling
   static const String errorTitle = "errorTitle";
@@ -70,6 +74,10 @@ mixin Translation{
     picAdress: 'Adress',
     picEmail: 'E-mail',
     picPassword: 'Password',
+    askWho: 'Who are you?',
+    askWhoSubtitle: 'What you want to be in the application',
+    askDonor: 'Donor',
+    askOrganizer: 'Organizer',
 
     //Error Handling
     errorTitle: 'Error',
@@ -108,6 +116,10 @@ mixin Translation{
     picAdress: 'Alamat',
     picEmail: 'E-mel',
     picPassword: 'Kata laluan',
+    askWho: 'Siapakah Anda?',
+    askWhoSubtitle: 'Apa yang anda ingin jadi?',
+    askDonor: 'Penderma',
+    askOrganizer: 'Organizer',
 
     //Error Handling
     errorTitle: 'Ralat',

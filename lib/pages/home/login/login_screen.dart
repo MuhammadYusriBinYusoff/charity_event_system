@@ -1,5 +1,4 @@
 import 'package:charity_event_system/common/resources/resources.dart';
-import 'package:charity_event_system/pages/home/sign%20up/organization_signup_screen.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -138,14 +137,14 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SignUpPage()),
+                             builder: (context) => UserChosen()),
                       );
                     },
                     child: Text(
                       Translation.loginQuestion.getString(context),
                       style: const TextStyle(
                           color: Palette
-                              .blueLink, // Change color to indicate it's clickable
+                              .blueLink,
                           fontFamily: 'Roborto'),
                     ),
                   ),
