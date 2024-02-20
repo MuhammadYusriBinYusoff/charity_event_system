@@ -107,7 +107,7 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
 
                       // Save user details to Firestore
                       await FirebaseFirestore.instance
-                          .collection("users")
+                          .collection("organizationAccount")
                           .doc(userUID)
                           .set(newUser);
   
