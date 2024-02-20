@@ -52,6 +52,12 @@ mixin Translation{
   static const String authenticationErrorMsg = "authenticationErrorMsg";
   static const String ok = "ok";
 
+  //General things
+  static const String logOutTitle = "logOutTitle";
+  static const String logOutMsg = "logOutMsg";
+  static const String cancel = "cancel";
+  static const String logout = "logout";
+
   static const Map<String,dynamic> EN = {
     //For Splashpage
     splashTitle: 'SpiraCare',
@@ -95,6 +101,12 @@ mixin Translation{
     credentialErrorMsg: 'Invalid credentials. Please try again.',
     authenticationErrorMsg: 'Authentication failed. Please try again later.',
     ok: 'Ok',
+
+    //General things
+    logOutTitle: 'Log Out',
+    logOutMsg: 'Are you sure you want to log out?',
+    logout: 'Log Out',
+    cancel: 'Cancel',
 
 
   };
@@ -142,6 +154,12 @@ mixin Translation{
     credentialErrorMsg: 'Bukti kelayakan tidak sah. Sila cuba lagi.',
     authenticationErrorMsg: 'Pengesahan gagal. Sila cuba sebentar lagi.',
     ok: 'Baik',
+
+    //General things
+    logOutTitle: 'Log Keluar',
+    logOutMsg: 'Anda pasti ingin log keluar?',
+    logout: 'Log Keluar',
+    cancel: 'Batal',
     
   };
 }
