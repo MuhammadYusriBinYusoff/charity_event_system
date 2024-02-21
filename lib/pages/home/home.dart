@@ -1,9 +1,11 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/pages.dart';
+import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -17,6 +19,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    OrganizerProvider organizationUser =
+        Provider.of<OrganizerProvider>(context);
+
     return Scaffold(
       backgroundColor: Palette.purpleLow,
       appBar: AppBar(
@@ -73,8 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       SpacerV(
                         value: Dimens.space16,
                       ),
-                      const Text(
-                        "HELLO YUSRI",
+                      Text(
+                        "Hello ${organizationUser.organizers.picName}",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -92,6 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   GestureDetector(
                     onTap: () {
                       // Handle circle icon tap
+                      print("Test Organization data at home.dart");
+                      print(organizationUser.organizers.id);
+                      print(organizationUser.organizers.organizationName);
+                      print("============");
                     },
                     child: const CircleAvatar(
                       radius: 30,
