@@ -15,18 +15,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Palette.purpleLow,
       appBar: AppBar(
-        title: Text('Home Page'),
+        backgroundColor: Palette.purpleMain,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () {
-              // Perform log out action
-              // For example, you can show a confirmation dialog
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
@@ -44,10 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         FirebaseAuth.instance.signOut();
                         Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                      );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
                       },
                       child: Text(Translation.logout.getString(context)),
                     ),
@@ -58,26 +56,91 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Container(
+              height: 100.0,
+              color: Palette.purpleMain,
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SpacerV(
+                        value: Dimens.space16,
+                      ),
+                      const Text(
+                        "HELLO YUSRI",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ), // Added space between the text and the avatar
+                      const Text(
+                        "Organizer",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // Handle circle icon tap
+                    },
+                    child: const CircleAvatar(
+                      radius: 30,
+                      backgroundColor:
+                          Palette.grey, // Change the color as needed
+                      child: Icon(Icons.person, size: 40, color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Image.asset(
-              'assets/images/spiral-logo.png',
-              fit: BoxFit.cover,
+            SpacerV(
+              value: Dimens.space16,
             ),
-            SvgPicture.asset(
-              'assets/images/sss.svg',
-              width: 100,
-              height: 100,
-            ),
-            SvgPicture.asset(
-              'assets/images/spiral-logo.svg',
-              width: 100,
-              height: 100,
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/spiral-logo.png',
+                    fit: BoxFit.cover,
+                  ),
+                  SvgPicture.asset(
+                    'assets/images/sss.svg',
+                    width: 100,
+                    height: 100,
+                  ),
+                  SvgPicture.asset(
+                    'assets/images/spiral-logo.svg',
+                    width: 100,
+                    height: 100,
+                  ),
+                  SvgPicture.asset(
+                    'assets/images/spiral-logo.svg',
+                    width: 100,
+                    height: 100,
+                  ),
+                  SvgPicture.asset(
+                    'assets/images/spiral-logo.svg',
+                    width: 100,
+                    height: 100,
+                  ),
+                  SvgPicture.asset(
+                    'assets/images/spiral-logo.svg',
+                    width: 100,
+                    height: 100,
+                  ),
+                ],
+              ),
             ),
           ],
         ),
