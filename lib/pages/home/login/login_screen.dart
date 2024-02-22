@@ -1,9 +1,11 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/pages.dart';
+import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -22,6 +24,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    OrganizerProvider organizationUser = Provider.of<OrganizerProvider>(context);
+    
     return Scaffold(
       appBar: AppBar(
         title:
@@ -66,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                             password: _passwordController.text,
                           );
 
+                          organizationUser.fetchOrganizerData();
                           // If sign-in is successful, navigate to the next screen
                           // ignore: use_build_context_synchronously
                           Navigator.push(

@@ -52,6 +52,18 @@ mixin Translation{
   static const String authenticationErrorMsg = "authenticationErrorMsg";
   static const String ok = "ok";
 
+  //General things
+  static const String logOutTitle = "logOutTitle";
+  static const String logOutMsg = "logOutMsg";
+  static const String cancel = "cancel";
+  static const String logout = "logout";
+
+  //Homepage
+  static const String charity2024Title = 'charity2024';
+  static const String charity2024Subtitle = 'charity2024Subtitle';
+  static const String myEventTitle = "myEventTitle";
+  static const String myEventSubtitle = "myEventSubtitle";
+
   static const Map<String,dynamic> EN = {
     //For Splashpage
     splashTitle: 'SpiraCare',
@@ -95,6 +107,18 @@ mixin Translation{
     credentialErrorMsg: 'Invalid credentials. Please try again.',
     authenticationErrorMsg: 'Authentication failed. Please try again later.',
     ok: 'Ok',
+
+    //General things
+    logOutTitle: 'Log Out',
+    logOutMsg: 'Are you sure you want to log out?',
+    logout: 'Log Out',
+    cancel: 'Cancel',
+
+    //Homepage
+    charity2024Title: 'Charity Event 2024',
+    charity2024Subtitle: 'Collection of activity from organizer',
+    myEventTitle: 'My Event',
+    myEventSubtitle: 'Organizer can create their event here',
 
 
   };
@@ -142,6 +166,18 @@ mixin Translation{
     credentialErrorMsg: 'Bukti kelayakan tidak sah. Sila cuba lagi.',
     authenticationErrorMsg: 'Pengesahan gagal. Sila cuba sebentar lagi.',
     ok: 'Baik',
+
+    //General things
+    logOutTitle: 'Log Keluar',
+    logOutMsg: 'Anda pasti ingin log keluar?',
+    logout: 'Log Keluar',
+    cancel: 'Batal',
+
+    //Homepage
+    charity2024Title: 'Program Amal 2024',
+    charity2024Subtitle: 'Koleksi aktviti daripada organizer',
+    myEventTitle: 'Event Saya',
+    myEventSubtitle: 'Organizer boleh buat program amal di sini',
     
   };
 }

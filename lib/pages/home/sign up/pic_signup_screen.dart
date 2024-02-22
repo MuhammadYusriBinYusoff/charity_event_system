@@ -1,6 +1,7 @@
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
+import 'package:charity_event_system/providers/providers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,9 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    OrganizerProvider organizationUser = Provider.of<OrganizerProvider>(context);
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text(Translation.signupTitle.getString(context)),
@@ -82,7 +86,6 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
-                      // Create user with email and password
                       final userCredential = await FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
                         email: _picEmailController.text,
@@ -103,31 +106,9 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                         organizationContact: widget.organizationContact,
                         organizationAdress: widget.organizationAddress,
                         organizationLink: widget.organizationLink,
-                      ).toJson();
+                      );
 
-                      // Save user details to Firestore
-                      await FirebaseFirestore.instance
-                          .collection("organizationAccount")
-                          .doc(userUID)
-                          .set(newUser);
-  
-                      //TODO: YUSRI: Save for later enhancement
-                      // OrganizerProvider organizerProvider =
-                      //     Provider.of<OrganizerProvider>(context);
-
-                      // await organizerProvider.createOrganizer(OrganizerModel(
-                      //   id: userUID,
-                      //   picName: _picNameController.text,
-                      //   picContact: _picContactController.text,
-                      //   picIc: _picIcController.text,
-                      //   picAdress: _picAdressController.text,
-                      //   picEmail: _picEmailController.text,
-                      //   picPassword: _picPasswordController.text,
-                      //   organizationName: widget.organizationName,
-                      //   organizationContact: widget.organizationContact,
-                      //   organizationAdress: widget.organizationAddress,
-                      //   organizationLink: widget.organizationLink,
-                      // ));
+                      organizationUser.createOrganizer(newUser);
 
                       Navigator.push(
                         context,

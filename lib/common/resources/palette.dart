@@ -7,6 +7,7 @@ class Palette {
 
   //For CEMS used
   static const purpleMain = Color(0xFFCB74D9);
+  static const purpleLow = Color(0xFFF3D3F9);
   static const blueLink = Color(0xFF4E6AFF);
   static const black = Color(0xFF090A0A);
   static const white = Color(0xFFFFFFFF);

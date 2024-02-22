@@ -1,11 +1,48 @@
 import 'package:charity_event_system/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 //TODO: YUSRI: Need to continue this later
 
 class OrganizerProvider extends ChangeNotifier {
-  List<OrganizerModel> organizer = [];
+  OrganizerModel _organizers = OrganizerModel();
+
+  OrganizerModel get organizers => _organizers;
+
+  Future<void> createOrganizer(OrganizerModel newOrganizer) async {
+    _organizers = newOrganizer;
+    await FirebaseFirestore.instance
+        .collection("organizationAccount")
+        .doc(newOrganizer.id)
+        .set(_organizers.toJson());
+    notifyListeners();
+  }
+
+  Future<void> fetchOrganizerData() async {
+    // Get the current user
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (user != null) {
+      String userId = user.uid;
+      CollectionReference usersCollection =
+          FirebaseFirestore.instance.collection('organizationAccount');
+      DocumentSnapshot<Map<String, dynamic>> userData = await usersCollection
+          .doc(userId)
+          .get() as DocumentSnapshot<Map<String, dynamic>>;
+
+      if (userData.exists) {
+        _organizers = OrganizerModel.fromSnapshot(userData);
+        notifyListeners();
+      } else {
+        print('Organizer data not found.');
+      }
+    } else {
+      print('No organizer signed in.');
+    }
+  }
+
+  /*List<OrganizerModel> organizer = [];
 
   List<OrganizerModel> get organizers => organizer;
 
@@ -47,4 +84,5 @@ class OrganizerProvider extends ChangeNotifier {
     organizers.add(newUser as OrganizerModel);
     notifyListeners();
   }
+  */
 }

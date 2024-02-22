@@ -1,18 +1,13 @@
 import 'package:charity_event_system/common/resources/resources.dart';
+import 'package:charity_event_system/pages/pages.dart';
+import 'package:charity_event_system/providers/providers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -21,101 +16,189 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    OrganizerProvider organizationUser =
+        Provider.of<OrganizerProvider>(context);
+
     return Scaffold(
+      backgroundColor: Palette.purpleLow,
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Palette.purpleMain,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout,color: Palette.white),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text(Translation.logOutTitle.getString(context)),
+                  content: Text(Translation.logOutMsg.getString(context)),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        // Close the dialog
+                        Navigator.pop(context);
+                      },
+                      child: Text(Translation.cancel.getString(context)),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
+                      },
+                      child: Text(Translation.logout.getString(context)),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: SingleChildScrollView(
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Container(
+              height: Dimens.space150,
+              color: Palette.purpleMain,
+              padding: EdgeInsets.all(Dimens.space8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SpacerV(
+                        value: Dimens.space24,
+                      ),
+                      Text(
+                        "Hello ${organizationUser.organizers.picName}",
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Palette.white,
+                        ),
+                      ), // Added space between the text and the avatar
+                      Text(
+                        "${organizationUser.organizers.organizationName}",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Palette.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // Handle circle icon tap
+                      print("Test Organization data at home.dart");
+                      print(organizationUser.organizers.id);
+                      print(organizationUser.organizers.organizationName);
+                      print("============");
+                    },
+                    child: const CircleAvatar(
+                      radius: 30,
+                      backgroundColor:
+                          Palette.white,
+                      child: Icon(Icons.person, size: 40, color: Palette.purpleMain),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            SpacerV(
+              value: Dimens.space16,
             ),
-            Image.asset(
-              'assets/images/spiral-logo.png',
-              fit: BoxFit.cover,
+            Container(
+              padding:EdgeInsets.all(Dimens.space16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    Translation.charity2024Title.getString(context),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    Translation.charity2024Subtitle.getString(context),
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  SpacerV(
+                    value: Dimens.space16,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const ProductCard(
+                          imageUrl:
+                              'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
+                          title: 'Product Name',
+                          description: 'Product description goes here.',
+                        ),
+                        SpacerH(
+                          value: Dimens.space8,
+                        ),
+                        const ProductCard(
+                          imageUrl:
+                              'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
+                          title: 'Product Name',
+                          description: 'Product description goes here.',
+                        ),
+                        SpacerH(
+                          value: Dimens.space8,
+                        ),
+                        const ProductCard(
+                          imageUrl:
+                              'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
+                          title: 'Product Name',
+                          description: 'Product description goes here.',
+                        ),
+                      ],
+                    ),
+                  ),
+                  SpacerV(
+                    value: Dimens.space32,
+                  ),
+                  Text(
+                    Translation.myEventTitle.getString(context),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    Translation.myEventSubtitle.getString(context),
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  SpacerV(
+                    value: Dimens.space16,
+                  ),
+                  FileAddingCard(
+                    title: 'Add New File',
+                    description: 'Tap here to add a new file',
+                    onTap: () {
+                      // Add your onTap logic here
+                      print('File adding card tapped!');
+                    },
+                  ),
+                ],
+              ),
             ),
-            // SvgPicture.asset(
-            //   'assets/images/test.svg',
-            //   width: 24, // Adjust the width as needed
-            //   height: 24, // Adjust the height as needed
-            // ),
-            SvgPicture.asset(
-              'assets/images/sss.svg',
-              width: 100, // Adjust the width as needed
-              height: 100, // Adjust the height as needed
-            ),
-            SvgPicture.asset(
-              'assets/images/spiral-logo.svg',
-              width: 100, // Adjust the width as needed
-              height: 100, // Adjust the height as needed
-            ),
-            // SvgPicture.asset(
-            //   'assets/images/test2.svg',
-            //   width: 24, // Adjust the width as needed
-            //   height: 24, // Adjust the height as needed
-            // ),
-            // SvgPicture.asset(
-            //   'assets/images/kaba icon.svg',
-            //   width: 24, // Adjust the width as needed
-            //   height: 24, // Adjust the height as needed
-            // ),
-            // const ImageIcon(AssetImage('assets/images/spiral-logo.svg')),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
