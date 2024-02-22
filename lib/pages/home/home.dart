@@ -4,7 +4,6 @@ import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -28,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Palette.purpleMain,
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.logout,color: Palette.white),
             onPressed: () {
               showDialog(
                 context: context,
@@ -63,12 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              height: 100.0,
+              height: Dimens.space150,
               color: Palette.purpleMain,
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(Dimens.space8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -76,20 +74,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SpacerV(
-                        value: Dimens.space16,
+                        value: Dimens.space24,
                       ),
                       Text(
                         "Hello ${organizationUser.organizers.picName}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
+                          color: Palette.white,
                         ),
                       ), // Added space between the text and the avatar
-                      const Text(
-                        "Organizer",
-                        style: TextStyle(
+                      Text(
+                        "${organizationUser.organizers.organizationName}",
+                        style: const TextStyle(
                           fontSize: 18,
-                          fontStyle: FontStyle.italic,
+                          color: Palette.white,
                         ),
                       ),
                     ],
@@ -105,8 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: const CircleAvatar(
                       radius: 30,
                       backgroundColor:
-                          Palette.grey, // Change the color as needed
-                      child: Icon(Icons.person, size: 40, color: Colors.white),
+                          Palette.white,
+                      child: Icon(Icons.person, size: 40, color: Palette.purpleMain),
                     ),
                   ),
                 ],
@@ -115,38 +114,84 @@ class _MyHomePageState extends State<MyHomePage> {
             SpacerV(
               value: Dimens.space16,
             ),
-            Center(
+            Container(
+              padding:EdgeInsets.all(Dimens.space16),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Image.asset(
-                    'assets/images/spiral-logo.png',
-                    fit: BoxFit.cover,
+                  Text(
+                    Translation.charity2024Title.getString(context),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  SvgPicture.asset(
-                    'assets/images/sss.svg',
-                    width: 100,
-                    height: 100,
+                  Text(
+                    Translation.charity2024Subtitle.getString(context),
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
-                  SvgPicture.asset(
-                    'assets/images/spiral-logo.svg',
-                    width: 100,
-                    height: 100,
+                  SpacerV(
+                    value: Dimens.space16,
                   ),
-                  SvgPicture.asset(
-                    'assets/images/spiral-logo.svg',
-                    width: 100,
-                    height: 100,
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        const ProductCard(
+                          imageUrl:
+                              'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
+                          title: 'Product Name',
+                          description: 'Product description goes here.',
+                        ),
+                        SpacerH(
+                          value: Dimens.space8,
+                        ),
+                        const ProductCard(
+                          imageUrl:
+                              'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
+                          title: 'Product Name',
+                          description: 'Product description goes here.',
+                        ),
+                        SpacerH(
+                          value: Dimens.space8,
+                        ),
+                        const ProductCard(
+                          imageUrl:
+                              'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
+                          title: 'Product Name',
+                          description: 'Product description goes here.',
+                        ),
+                      ],
+                    ),
                   ),
-                  SvgPicture.asset(
-                    'assets/images/spiral-logo.svg',
-                    width: 100,
-                    height: 100,
+                  SpacerV(
+                    value: Dimens.space32,
                   ),
-                  SvgPicture.asset(
-                    'assets/images/spiral-logo.svg',
-                    width: 100,
-                    height: 100,
+                  Text(
+                    Translation.myEventTitle.getString(context),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    Translation.myEventSubtitle.getString(context),
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  SpacerV(
+                    value: Dimens.space16,
+                  ),
+                  FileAddingCard(
+                    title: 'Add New File',
+                    description: 'Tap here to add a new file',
+                    onTap: () {
+                      // Add your onTap logic here
+                      print('File adding card tapped!');
+                    },
                   ),
                 ],
               ),

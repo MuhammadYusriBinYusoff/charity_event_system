@@ -58,6 +58,12 @@ mixin Translation{
   static const String cancel = "cancel";
   static const String logout = "logout";
 
+  //Homepage
+  static const String charity2024Title = 'charity2024';
+  static const String charity2024Subtitle = 'charity2024Subtitle';
+  static const String myEventTitle = "myEventTitle";
+  static const String myEventSubtitle = "myEventSubtitle";
+
   static const Map<String,dynamic> EN = {
     //For Splashpage
     splashTitle: 'SpiraCare',
@@ -107,6 +113,12 @@ mixin Translation{
     logOutMsg: 'Are you sure you want to log out?',
     logout: 'Log Out',
     cancel: 'Cancel',
+
+    //Homepage
+    charity2024Title: 'Charity Event 2024',
+    charity2024Subtitle: 'Collection of activity from organizer',
+    myEventTitle: 'My Event',
+    myEventSubtitle: 'Organizer can create their event here',
 
 
   };
@@ -160,6 +172,12 @@ mixin Translation{
     logOutMsg: 'Anda pasti ingin log keluar?',
     logout: 'Log Keluar',
     cancel: 'Batal',
+
+    //Homepage
+    charity2024Title: 'Program Amal 2024',
+    charity2024Subtitle: 'Koleksi aktviti daripada organizer',
+    myEventTitle: 'Event Saya',
+    myEventSubtitle: 'Organizer boleh buat program amal di sini',
     
   };
 }
