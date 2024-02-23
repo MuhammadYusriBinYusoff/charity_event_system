@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/home/splash_screen.dart';
 import 'package:charity_event_system/pages/localization/locales.dart';
+import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -41,12 +42,14 @@ Future main() async {
   }
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => OrganizerProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => OrganizerProvider()),
+        ChangeNotifierProvider(create: (context) => EventDetailsProvider()),
+      ],
       child: const MyApp(),
     ),
   );
-  //runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {

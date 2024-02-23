@@ -1,4 +1,5 @@
 import 'package:charity_event_system/common/resources/resources.dart';
+import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +27,9 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
 
   @override
   Widget build(BuildContext context) {
+    OrganizerProvider organizationUser = Provider.of<OrganizerProvider>(context);
+    EventDetailsProvider eventDetailsFile = Provider.of<EventDetailsProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Palette.purpleMain,
@@ -103,7 +107,14 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    
+                    final userUID = organizationUser.organizers.id;
+                    final newEvent = EventDetailsModel(
+                        id: userUID,
+                        eventName: _charityEventTitleController.text,
+                        eventDescription: _charityEventDescriptionController.text,
+                      );
+
+                      eventDetailsFile.createEventDetails(newEvent);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Palette.purpleMain,

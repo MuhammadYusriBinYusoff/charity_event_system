@@ -21,6 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
+    EventDetailsProvider eventDetailsFile = Provider.of<EventDetailsProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
@@ -38,7 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   actions: [
                     TextButton(
                       onPressed: () {
-                        // Close the dialog
                         Navigator.pop(context);
                       },
                       child: Text(Translation.cancel.getString(context)),
@@ -96,7 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Handle circle icon tap
                       print("Test Organization data at home.dart");
                       print(organizationUser.organizers.id);
                       print(organizationUser.organizers.organizationName);
@@ -187,13 +186,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     value: Dimens.space16,
                   ),
                   FileAddingCard(
-                    title: 'Add New File',
+                    title: eventDetailsFile.eventDetails.eventName,
                     description: 'Tap here to add a new file',
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EventDescriptionPage(),
+                          builder: (context) => const EventDescriptionPage(),
                         ),
                       );
                     },
