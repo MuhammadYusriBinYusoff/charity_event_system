@@ -64,6 +64,14 @@ mixin Translation{
   static const String myEventTitle = "myEventTitle";
   static const String myEventSubtitle = "myEventSubtitle";
 
+  //Event
+  static const String eventTitle = 'eventTitle';
+  static const String eventDescription = 'eventDescription';
+  static const String itemName = 'itemName';
+  static const String itemQuantity = 'itemQuantity';
+  static const String itemUnit = 'itemUnit';
+  static const String itemDate = 'itemDate';
+
   static const Map<String,dynamic> EN = {
     //For Splashpage
     splashTitle: 'SpiraCare',
@@ -119,6 +127,14 @@ mixin Translation{
     charity2024Subtitle: 'Collection of activity from organizer',
     myEventTitle: 'My Event',
     myEventSubtitle: 'Organizer can create their event here',
+
+    //Event
+    eventTitle: 'Event Title',
+    eventDescription: 'Event Description',
+    itemName: 'Item Name',
+    itemQuantity: 'Quantity',
+    itemUnit: 'Unit',
+    itemDate: 'Date',
 
 
   };
@@ -178,6 +194,14 @@ mixin Translation{
     charity2024Subtitle: 'Koleksi aktviti daripada organizer',
     myEventTitle: 'Event Saya',
     myEventSubtitle: 'Organizer boleh buat program amal di sini',
+
+    //Event
+    eventTitle: 'Tajuk Event',
+    eventDescription: 'Deskripsi Event',
+    itemName: 'Nama barang',
+    itemQuantity: 'Jumlah',
+    itemUnit: 'Unit',
+    itemDate: 'Tarikh',
     
   };
 }

@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'providers/user/user.dart';
 import 'package:provider/provider.dart';
 
 
@@ -46,6 +45,7 @@ Future main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => OrganizerProvider()),
         ChangeNotifierProvider(create: (context) => EventDetailsProvider()),
+        ChangeNotifierProvider(create: (context) => EventItemsProvider()),
       ],
       child: const MyApp(),
     ),

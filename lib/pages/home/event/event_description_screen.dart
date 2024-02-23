@@ -1,5 +1,6 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/models/models.dart';
+import 'package:charity_event_system/pages/home/event/event.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
-
 
 class EventDescriptionPage extends StatefulWidget {
   const EventDescriptionPage({Key? key}) : super(key: key);
@@ -18,8 +17,10 @@ class EventDescriptionPage extends StatefulWidget {
 }
 
 class _EventDescriptionPageState extends State<EventDescriptionPage> {
-  final TextEditingController _charityEventTitleController = TextEditingController();
-  final TextEditingController _charityEventDescriptionController = TextEditingController();
+  final TextEditingController _charityEventTitleController =
+      TextEditingController();
+  final TextEditingController _charityEventDescriptionController =
+      TextEditingController();
 
   TextStyle textStyle = const TextStyle(
     fontFamily: 'Roboto',
@@ -27,8 +28,10 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
 
   @override
   Widget build(BuildContext context) {
-    OrganizerProvider organizationUser = Provider.of<OrganizerProvider>(context);
-    EventDetailsProvider eventDetailsFile = Provider.of<EventDetailsProvider>(context);
+    OrganizerProvider organizationUser =
+        Provider.of<OrganizerProvider>(context);
+    EventDetailsProvider eventDetailsFile =
+        Provider.of<EventDetailsProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -76,26 +79,30 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
             children: [
               SpacerV(value: Dimens.space64),
               Text(
-                "Charity Event Title",
+                Translation.eventTitle.getString(context),
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SpacerV(value: Dimens.space8,),
+              SpacerV(
+                value: Dimens.space8,
+              ),
               buildTextField(
                 controller: _charityEventTitleController,
                 hintText: "Please write here",
               ),
               SpacerV(value: Dimens.space24),
               Text(
-                "Description",
+                Translation.eventDescription.getString(context),
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SpacerV(value: Dimens.space8,),
+              SpacerV(
+                value: Dimens.space8,
+              ),
               buildTextField(
                 controller: _charityEventDescriptionController,
                 hintText: "Please write here",
@@ -109,12 +116,18 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                   onPressed: () async {
                     final userUID = organizationUser.organizers.id;
                     final newEvent = EventDetailsModel(
-                        id: userUID,
-                        eventName: _charityEventTitleController.text,
-                        eventDescription: _charityEventDescriptionController.text,
-                      );
+                      id: userUID,
+                      eventName: _charityEventTitleController.text,
+                      eventDescription: _charityEventDescriptionController.text,
+                    );
 
-                      eventDetailsFile.createEventDetails(newEvent);
+                    eventDetailsFile.createEventDetails(newEvent);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EventItemAddPage(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Palette.purpleMain,
