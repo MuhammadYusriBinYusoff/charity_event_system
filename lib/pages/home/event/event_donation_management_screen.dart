@@ -12,12 +12,15 @@ class EventDonationManagementPage extends StatefulWidget {
   const EventDonationManagementPage({Key? key}) : super(key: key);
 
   @override
-  _EventDonationManagementPageState createState() => _EventDonationManagementPageState();
+  _EventDonationManagementPageState createState() =>
+      _EventDonationManagementPageState();
 }
 
-class _EventDonationManagementPageState extends State<EventDonationManagementPage> {
+class _EventDonationManagementPageState
+    extends State<EventDonationManagementPage> {
   final TextEditingController _targetMoneyController = TextEditingController();
-  final TextEditingController _currentCollectedController = TextEditingController();
+  final TextEditingController _currentCollectedController =
+      TextEditingController();
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _endDateController = TextEditingController();
   final TextEditingController _bankAccountController = TextEditingController();
@@ -30,7 +33,8 @@ class _EventDonationManagementPageState extends State<EventDonationManagementPag
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
-    EventDonationProvider eventDonation = Provider.of<EventDonationProvider>(context);
+    EventDonationProvider eventDonation =
+        Provider.of<EventDonationProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -171,7 +175,11 @@ class _EventDonationManagementPageState extends State<EventDonationManagementPag
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => EventDonationManagementPage()),
+                        builder: (context) => MyHomePage(
+                          title:
+                            Translation.splashTitle.getString(context),
+                        )
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
