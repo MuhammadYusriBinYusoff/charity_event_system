@@ -33,130 +33,126 @@ class _LoginPageState extends State<LoginPage> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SpacerV(value: Dimens.space32),
-            SvgPicture.asset(
-              Images.splashIcon,
-              width: 200,
-              height: 200,
-            ),
-            Padding(
-              padding: EdgeInsets.all(Dimens.space16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SpacerV(value: Dimens.space64),
-                  buildTextField(
-                    controller: _usernameController,
-                    labelText: Translation.loginEmail.getString(context),
-                  ),
-                  SpacerV(value: Dimens.space16),
-                  buildTextField(
-                    controller: _passwordController,
-                    labelText: Translation.loginPassword.getString(context),
-                    obscureText: true,
-                  ),
-                  SpacerV(value: Dimens.space16),
-                  SizedBox(
-                    width: double.infinity,
-                    height: Dimens.space40,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        try {
-                          await FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                            email: _usernameController.text,
-                            password: _passwordController.text,
-                          );
-
-                          organizationUser.fetchOrganizerData();
-                          // If sign-in is successful, navigate to the next screen
-                          // ignore: use_build_context_synchronously
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MyHomePage(
-                                title:
-                                    Translation.splashTitle.getString(context),
-                              ),
-                            ),
-                          );
-                        } catch (error) {
-                          print("Error: $error");
-                          // Handle specific Firebase authentication exceptions
-                          String errorMessage =
-                              Translation.generalErrorMsg.getString(context);
-                          if (error is FirebaseAuthException) {
-                            switch (error.code) {
-                              case 'invalid-credential':
-                                errorMessage =
-                                    Translation.credentialErrorMsg.getString(context);
-                                break;
-                              default:
-                                errorMessage =
-                                    Translation.authenticationErrorMsg.getString(context);
-                                break;
-                            }
-                          }
-                          // ignore: use_build_context_synchronously
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(Translation.errorTitle.getString(context), style: textStyle),
-                                content: Text(errorMessage),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pop(); // Dismiss the dialog
-                                    },
-                                    child: Text(Translation.ok.getString(context), style: textStyle),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Palette.purpleMain,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Dimens.space8),
-                        ),
-                      ),
-                      child: Text(
-                        Translation.loginTitle.getString(context),
-                        style: const TextStyle(
-                            color: Palette.white, fontFamily: 'Roborto'),
-                      ),
-                    ),
-                  ),
-                  SpacerV(value: Dimens.space16),
-                  GestureDetector(
-                    onTap: () {
-                      // Add your navigation logic here
-                      print('Navigate to sign up screen');
+        child: Container(
+          padding: EdgeInsets.all(Dimens.space16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SpacerV(value: Dimens.space32),
+              SvgPicture.asset(
+                Images.splashIcon,
+                width: 200,
+                height: 200,
+              ),
+              SpacerV(value: Dimens.space64),
+              buildTextField(
+                controller: _usernameController,
+                labelText: Translation.loginEmail.getString(context),
+              ),
+              SpacerV(value: Dimens.space16),
+              buildTextField(
+                controller: _passwordController,
+                labelText: Translation.loginPassword.getString(context),
+                obscureText: true,
+              ),
+              SpacerV(value: Dimens.space16),
+              SizedBox(
+                width: double.infinity,
+                height: Dimens.space40,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      await FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                        email: _usernameController.text,
+                        password: _passwordController.text,
+                      );
+                            
+                      organizationUser.fetchOrganizerData();
+                      // If sign-in is successful, navigate to the next screen
+                      // ignore: use_build_context_synchronously
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                             builder: (context) => UserChosen()),
+                          builder: (context) => MyHomePage(
+                            title:
+                                Translation.splashTitle.getString(context),
+                          ),
+                        ),
                       );
-                    },
-                    child: Text(
-                      Translation.loginQuestion.getString(context),
-                      style: const TextStyle(
-                          color: Palette
-                              .blueLink,
-                          fontFamily: 'Roborto'),
+                    } catch (error) {
+                      print("Error: $error");
+                      // Handle specific Firebase authentication exceptions
+                      String errorMessage =
+                          Translation.generalErrorMsg.getString(context);
+                      if (error is FirebaseAuthException) {
+                        switch (error.code) {
+                          case 'invalid-credential':
+                            errorMessage =
+                                Translation.credentialErrorMsg.getString(context);
+                            break;
+                          default:
+                            errorMessage =
+                                Translation.authenticationErrorMsg.getString(context);
+                            break;
+                        }
+                      }
+                      // ignore: use_build_context_synchronously
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text(Translation.errorTitle.getString(context), style: textStyle),
+                            content: Text(errorMessage),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); // Dismiss the dialog
+                                },
+                                child: Text(Translation.ok.getString(context), style: textStyle),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Palette.purpleMain,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.space8),
                     ),
                   ),
-                ],
+                  child: Text(
+                    Translation.loginTitle.getString(context),
+                    style: const TextStyle(
+                        color: Palette.white, fontFamily: 'Roborto'),
+                  ),
+                ),
               ),
-            ),
-          ],
+              SpacerV(value: Dimens.space16),
+              GestureDetector(
+                onTap: () {
+                  // Add your navigation logic here
+                  print('Navigate to sign up screen');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                         builder: (context) => UserChosen()),
+                  );
+                },
+                child: Text(
+                  Translation.loginQuestion.getString(context),
+                  style: const TextStyle(
+                      color: Palette
+                          .blueLink,
+                      fontFamily: 'Roborto'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

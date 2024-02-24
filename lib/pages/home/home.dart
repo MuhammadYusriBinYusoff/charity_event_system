@@ -1,4 +1,5 @@
 import 'package:charity_event_system/common/resources/resources.dart';
+import 'package:charity_event_system/pages/home/event/event.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
+    EventDetailsProvider eventDetailsFile = Provider.of<EventDetailsProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
@@ -27,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Palette.purpleMain,
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout,color: Palette.white),
+            icon: const Icon(Icons.logout, color: Palette.white),
             onPressed: () {
               showDialog(
                 context: context,
@@ -37,7 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   actions: [
                     TextButton(
                       onPressed: () {
-                        // Close the dialog
                         Navigator.pop(context);
                       },
                       child: Text(Translation.cancel.getString(context)),
@@ -95,7 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Handle circle icon tap
                       print("Test Organization data at home.dart");
                       print(organizationUser.organizers.id);
                       print(organizationUser.organizers.organizationName);
@@ -103,9 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     },
                     child: const CircleAvatar(
                       radius: 30,
-                      backgroundColor:
-                          Palette.white,
-                      child: Icon(Icons.person, size: 40, color: Palette.purpleMain),
+                      backgroundColor: Palette.white,
+                      child: Icon(Icons.person,
+                          size: 40, color: Palette.purpleMain),
                     ),
                   ),
                 ],
@@ -115,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
               value: Dimens.space16,
             ),
             Container(
-              padding:EdgeInsets.all(Dimens.space16),
+              padding: EdgeInsets.all(Dimens.space16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -186,11 +186,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     value: Dimens.space16,
                   ),
                   FileAddingCard(
-                    title: 'Add New File',
+                    title: eventDetailsFile.eventDetails.eventName,
                     description: 'Tap here to add a new file',
                     onTap: () {
-                      // Add your onTap logic here
-                      print('File adding card tapped!');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EventDescriptionPage(),
+                        ),
+                      );
                     },
                   ),
                 ],
