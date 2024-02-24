@@ -90,7 +90,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
               ),
               buildTextField(
                 controller: _charityEventTitleController,
-                hintText: "Please write here",
+                hintText: Translation.pleaseHintText.getString(context),
               ),
               SpacerV(value: Dimens.space24),
               Text(
@@ -105,7 +105,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
               ),
               buildTextField(
                 controller: _charityEventDescriptionController,
-                hintText: "Please write here",
+                hintText: Translation.pleaseHintText.getString(context),
                 multiLine: true,
               ),
               SpacerV(value: Dimens.space24),

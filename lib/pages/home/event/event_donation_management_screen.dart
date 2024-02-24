@@ -1,6 +1,5 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/models/models.dart';
-import 'package:charity_event_system/pages/home/event/event.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,18 +8,19 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class EventItemAddPage extends StatefulWidget {
-  const EventItemAddPage({Key? key}) : super(key: key);
+class EventDonationManagementPage extends StatefulWidget {
+  const EventDonationManagementPage({Key? key}) : super(key: key);
 
   @override
-  _EventItemAddPageState createState() => _EventItemAddPageState();
+  _EventDonationManagementPageState createState() => _EventDonationManagementPageState();
 }
 
-class _EventItemAddPageState extends State<EventItemAddPage> {
-  final TextEditingController _itemNameController = TextEditingController();
-  final TextEditingController _itemQuantityController = TextEditingController();
-  final TextEditingController _itemUnitController = TextEditingController();
-  final TextEditingController _itemDateController = TextEditingController();
+class _EventDonationManagementPageState extends State<EventDonationManagementPage> {
+  final TextEditingController _targetMoneyController = TextEditingController();
+  final TextEditingController _currentCollectedController = TextEditingController();
+  final TextEditingController _startDateController = TextEditingController();
+  final TextEditingController _endDateController = TextEditingController();
+  final TextEditingController _bankAccountController = TextEditingController();
 
   TextStyle textStyle = const TextStyle(
     fontFamily: 'Roboto',
@@ -30,8 +30,8 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
-    EventItemsProvider eventItems = Provider.of<EventItemsProvider>(context);
-    
+    EventDonationProvider eventDonation = Provider.of<EventDonationProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Palette.purpleMain,
@@ -77,7 +77,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
             children: [
               SpacerV(value: Dimens.space16),
               Text(
-                Translation.itemName.getString(context),
+                Translation.donationTarget.getString(context),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -87,12 +87,12 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                 value: Dimens.space8,
               ),
               buildTextField(
-                controller: _itemNameController,
+                controller: _targetMoneyController,
                 hintText: Translation.pleaseHintText.getString(context),
               ),
               SpacerV(value: Dimens.space24),
               Text(
-                Translation.itemQuantity.getString(context),
+                Translation.donationCurrent.getString(context),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -102,13 +102,12 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                 value: Dimens.space8,
               ),
               buildTextField(
-                controller: _itemQuantityController,
+                controller: _currentCollectedController,
                 hintText: Translation.pleaseHintText.getString(context),
-                multiLine: true,
               ),
               SpacerV(value: Dimens.space24),
               Text(
-                Translation.itemUnit.getString(context),
+                Translation.donationStartDate.getString(context),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -118,13 +117,12 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                 value: Dimens.space8,
               ),
               buildTextField(
-                controller: _itemUnitController,
+                controller: _startDateController,
                 hintText: Translation.pleaseHintText.getString(context),
-                multiLine: true,
               ),
               SpacerV(value: Dimens.space24),
               Text(
-                Translation.itemDate.getString(context),
+                Translation.donationEndDate.getString(context),
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -134,59 +132,23 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                 value: Dimens.space8,
               ),
               buildTextField(
-                controller: _itemDateController,
+                controller: _endDateController,
                 hintText: Translation.pleaseHintText.getString(context),
-                multiLine: true,
               ),
               SpacerV(value: Dimens.space24),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Add onPressed logic for the first button
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Palette.purpleMain,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Dimens.space8),
-                        ),
-                      ),
-                      child: const Text(
-                        'Table',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                    ),
-                  ),
-                  SpacerH(
-                    value: Dimens.space8,
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Add onPressed logic for the second button
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Palette.purpleMain,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Dimens.space8),
-                        ),
-                      ),
-                      child: const Text(
-                        'Insert',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+              Text(
+                Translation.donationBankAccount.getString(context),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SpacerV(
+                value: Dimens.space8,
+              ),
+              buildTextField(
+                controller: _bankAccountController,
+                hintText: Translation.pleaseHintText.getString(context),
               ),
               SpacerV(value: Dimens.space24),
               SizedBox(
@@ -195,15 +157,16 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     final userUID = organizationUser.organizers.id;
-                    final newItem = EventItemsModel(
+                    final newDonation = EventDonationModel(
                       id: userUID,
-                      itemName: _itemNameController.text,
-                      itemQuantity: _itemQuantityController.text,
-                      itemUnit: _itemUnitController.text,
-                      itemDate: _itemDateController.text,
+                      targetMoney: _targetMoneyController.text,
+                      currentCollected: _currentCollectedController.text,
+                      startDate: _startDateController.text,
+                      endDate: _endDateController.text,
+                      bankAccount: _bankAccountController.text,
                     );
 
-                    eventItems.createItemDetails(newItem);
+                    eventDonation.createDonationDetails(newDonation);
 
                     Navigator.push(
                       context,
@@ -234,10 +197,11 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
 
   @override
   void dispose() {
-    _itemNameController.dispose();
-    _itemQuantityController.dispose();
-    _itemUnitController.dispose();
-    _itemDateController.dispose();
+    _targetMoneyController.dispose();
+    _currentCollectedController.dispose();
+    _startDateController.dispose();
+    _endDateController.dispose();
+    _bankAccountController.dispose();
     super.dispose();
   }
 }

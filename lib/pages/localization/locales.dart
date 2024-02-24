@@ -63,6 +63,7 @@ mixin Translation{
   static const String charity2024Subtitle = 'charity2024Subtitle';
   static const String myEventTitle = "myEventTitle";
   static const String myEventSubtitle = "myEventSubtitle";
+  static const String pleaseHintText = "pleaseHintText";
 
   //Event
   static const String eventTitle = 'eventTitle';
@@ -71,6 +72,12 @@ mixin Translation{
   static const String itemQuantity = 'itemQuantity';
   static const String itemUnit = 'itemUnit';
   static const String itemDate = 'itemDate';
+  static const String donationTarget = 'donationTarget';
+  static const String donationCurrent = 'donationCurrent';
+  static const String donationStartDate = 'donationStartDate';
+  static const String donationEndDate = 'donationEndDate';
+  static const String donationBankAccount = 'donationBankAccount';
+  
 
   static const Map<String,dynamic> EN = {
     //For Splashpage
@@ -121,6 +128,7 @@ mixin Translation{
     logOutMsg: 'Are you sure you want to log out?',
     logout: 'Log Out',
     cancel: 'Cancel',
+    pleaseHintText: 'Please write here',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
@@ -135,6 +143,11 @@ mixin Translation{
     itemQuantity: 'Quantity',
     itemUnit: 'Unit',
     itemDate: 'Date',
+    donationTarget: 'Target Money',
+    donationCurrent: 'Current Collected',
+    donationStartDate: 'Start Date',
+    donationEndDate: 'End Date',
+    donationBankAccount: 'Bank Account',
 
 
   };
@@ -188,6 +201,7 @@ mixin Translation{
     logOutMsg: 'Anda pasti ingin log keluar?',
     logout: 'Log Keluar',
     cancel: 'Batal',
+    pleaseHintText: 'Sila tulis di sini',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',
@@ -202,6 +216,11 @@ mixin Translation{
     itemQuantity: 'Jumlah',
     itemUnit: 'Unit',
     itemDate: 'Tarikh',
+    donationTarget: 'Target Duit',
+    donationCurrent: 'Jumlah Terkumpul Sekarang',
+    donationStartDate: 'Tarikh Mula',
+    donationEndDate: 'Tarikh Akhir',
+    donationBankAccount: 'Akaun Bank',
     
   };
 }
