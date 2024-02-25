@@ -16,5 +16,6 @@ class Palette {
   static const redButton = Color(0xFFE42424);
   static const greyIndicator = Color(0xFFE3E5E5);
   static const yellowMark = Color(0xFFB5B90A);
+  static const blueIndicatorLight = Color(0xFF03A9F4);
 
 }

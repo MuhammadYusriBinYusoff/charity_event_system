@@ -142,8 +142,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         const ProductCard(
                           imageUrl:
                               'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
-                          title: 'Product Name',
-                          description: 'Product description goes here.',
+                          title: 'Organization Name', //@TODO LATER should make the title product name should restrict to 56 words
+                          description: 'RM 20000',
+                          valueIndicatorProgress: 0.5,
                         ),
                         SpacerH(
                           value: Dimens.space8,
@@ -151,8 +152,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         const ProductCard(
                           imageUrl:
                               'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
-                          title: 'Product Name',
-                          description: 'Product description goes here.',
+                          title: 'Organization Name',
+                          description: 'RM 20000',
+                          valueIndicatorProgress: 0.8,
                         ),
                         SpacerH(
                           value: Dimens.space8,
@@ -160,8 +162,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         const ProductCard(
                           imageUrl:
                               'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
-                          title: 'Product Name',
-                          description: 'Product description goes here.',
+                          title: 'Organization Name',
+                          description: 'RM 20000',
+                          valueIndicatorProgress: 0.2,
                         ),
                       ],
                     ),
