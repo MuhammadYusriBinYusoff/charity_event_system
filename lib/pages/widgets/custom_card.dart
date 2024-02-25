@@ -1,11 +1,12 @@
 import 'package:charity_event_system/common/common.dart';
-import 'package:charity_event_system/pages/widgets/spacer_v.dart';
+import 'package:charity_event_system/pages/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   final String? imageUrl;
   final String? title;
   final String? description;
+  final double? valueIndicatorProgress;
   final VoidCallback? onTap;
 
   const ProductCard({
@@ -13,6 +14,7 @@ class ProductCard extends StatelessWidget {
     this.imageUrl,
     this.title,
     this.description,
+    this.valueIndicatorProgress,
     this.onTap,
   });
 
@@ -22,7 +24,7 @@ class ProductCard extends StatelessWidget {
       onTap: onTap,
       child: SizedBox(
         width: Dimens.space250,
-        height: Dimens.space300,
+        height: Dimens.space280,
         child: Card(
           color: Palette.white,
           elevation: 4.0, 
@@ -40,7 +42,7 @@ class ProductCard extends StatelessWidget {
                   height: Dimens.space150,
                 ),
               ),
-              Padding(
+              Container(
                 padding: EdgeInsets.all(Dimens.space8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,6 +59,8 @@ class ProductCard extends StatelessWidget {
                       description ?? '',
                       style: const TextStyle(fontSize: 14),
                     ),
+                    const SpacerV(value: 8.0,),
+                    ProgressBarIndicator(value: valueIndicatorProgress,),
                   ],
                 ),
               ),
