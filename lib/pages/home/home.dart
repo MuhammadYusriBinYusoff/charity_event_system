@@ -17,11 +17,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   @override
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
-    EventDetailsProvider eventDetailsFile = Provider.of<EventDetailsProvider>(context);
+    EventDetailsProvider eventDetailsFile =
+        Provider.of<EventDetailsProvider>(context);
+    EventDonationProvider eventDonationsFile = Provider.of<EventDonationProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
@@ -46,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     TextButton(
                       onPressed: () {
                         FirebaseAuth.instance.signOut();
+                        eventDetailsFile.resetEventDetails();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -84,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           fontWeight: FontWeight.bold,
                           color: Palette.white,
                         ),
-                      ), // Added space between the text and the avatar
+                      ), 
                       Text(
                         "${organizationUser.organizers.organizationName}",
                         style: const TextStyle(
@@ -142,7 +146,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         const ProductCard(
                           imageUrl:
                               'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
-                          title: 'Organization Name', //@TODO LATER should make the title product name should restrict to 56 words
+                          title:
+                              'Organization Name', //@TODO LATER should make the title product name should restrict to 56 words
                           description: 'RM 20000',
                           valueIndicatorProgress: 0.5,
                         ),
@@ -188,18 +193,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   SpacerV(
                     value: Dimens.space16,
                   ),
-                  FileAddingCard(
-                    title: eventDetailsFile.eventDetails.eventName,
-                    description: 'Tap here to add a new file',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EventDescriptionPage(),
-                        ),
-                      );
-                    },
-                  ),
+                  if (eventDetailsFile.eventDetails.id == null)
+                    FileAddingCard(
+                      title: Translation.createEventTitle.getString(context),
+                      description: Translation.createEventSubtitle.getString(context),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EventDescriptionPage(),
+                          ),
+                        );
+                      },
+                    )
+                  else
+                    ProductCard(
+                      imageUrl:
+                          'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
+                      title: eventDetailsFile.eventDetails.eventName,
+                      description: 'RM ${eventDonationsFile.donationDetails.targetMoney}',
+                      valueIndicatorProgress: 0.2,
+                    ),
                 ],
               ),
             ),
