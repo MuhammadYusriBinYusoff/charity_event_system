@@ -25,6 +25,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser = Provider.of<OrganizerProvider>(context);
+    EventDetailsProvider eventDetailsFile = Provider.of<EventDetailsProvider>(context);
+    EventDonationProvider eventDonationsFile = Provider.of<EventDonationProvider>(context);
     
     return Scaffold(
       appBar: AppBar(
@@ -69,6 +71,9 @@ class _LoginPageState extends State<LoginPage> {
                       );
                             
                       organizationUser.fetchOrganizerData();
+                      eventDetailsFile.fetchEventDetailsData();
+                      eventDonationsFile.fetchEventDonationData();
+
                       // If sign-in is successful, navigate to the next screen
                       // ignore: use_build_context_synchronously
                       Navigator.push(

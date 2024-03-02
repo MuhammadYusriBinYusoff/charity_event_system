@@ -119,6 +119,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                       id: userUID,
                       eventName: _charityEventTitleController.text,
                       eventDescription: _charityEventDescriptionController.text,
+                      type: "organizer",
                     );
 
                     eventDetailsFile.createEventDetails(newEvent);

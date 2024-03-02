@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventDonationModel {
   final String? id;
-  final String? targetMoney;
-  final String? currentCollected;
+  final double? targetMoney;
+  final double? currentCollected;
   final String? startDate;
   final String? endDate;
   final String? bankAccount;
