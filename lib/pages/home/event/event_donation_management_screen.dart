@@ -163,8 +163,8 @@ class _EventDonationManagementPageState
                     final userUID = organizationUser.organizers.id;
                     final newDonation = EventDonationModel(
                       id: userUID,
-                      targetMoney: _targetMoneyController.text,
-                      currentCollected: _currentCollectedController.text,
+                      targetMoney: double.parse(_targetMoneyController.text),
+                      currentCollected: double.parse(_currentCollectedController.text),
                       startDate: _startDateController.text,
                       endDate: _endDateController.text,
                       bankAccount: _bankAccountController.text,

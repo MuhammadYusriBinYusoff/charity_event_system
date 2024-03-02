@@ -1,4 +1,5 @@
 import 'package:charity_event_system/common/common.dart';
+import 'package:charity_event_system/pages/home/homes.dart';
 import 'package:charity_event_system/pages/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -6,14 +7,16 @@ class ProductCard extends StatelessWidget {
   final String? imageUrl;
   final String? title;
   final String? description;
+  final String? type;
   final double? valueIndicatorProgress;
   final VoidCallback? onTap;
 
   const ProductCard({
-    super.key, 
+    super.key,
     this.imageUrl,
     this.title,
     this.description,
+    this.type,
     this.valueIndicatorProgress,
     this.onTap,
   });
@@ -21,21 +24,31 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        if (type == "organizer")
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EventPostingDescriptionPage(),
+            ),
+          );
+      },
       child: SizedBox(
         width: Dimens.space250,
         height: Dimens.space280,
         child: Card(
           color: Palette.white,
-          elevation: 4.0, 
+          elevation: 4.0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0), // Rounded corners for the card
+            borderRadius:
+                BorderRadius.circular(0), // Rounded corners for the card
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(0)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(0)),
                 child: Image.network(
                   imageUrl ?? '',
                   fit: BoxFit.cover,
@@ -54,13 +67,19 @@ class ProductCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SpacerV(value: 8.0,),
+                    const SpacerV(
+                      value: 8.0,
+                    ),
                     Text(
                       description ?? '',
                       style: const TextStyle(fontSize: 14),
                     ),
-                    const SpacerV(value: 8.0,),
-                    ProgressBarIndicator(value: valueIndicatorProgress,),
+                    const SpacerV(
+                      value: 8.0,
+                    ),
+                    ProgressBarIndicator(
+                      value: valueIndicatorProgress,
+                    ),
                   ],
                 ),
               ),
@@ -71,4 +90,3 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
-

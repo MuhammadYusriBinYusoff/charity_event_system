@@ -4,11 +4,13 @@ class EventDetailsModel {
   final String? id;
   final String? eventName;
   final String? eventDescription;
+  final String? type;
 
   EventDetailsModel({
     this.id,
     this.eventName,
     this.eventDescription,
+    this.type,
   });
 
   static EventDetailsModel fromSnapshot(
@@ -17,6 +19,7 @@ class EventDetailsModel {
       id: snapshot['id'],
       eventName: snapshot['eventName'],
       eventDescription: snapshot['eventDescription'],
+      type: snapshot['type'],
     );
   }
 
@@ -25,6 +28,7 @@ class EventDetailsModel {
       "id": id,
       "eventName": eventName,
       "eventDescription": eventDescription,
+      "type": type,
     };
   }
 }
