@@ -13,6 +13,7 @@ class PICSignUpPage extends StatefulWidget {
   final String? organizationContact;
   final String? organizationAddress;
   final String? organizationLink;
+  final String? profileImageLink;
 
   const PICSignUpPage({
     Key? key,
@@ -20,6 +21,7 @@ class PICSignUpPage extends StatefulWidget {
     this.organizationContact,
     this.organizationAddress,
     this.organizationLink,
+    this.profileImageLink,
   }) : super(key: key);
 
   @override
@@ -98,14 +100,14 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                         picName: _picNameController.text,
                         picContact: _picContactController.text,
                         picIc: _picIcController.text,
-                        picAdress: _picAdressController
-                            .text, // corrected "address" spelling
+                        picAdress: _picAdressController.text,
                         picEmail: _picEmailController.text,
                         picPassword: _picPasswordController.text,
                         organizationName: widget.organizationName,
                         organizationContact: widget.organizationContact,
                         organizationAdress: widget.organizationAddress,
                         organizationLink: widget.organizationLink,
+                        profileImageLink: widget.profileImageLink,
                       );
 
                       organizationUser.createOrganizer(newUser);

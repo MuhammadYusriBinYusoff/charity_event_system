@@ -12,6 +12,7 @@ class OrganizerModel{
   final String? organizationContact;
   final String? organizationAdress;
   final String? organizationLink;
+  final String? profileImageLink;
 
   OrganizerModel({
     this.id,
@@ -24,7 +25,8 @@ class OrganizerModel{
     this.organizationName,
     this.organizationContact,
     this.organizationAdress,
-    this.organizationLink
+    this.organizationLink,
+    this.profileImageLink,
   });
 
   static OrganizerModel fromSnapshot(DocumentSnapshot<Map<String,dynamic>> snapshot){
@@ -40,6 +42,7 @@ class OrganizerModel{
       organizationContact: snapshot['organizationContact'],  
       organizationAdress: snapshot['organizationAdress'],
       organizationLink: snapshot['organizationLink'],
+      profileImageLink: snapshot['profileImageLink'],
     );
   }
 
@@ -56,6 +59,7 @@ class OrganizerModel{
     "organizationContact": organizationContact,
     "organizationAdress": organizationAdress,
     "organizationLink": organizationLink,
+    "profileImageLink": profileImageLink,
   };
 }
 
