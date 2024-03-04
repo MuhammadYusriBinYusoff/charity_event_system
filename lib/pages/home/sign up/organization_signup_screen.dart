@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/home/sign%20up/pic_signup_screen.dart';
 import 'package:charity_event_system/pages/pages.dart';

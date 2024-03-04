@@ -17,14 +17,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
     EventDetailsProvider eventDetailsFile =
         Provider.of<EventDetailsProvider>(context);
-    EventDonationProvider eventDonationsFile = Provider.of<EventDonationProvider>(context);
+    EventDonationProvider eventDonationsFile =
+        Provider.of<EventDonationProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           fontWeight: FontWeight.bold,
                           color: Palette.white,
                         ),
-                      ), 
+                      ),
                       Text(
                         "${organizationUser.organizers.organizationName}",
                         style: const TextStyle(
@@ -105,12 +105,18 @@ class _MyHomePageState extends State<MyHomePage> {
                       print(organizationUser.organizers.organizationName);
                       print("============");
                     },
-                    child: const CircleAvatar(
-                      radius: 30,
-                      backgroundColor: Palette.white,
-                      child: Icon(Icons.person,
-                          size: 40, color: Palette.purpleMain),
-                    ),
+                    child: organizationUser.organizers.profileImageLink != null && organizationUser.organizers.profileImageLink != ''
+                        ? CircleAvatar(
+                            radius: Dimens.space32,
+                            backgroundImage: NetworkImage(organizationUser
+                                    .organizers.profileImageLink ??
+                                'https://firebasestorage.googleapis.com/v0/b/charity-event-cems.appspot.com/o/images%2Fyusss.jpg?alt=media&token=fa38b153-50cc-474c-8774-6c5943fee4c2'),
+                          )
+                        : CircleAvatar(
+                            radius: Dimens.space32,
+                            backgroundImage: const NetworkImage(
+                                'https://cdn-icons-png.flaticon.com/512/7915/7915522.png'),
+                          ),
                   ),
                 ],
               ),
@@ -196,7 +202,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (eventDetailsFile.eventDetails.id == null)
                     FileAddingCard(
                       title: Translation.createEventTitle.getString(context),
-                      description: Translation.createEventSubtitle.getString(context),
+                      description:
+                          Translation.createEventSubtitle.getString(context),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -211,8 +218,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       imageUrl:
                           'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
                       title: eventDetailsFile.eventDetails.eventName,
-                      description: 'RM ${eventDonationsFile.donationDetails.targetMoney}',
-                      valueIndicatorProgress: double.parse(((eventDonationsFile.donationDetails.currentCollected ?? 0) / (eventDonationsFile.donationDetails.targetMoney ?? 1)).toStringAsFixed(2)),
+                      description:
+                          'RM ${eventDonationsFile.donationDetails.targetMoney}',
+                      valueIndicatorProgress: double.parse(((eventDonationsFile
+                                      .donationDetails.currentCollected ??
+                                  0) /
+                              (eventDonationsFile.donationDetails.targetMoney ??
+                                  1))
+                          .toStringAsFixed(2)),
                       type: eventDetailsFile.eventDetails.type,
                     ),
                 ],
