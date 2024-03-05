@@ -42,6 +42,21 @@ class OrganizerProvider extends ChangeNotifier {
     }
   }
 
+  // Function to update user data
+  Future<void> updateOrganizerData(String? organizerId, Map<String, dynamic> dataToUpdate) async {
+    await FirebaseFirestore.instance
+        .collection("organizationAccount")
+        .doc(organizerId)
+        .update(dataToUpdate);
+    
+    _organizers.organizationName = dataToUpdate['organizationName'] ?? '';
+     _organizers.organizationContact = dataToUpdate['organizationContact'] ?? '';
+     _organizers.organizationAdress = dataToUpdate['organizationAdress'] ?? '';
+     _organizers.organizationLink = dataToUpdate['organizationLink'] ?? '';
+     _organizers.profileImageLink = dataToUpdate['profileImageLink'] ?? '';
+    notifyListeners();
+  }
+
   /*List<OrganizerModel> organizer = [];
 
   List<OrganizerModel> get organizers => organizer;

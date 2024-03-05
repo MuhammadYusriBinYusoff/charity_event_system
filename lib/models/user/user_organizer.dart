@@ -8,11 +8,11 @@ class OrganizerModel{
   final String? picAdress;
   final String? picEmail;
   final String? picPassword;
-  final String? organizationName;
-  final String? organizationContact;
-  final String? organizationAdress;
-  final String? organizationLink;
-  final String? profileImageLink;
+  String? organizationName;
+  String? organizationContact;
+  String? organizationAdress;
+  String? organizationLink;
+  String? profileImageLink;
 
   OrganizerModel({
     this.id,

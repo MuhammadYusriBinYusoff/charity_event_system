@@ -1,5 +1,4 @@
 import 'package:charity_event_system/common/resources/resources.dart';
-import 'package:charity_event_system/pages/home/event/event.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,9 +7,9 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, this.title});
 
-  final String title;
+  final String? title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -104,8 +103,26 @@ class _MyHomePageState extends State<MyHomePage> {
                       print(organizationUser.organizers.id);
                       print(organizationUser.organizers.organizationName);
                       print("============");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OrganizationProfilePage(
+                                  organizationName: organizationUser
+                                      .organizers.organizationName,
+                                  organizationContact:
+                                      organizationUser.organizers.organizationContact,
+                                  organizationAdress: organizationUser
+                                      .organizers.organizationAdress,
+                                  organizationLink: organizationUser
+                                      .organizers.organizationLink,
+                                  profileImageLink: organizationUser
+                                      .organizers.profileImageLink,
+                                )),
+                      );
                     },
-                    child: organizationUser.organizers.profileImageLink != null && organizationUser.organizers.profileImageLink != ''
+                    child: organizationUser.organizers.profileImageLink !=
+                                null &&
+                            organizationUser.organizers.profileImageLink != ''
                         ? CircleAvatar(
                             radius: Dimens.space32,
                             backgroundImage: NetworkImage(organizationUser
