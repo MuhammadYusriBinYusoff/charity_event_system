@@ -51,10 +51,10 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
   }
 
   // Function to upload image to Firebase Storage
-  Future<void> uploadImage(XFile file) async {
+  Future<void> uploadImage(XFile file, String? userId) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages = referenceRoot.child('profileImage');
-    Reference referenceImageToUpload = referenceDirImages.child('${file.name}');
+    Reference referenceDirImages = referenceRoot.child('profileImage').child(userId ?? '');
+    Reference referenceImageToUpload = referenceDirImages.child(file.name);
 
     try {
       setState(() {
@@ -88,10 +88,6 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
-    EventDetailsProvider eventDetailsFile =
-        Provider.of<EventDetailsProvider>(context);
-    EventDonationProvider eventDonationsFile =
-        Provider.of<EventDonationProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -131,7 +127,7 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
                         XFile? file = await pickImage(); // Step 1: pick image
 
                         if (file != null) {
-                          await uploadImage(file); // Step 2: upload image
+                          await uploadImage(file,organizationUser.organizers.id); // Step 2: upload image
                         }
                       },
                       icon: const Icon(Icons.add_a_photo),
@@ -213,7 +209,7 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
                     ),
                   ),
                   child: Text(
-                    Translation.next.getString(context),
+                    Translation.save.getString(context),
                     style: const TextStyle(
                         color: Palette.white, fontFamily: 'Roborto'),
                   ),

@@ -30,17 +30,17 @@ class PicProfilePage extends StatefulWidget {
 }
 
 class _PicProfilePageState extends State<PicProfilePage> {
-  TextEditingController _picNameController =
+  final TextEditingController _picNameController =
       TextEditingController();
-  TextEditingController _picContactController =
+  final TextEditingController _picContactController =
       TextEditingController();
-  TextEditingController _picIcController =
+  final TextEditingController _picIcController =
       TextEditingController();
-  TextEditingController _picAdressController =
+  final TextEditingController _picAdressController =
       TextEditingController();
-  TextEditingController _picEmailController =
+  final TextEditingController _picEmailController =
       TextEditingController();
-  TextEditingController _picPasswordController =
+  final TextEditingController _picPasswordController =
       TextEditingController();
 
 
@@ -145,7 +145,7 @@ class _PicProfilePageState extends State<PicProfilePage> {
                     ),
                   ),
                   child: Text(
-                    Translation.next.getString(context),
+                    Translation.save.getString(context),
                     style: const TextStyle(
                         color: Palette.white, fontFamily: 'Roborto'),
                   ),
