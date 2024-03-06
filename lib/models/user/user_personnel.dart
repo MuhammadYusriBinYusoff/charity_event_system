@@ -7,6 +7,7 @@ class PersonnelModel{
   final String? personnelAdress;
   final String? personnelEmail;
   final String? personnelPassword;
+  final String? profileImageLink;
 
   PersonnelModel({
     this.id,
@@ -15,6 +16,7 @@ class PersonnelModel{
     this.personnelAdress,
     this.personnelEmail,
     this.personnelPassword,
+    this.profileImageLink,
   });
 
   static PersonnelModel fromSnapshot(DocumentSnapshot<Map<String,dynamic>> snapshot){
@@ -24,7 +26,8 @@ class PersonnelModel{
       personnelContact: snapshot['personnelContact'], 
       personnelAdress: snapshot['personnelAdress'], 
       personnelEmail: snapshot['personnelEmail'], 
-      personnelPassword: snapshot['personnelPassword']
+      personnelPassword: snapshot['personnelPassword'],
+      profileImageLink: snapshot['profileImageLink'],
     );
   }
 
@@ -36,6 +39,7 @@ class PersonnelModel{
     "personnelAdress": personnelAdress, // Corrected "personnelAdress" to "personnelAddress"
     "personnelEmail": personnelEmail,
     "personnelPassword": personnelPassword,
+    "profileImageLink": profileImageLink,
   };
 }
 

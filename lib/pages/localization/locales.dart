@@ -57,6 +57,7 @@ mixin Translation{
   static const String logOutMsg = "logOutMsg";
   static const String cancel = "cancel";
   static const String logout = "logout";
+  static const String save = "save";
 
   //Homepage
   static const String charity2024Title = 'charity2024';
@@ -131,6 +132,7 @@ mixin Translation{
     logout: 'Log Out',
     cancel: 'Cancel',
     pleaseHintText: 'Please write here',
+    save: 'Save',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
@@ -206,6 +208,7 @@ mixin Translation{
     logout: 'Log Keluar',
     cancel: 'Batal',
     pleaseHintText: 'Sila tulis di sini',
+    save: 'Simpan',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',

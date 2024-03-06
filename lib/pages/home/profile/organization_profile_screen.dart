@@ -1,20 +1,36 @@
 import 'dart:io';
 import 'package:charity_event_system/common/common.dart';
-import 'package:charity_event_system/pages/home/sign%20up/pic_signup_screen.dart';
 import 'package:charity_event_system/pages/pages.dart';
+import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class OrganizationProfilePage extends StatefulWidget {
+  String? organizationName;
+  String? organizationContact;
+  String? organizationAdress;
+  String? organizationLink;
+  String? profileImageLink;
+
+  OrganizationProfilePage({
+    Key? key,
+    this.organizationName,
+    this.organizationContact,
+    this.organizationAdress,
+    this.organizationLink,
+    this.profileImageLink,
+  }) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<OrganizationProfilePage> createState() =>
+      _OrganizationProfilePageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
   final TextEditingController _organizationNameController =
       TextEditingController();
   final TextEditingController _organizationContactController =
@@ -35,10 +51,10 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   // Function to upload image to Firebase Storage
-  Future<void> uploadImage(XFile file) async {
+  Future<void> uploadImage(XFile file, String? userId) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages = referenceRoot.child('profileImage');
-    Reference referenceImageToUpload = referenceDirImages.child('${file.name}');
+    Reference referenceDirImages = referenceRoot.child('profileImage').child(userId ?? '');
+    Reference referenceImageToUpload = referenceDirImages.child(file.name);
 
     try {
       setState(() {
@@ -52,17 +68,30 @@ class _SignUpPageState extends State<SignUpPage> {
       });
     } catch (error) {
       setState(() {
-        isLoading = false; 
+        isLoading = false;
       });
       print(error);
     }
   }
 
   @override
+  void initState() {
+    super.initState();
+    _organizationNameController.text = widget.organizationName ?? "";
+    _organizationContactController.text = widget.organizationContact ?? "";
+    _organizationAdressController.text = widget.organizationAdress ?? "";
+    _organizationLinkController.text = widget.organizationLink ?? "";
+    imageUrl = widget.profileImageLink;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    OrganizerProvider organizationUser =
+        Provider.of<OrganizerProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(Translation.signupTitle.getString(context)),
+        title: const Text("Profile"),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -70,7 +99,9 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SpacerV(value: Dimens.space32,),
+              SpacerV(
+                value: Dimens.space32,
+              ),
               Stack(
                 children: [
                   Center(
@@ -94,9 +125,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: IconButton(
                       onPressed: () async {
                         XFile? file = await pickImage(); // Step 1: pick image
-        
+
                         if (file != null) {
-                          await uploadImage(file); // Step 2: upload image
+                          await uploadImage(file,organizationUser.organizers.id); // Step 2: upload image
                         }
                       },
                       icon: const Icon(Icons.add_a_photo),
@@ -107,22 +138,22 @@ class _SignUpPageState extends State<SignUpPage> {
               SpacerV(
                 value: Dimens.space64,
               ),
-              buildTextField(
+              CustomTextField(
                 controller: _organizationNameController,
                 labelText: Translation.organizationName.getString(context),
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _organizationContactController,
                 labelText: Translation.organizationContact.getString(context),
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _organizationAdressController,
                 labelText: Translation.organizationAdress.getString(context),
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _organizationLinkController,
                 labelText: Translation.organizationLink.getString(context),
               ),
@@ -131,28 +162,44 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: double.infinity,
                 height: Dimens.space40,
                 child: ElevatedButton(
-                  onPressed: () {
-                    String organizationName = _organizationNameController.text;
-                    String organizationContact =
-                        _organizationContactController.text;
-                    String organizationAdress =
-                        _organizationAdressController.text;
-                    String organizationLink = _organizationLinkController.text;
-                    
-                    print(
-                        'Name: $organizationName, Contact: $organizationContact, Adress: $organizationAdress, Link: $organizationLink');
-        
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PICSignUpPage(
-                                organizationName: organizationName,
-                                organizationContact: organizationContact,
-                                organizationAddress: organizationAdress,
-                                organizationLink: organizationLink,
-                                profileImageLink: imageUrl,
-                              )),
-                    );
+                  onPressed: () async {
+                    try {
+                      String? userId = organizationUser.organizers.id;
+
+                      Map<String, dynamic> dataToUpdate = {
+                        'organizationName': _organizationNameController.text,
+                        'organizationContact':
+                            _organizationContactController.text,
+                        'organizationAdress': _organizationAdressController.text,
+                        'organizationLink': _organizationLinkController.text,
+                        'profileImageLink': imageUrl,
+                      };
+
+                      await organizationUser.updateOrganizerData(
+                          userId, dataToUpdate);
+
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PicProfilePage(
+                                  picName: organizationUser
+                                      .organizers.picName,
+                                  picContact:
+                                      organizationUser.organizers.picContact,
+                                  picIc:
+                                      organizationUser.organizers.picIc,
+                                  picAdress: organizationUser
+                                      .organizers.picAdress,
+                                  picEmail: organizationUser
+                                      .organizers.picEmail,
+                                  picPassword: organizationUser
+                                      .organizers.picPassword,
+                                )),
+                      );
+                    } catch (error) {
+                      print("Error: $error");
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Palette.purpleMain,
@@ -162,7 +209,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   child: Text(
-                    Translation.next.getString(context),
+                    Translation.save.getString(context),
                     style: const TextStyle(
                         color: Palette.white, fontFamily: 'Roborto'),
                   ),

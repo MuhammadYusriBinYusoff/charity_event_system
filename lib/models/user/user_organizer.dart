@@ -1,17 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrganizerModel{
-  final String? id;
-  final String? picName;
-  final String? picContact;
-  final String? picIc;
-  final String? picAdress;
-  final String? picEmail;
-  final String? picPassword;
-  final String? organizationName;
-  final String? organizationContact;
-  final String? organizationAdress;
-  final String? organizationLink;
+  String? id;
+  String? picName;
+  String? picContact;
+  String? picIc;
+  String? picAdress;
+  String? picEmail;
+  String? picPassword;
+  String? organizationName;
+  String? organizationContact;
+  String? organizationAdress;
+  String? organizationLink;
+  String? profileImageLink;
 
   OrganizerModel({
     this.id,
@@ -24,7 +25,8 @@ class OrganizerModel{
     this.organizationName,
     this.organizationContact,
     this.organizationAdress,
-    this.organizationLink
+    this.organizationLink,
+    this.profileImageLink,
   });
 
   static OrganizerModel fromSnapshot(DocumentSnapshot<Map<String,dynamic>> snapshot){
@@ -40,6 +42,7 @@ class OrganizerModel{
       organizationContact: snapshot['organizationContact'],  
       organizationAdress: snapshot['organizationAdress'],
       organizationLink: snapshot['organizationLink'],
+      profileImageLink: snapshot['profileImageLink'],
     );
   }
 
@@ -56,6 +59,7 @@ class OrganizerModel{
     "organizationContact": organizationContact,
     "organizationAdress": organizationAdress,
     "organizationLink": organizationLink,
+    "profileImageLink": profileImageLink,
   };
 }
 

@@ -28,6 +28,7 @@ Future main() async {
           apiKey: "AIzaSyBgcuSX1pc9vGhK3oBwXMqLXc3nzhUXGkE",
           appId: "1:576604151770:android:29bec06e84ecb5f778eae3",
           messagingSenderId: "576604151770",
+          storageBucket: "charity-event-cems.appspot.com",
           projectId: "charity-event-cems"),
     );
   } else {
