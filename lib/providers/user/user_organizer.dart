@@ -57,6 +57,21 @@ class OrganizerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updatePicData(String? organizerId, Map<String, dynamic> dataToUpdate) async {
+    await FirebaseFirestore.instance
+        .collection("organizationAccount")
+        .doc(organizerId)
+        .update(dataToUpdate);
+    
+    _organizers.picName = dataToUpdate['picName'] ?? '';
+     _organizers.picContact = dataToUpdate['picContact'] ?? '';
+      _organizers.picIc = dataToUpdate['picIc'] ?? '';
+     _organizers.picAdress = dataToUpdate['picAdress'] ?? '';
+     _organizers.picEmail = dataToUpdate['picEmail'] ?? '';
+     _organizers.picPassword = dataToUpdate['picPassword'] ?? '';
+    notifyListeners();
+  }
+
   /*List<OrganizerModel> organizer = [];
 
   List<OrganizerModel> get organizers => organizer;

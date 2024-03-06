@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrganizerModel{
-  final String? id;
-  final String? picName;
-  final String? picContact;
-  final String? picIc;
-  final String? picAdress;
-  final String? picEmail;
-  final String? picPassword;
+  String? id;
+  String? picName;
+  String? picContact;
+  String? picIc;
+  String? picAdress;
+  String? picEmail;
+  String? picPassword;
   String? organizationName;
   String? organizationContact;
   String? organizationAdress;

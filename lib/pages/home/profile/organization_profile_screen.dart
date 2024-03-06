@@ -31,13 +31,13 @@ class OrganizationProfilePage extends StatefulWidget {
 }
 
 class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
-  TextEditingController _organizationNameController =
+  final TextEditingController _organizationNameController =
       TextEditingController();
-  TextEditingController _organizationContactController =
+  final TextEditingController _organizationContactController =
       TextEditingController();
-  TextEditingController _organizationAdressController =
+  final TextEditingController _organizationAdressController =
       TextEditingController();
-  TextEditingController _organizationLinkController =
+  final TextEditingController _organizationLinkController =
       TextEditingController();
 
   String? imageUrl;
@@ -182,11 +182,23 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
                       await organizationUser.updateOrganizerData(
                           userId, dataToUpdate);
 
+                      // ignore: use_build_context_synchronously
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MyHomePage(
-                                  title: '',
+                            builder: (context) => PicProfilePage(
+                                  picName: organizationUser
+                                      .organizers.picName,
+                                  picContact:
+                                      organizationUser.organizers.picContact,
+                                  picIc:
+                                      organizationUser.organizers.picIc,
+                                  picAdress: organizationUser
+                                      .organizers.picAdress,
+                                  picEmail: organizationUser
+                                      .organizers.picEmail,
+                                  picPassword: organizationUser
+                                      .organizers.picPassword,
                                 )),
                       );
                     } catch (error) {
