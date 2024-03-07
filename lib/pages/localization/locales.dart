@@ -71,6 +71,7 @@ mixin Translation{
   static const String createEventSubtitle = 'createEventSubtitle';
   static const String eventTitle = 'eventTitle';
   static const String eventDescription = 'eventDescription';
+  static const String photoPosting ='photoPhosting';
   static const String itemName = 'itemName';
   static const String itemQuantity = 'itemQuantity';
   static const String itemUnit = 'itemUnit';
@@ -145,6 +146,7 @@ mixin Translation{
     createEventSubtitle: 'Tap to add new file',
     eventTitle: 'Event Title',
     eventDescription: 'Event Description',
+    photoPosting: 'Event Banner',
     itemName: 'Item Name',
     itemQuantity: 'Quantity',
     itemUnit: 'Unit',
@@ -221,6 +223,7 @@ mixin Translation{
     createEventSubtitle: 'Tekan untuk buat file baru',
     eventTitle: 'Tajuk Event',
     eventDescription: 'Deskripsi Event',
+    photoPosting: 'Iklan Event',
     itemName: 'Nama barang',
     itemQuantity: 'Jumlah',
     itemUnit: 'Unit',

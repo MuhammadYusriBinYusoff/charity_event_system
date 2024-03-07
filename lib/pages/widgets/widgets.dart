@@ -6,3 +6,4 @@ export 'custom_card.dart';
 export 'file_added_card.dart';
 export 'custom_progress_bar.dart';
 export 'textbox2.dart';
+export 'custom_photo_description_post.dart';
