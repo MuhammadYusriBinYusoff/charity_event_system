@@ -81,6 +81,8 @@ mixin Translation{
   static const String donationStartDate = 'donationStartDate';
   static const String donationEndDate = 'donationEndDate';
   static const String donationBankAccount = 'donationBankAccount';
+  static const String uploadGalleryImage = 'uploadGalleryImage';
+  static const String showGalleryImage = 'showGalleryImage';
   
 
   static const Map<String,dynamic> EN = {
@@ -156,6 +158,8 @@ mixin Translation{
     donationStartDate: 'Start Date',
     donationEndDate: 'End Date',
     donationBankAccount: 'Bank Account',
+    uploadGalleryImage: 'Upload Gallery Image',
+    showGalleryImage: 'Gallery',
 
 
   };
@@ -233,6 +237,8 @@ mixin Translation{
     donationStartDate: 'Tarikh Mula',
     donationEndDate: 'Tarikh Akhir',
     donationBankAccount: 'Akaun Bank',
+    uploadGalleryImage: 'Muat Turun Gambar Galeri',
+    showGalleryImage: 'Galleri',
     
   };
 }
