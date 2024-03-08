@@ -83,8 +83,8 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
-    EventDetailsProvider eventDetailsFile =
-        Provider.of<EventDetailsProvider>(context);
+    EventGalleryProvider eventGalleryFile =
+        Provider.of<EventGalleryProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -171,14 +171,12 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     final userUID = organizationUser.organizers.id;
-                    final newEvent = EventDetailsModel(
+                    final newGallery = EventGalleryModel(
                       id: userUID,
-                      eventName: _charityEventTitleController.text,
-                      eventDescription: _charityEventDescriptionController.text,
-                      type: "organizer",
+                      imageGalleryUrls: bannerImageUrlList,
                     );
 
-                    eventDetailsFile.createEventDetails(newEvent);
+                    eventGalleryFile.createEventGallery(newGallery);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -209,8 +207,6 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
 
   @override
   void dispose() {
-    _charityEventTitleController.dispose();
-    _charityEventDescriptionController.dispose();
     super.dispose();
   }
 }

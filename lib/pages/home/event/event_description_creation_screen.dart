@@ -184,14 +184,8 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                     //   eventDescription: _charityEventDescriptionController.text,
                     //   type: "organizer",
                     // );
-
                     // eventDetailsFile.createEventDetails(newEvent);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const EventItemAddPage(),
-                    //   ),
-                    // );
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
