@@ -29,6 +29,8 @@ class ImageListWidget extends StatelessWidget {
                       Expanded(
                         child: ImageItem(
                           imageUrl: imageUrls![firstIndex],
+                          imageUrls: imageUrls,
+                          index: firstIndex,
                           imageSize: imageSize,
                         ),
                       ),
@@ -37,6 +39,8 @@ class ImageListWidget extends StatelessWidget {
                       Expanded(
                         child: ImageItem(
                           imageUrl: imageUrls![secondIndex],
+                          imageUrls: imageUrls,
+                          index: secondIndex,
                           imageSize: imageSize,
                         ),
                       ),

@@ -9,3 +9,4 @@ export 'textbox2.dart';
 export 'custom_photo_uploaded.dart';
 export 'custom_gallery_list.dart';
 export 'custom_gallery_card.dart';
+export 'custom_photo_view.dart';
