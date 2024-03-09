@@ -14,43 +14,53 @@ class ImageListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          if (imageUrls != null && imageUrls!.isNotEmpty)
-            for (int i = 0; i < (imageUrls!.length); i += 2)
-              Row(
-                children: [
-                  if (imageUrls![i].isNotEmpty)
-                    ImageItem(
-                      imageUrl: imageUrls![i],
-                      imageSize: imageSize,
-                    ),
-                  SpacerH(value: Dimens.space8,),
-                  if (i + 1 < imageUrls!.length && imageUrls![i + 1].isNotEmpty)
-                    ImageItem(
-                      imageUrl: imageUrls![i + 1],
-                      imageSize: imageSize,
-                    ),
-                ],
-              ),
-          if (imageUrls == null || imageUrls!.isEmpty)
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimens.space8),
-                color: Colors.grey[300], 
-              ),
-              width: MediaQuery.of(context).size.width * 0.44,
-              height: imageSize,
-              child: const Center(
-                child: Text(
-                  'No Images',
-                  style: TextStyle(color: Palette.grey),
-                ),
+    return imageUrls != null && imageUrls!.isNotEmpty
+        ? SizedBox(
+          height:imageSize * 3.5,
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: ((imageUrls!.length) ~/ 2) + ((imageUrls!.length) % 2),
+              itemBuilder: (context, index) {
+                final int firstIndex = index * 2;
+                final int secondIndex = firstIndex + 1;
+                return Row(
+                  children: [
+                    if (firstIndex < imageUrls!.length)
+                      Expanded(
+                        child: ImageItem(
+                          imageUrl: imageUrls![firstIndex],
+                          imageSize: imageSize,
+                        ),
+                      ),
+                    SpacerH(value: Dimens.space8),
+                    if (secondIndex < imageUrls!.length)
+                      Expanded(
+                        child: ImageItem(
+                          imageUrl: imageUrls![secondIndex],
+                          imageSize: imageSize,
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
+        )
+        : Container(
+            margin: EdgeInsets.only(bottom: Dimens.space8),
+            width: MediaQuery.of(context).size.width * 0.45,
+          height: imageSize,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(Dimens.space8),
+              color: Colors.grey[300],
+            ),
+            child: const Center(
+              child: Text(
+                'No Images',
+                style: TextStyle(color: Palette.grey),
               ),
             ),
-        ],
-      ),
-    );
+          );
   }
 }
+
+

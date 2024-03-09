@@ -14,25 +14,29 @@ class ImageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      flex: 1,
-      child: Container(
-        margin: EdgeInsets.only(bottom: Dimens.space8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimens.space8),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(Dimens.space8),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.45,
-            height: imageSize,
-            child: CachedNetworkImage(
-              imageUrl: imageUrl,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ),
+    return Container(
+      margin: EdgeInsets.only(bottom: Dimens.space8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Dimens.space4),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(Dimens.space8),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.45,
+          height: imageSize,
+          child: imageUrl.isNotEmpty
+              ? CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                )
+              : const Center(
+                  child: Text(
+                    'No Image',
+                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  ),
+                ),
         ),
       ),
     );

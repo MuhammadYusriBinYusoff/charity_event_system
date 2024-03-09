@@ -129,7 +129,7 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SpacerV(value: Dimens.space64),
+              SpacerV(value: Dimens.space16),
               Text(
                 Translation.uploadGalleryImage.getString(context),
                 style: const TextStyle(

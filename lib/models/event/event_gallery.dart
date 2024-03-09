@@ -13,8 +13,9 @@ class EventGalleryModel {
       DocumentSnapshot<Map<String, dynamic>> snapshot) {
     return EventGalleryModel(
       id: snapshot['id'],
-      imageGalleryUrls:
-          (snapshot['imageGalleryUrls'] as List<dynamic>).cast<String>(),
+      imageGalleryUrls: snapshot['imageGalleryUrls'] != null
+          ? (snapshot['imageGalleryUrls'] as List<dynamic>).cast<String>()
+          : null,
     );
   }
 
