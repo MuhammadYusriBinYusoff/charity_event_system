@@ -71,6 +71,7 @@ mixin Translation{
   static const String createEventSubtitle = 'createEventSubtitle';
   static const String eventTitle = 'eventTitle';
   static const String eventDescription = 'eventDescription';
+  static const String photoPosting ='photoPhosting';
   static const String itemName = 'itemName';
   static const String itemQuantity = 'itemQuantity';
   static const String itemUnit = 'itemUnit';
@@ -80,6 +81,8 @@ mixin Translation{
   static const String donationStartDate = 'donationStartDate';
   static const String donationEndDate = 'donationEndDate';
   static const String donationBankAccount = 'donationBankAccount';
+  static const String uploadGalleryImage = 'uploadGalleryImage';
+  static const String showGalleryImage = 'showGalleryImage';
   
 
   static const Map<String,dynamic> EN = {
@@ -145,6 +148,7 @@ mixin Translation{
     createEventSubtitle: 'Tap to add new file',
     eventTitle: 'Event Title',
     eventDescription: 'Event Description',
+    photoPosting: 'Event Banner',
     itemName: 'Item Name',
     itemQuantity: 'Quantity',
     itemUnit: 'Unit',
@@ -154,6 +158,8 @@ mixin Translation{
     donationStartDate: 'Start Date',
     donationEndDate: 'End Date',
     donationBankAccount: 'Bank Account',
+    uploadGalleryImage: 'Upload Gallery Image',
+    showGalleryImage: 'Gallery',
 
 
   };
@@ -221,6 +227,7 @@ mixin Translation{
     createEventSubtitle: 'Tekan untuk buat file baru',
     eventTitle: 'Tajuk Event',
     eventDescription: 'Deskripsi Event',
+    photoPosting: 'Iklan Event',
     itemName: 'Nama barang',
     itemQuantity: 'Jumlah',
     itemUnit: 'Unit',
@@ -230,6 +237,8 @@ mixin Translation{
     donationStartDate: 'Tarikh Mula',
     donationEndDate: 'Tarikh Akhir',
     donationBankAccount: 'Akaun Bank',
+    uploadGalleryImage: 'Muat Turun Gambar Galeri',
+    showGalleryImage: 'Galleri',
     
   };
 }

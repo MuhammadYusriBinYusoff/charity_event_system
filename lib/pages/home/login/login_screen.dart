@@ -27,9 +27,11 @@ class _LoginPageState extends State<LoginPage> {
     OrganizerProvider organizationUser = Provider.of<OrganizerProvider>(context);
     EventDetailsProvider eventDetailsFile = Provider.of<EventDetailsProvider>(context);
     EventDonationProvider eventDonationsFile = Provider.of<EventDonationProvider>(context);
+    EventGalleryProvider eventGalleryFile = Provider.of<EventGalleryProvider>(context);
     
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title:
             Text(Translation.loginTitle.getString(context), style: textStyle),
         centerTitle: true,
@@ -73,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                       organizationUser.fetchOrganizerData();
                       eventDetailsFile.fetchEventDetailsData();
                       eventDonationsFile.fetchEventDonationData();
+                      eventGalleryFile.fetchEventGalleryData();
 
                       // If sign-in is successful, navigate to the next screen
                       // ignore: use_build_context_synchronously

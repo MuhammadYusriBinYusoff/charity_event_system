@@ -28,6 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Palette.purpleLow,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Palette.purpleMain,
         actions: [
           IconButton(
@@ -99,10 +100,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      print("Test Organization data at home.dart");
-                      print(organizationUser.organizers.id);
-                      print(organizationUser.organizers.organizationName);
-                      print("============");
                       Navigator.push(
                         context,
                         MaterialPageRoute(

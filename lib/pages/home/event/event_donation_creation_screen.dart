@@ -1,6 +1,5 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/models/models.dart';
-import 'package:charity_event_system/pages/home/event/event.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,18 +8,22 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class EventDescriptionPage extends StatefulWidget {
-  const EventDescriptionPage({Key? key}) : super(key: key);
+class EventDonationManagementPage extends StatefulWidget {
+  const EventDonationManagementPage({Key? key}) : super(key: key);
 
   @override
-  _EventDescriptionPageState createState() => _EventDescriptionPageState();
+  _EventDonationManagementPageState createState() =>
+      _EventDonationManagementPageState();
 }
 
-class _EventDescriptionPageState extends State<EventDescriptionPage> {
-  final TextEditingController _charityEventTitleController =
+class _EventDonationManagementPageState
+    extends State<EventDonationManagementPage> {
+  final TextEditingController _targetMoneyController = TextEditingController();
+  final TextEditingController _currentCollectedController =
       TextEditingController();
-  final TextEditingController _charityEventDescriptionController =
-      TextEditingController();
+  final TextEditingController _startDateController = TextEditingController();
+  final TextEditingController _endDateController = TextEditingController();
+  final TextEditingController _bankAccountController = TextEditingController();
 
   TextStyle textStyle = const TextStyle(
     fontFamily: 'Roboto',
@@ -30,8 +33,8 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
-    EventDetailsProvider eventDetailsFile =
-        Provider.of<EventDetailsProvider>(context);
+    EventDonationProvider eventDonation =
+        Provider.of<EventDonationProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +51,6 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                   actions: [
                     TextButton(
                       onPressed: () {
-                        // Close the dialog
                         Navigator.pop(context);
                       },
                       child: Text(Translation.cancel.getString(context)),
@@ -77,9 +79,9 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SpacerV(value: Dimens.space64),
+              SpacerV(value: Dimens.space16),
               Text(
-                Translation.eventTitle.getString(context),
+                Translation.donationTarget.getString(context),
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -89,12 +91,12 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                 value: Dimens.space8,
               ),
               buildTextField(
-                controller: _charityEventTitleController,
+                controller: _targetMoneyController,
                 hintText: Translation.pleaseHintText.getString(context),
               ),
               SpacerV(value: Dimens.space24),
               Text(
-                Translation.eventDescription.getString(context),
+                Translation.donationCurrent.getString(context),
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -104,9 +106,53 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                 value: Dimens.space8,
               ),
               buildTextField(
-                controller: _charityEventDescriptionController,
+                controller: _currentCollectedController,
                 hintText: Translation.pleaseHintText.getString(context),
-                multiLine: true,
+              ),
+              SpacerV(value: Dimens.space24),
+              Text(
+                Translation.donationStartDate.getString(context),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SpacerV(
+                value: Dimens.space8,
+              ),
+              buildTextField(
+                controller: _startDateController,
+                hintText: Translation.pleaseHintText.getString(context),
+              ),
+              SpacerV(value: Dimens.space24),
+              Text(
+                Translation.donationEndDate.getString(context),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SpacerV(
+                value: Dimens.space8,
+              ),
+              buildTextField(
+                controller: _endDateController,
+                hintText: Translation.pleaseHintText.getString(context),
+              ),
+              SpacerV(value: Dimens.space24),
+              Text(
+                Translation.donationBankAccount.getString(context),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SpacerV(
+                value: Dimens.space8,
+              ),
+              buildTextField(
+                controller: _bankAccountController,
+                hintText: Translation.pleaseHintText.getString(context),
               ),
               SpacerV(value: Dimens.space24),
               SizedBox(
@@ -115,18 +161,24 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     final userUID = organizationUser.organizers.id;
-                    final newEvent = EventDetailsModel(
+                    final newDonation = EventDonationModel(
                       id: userUID,
-                      eventName: _charityEventTitleController.text,
-                      eventDescription: _charityEventDescriptionController.text,
-                      type: "organizer",
+                      targetMoney: double.parse(_targetMoneyController.text),
+                      currentCollected: double.parse(_currentCollectedController.text),
+                      startDate: _startDateController.text,
+                      endDate: _endDateController.text,
+                      bankAccount: _bankAccountController.text,
                     );
 
-                    eventDetailsFile.createEventDetails(newEvent);
+                    eventDonation.createDonationDetails(newDonation);
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const EventItemAddPage(),
+                        builder: (context) => MyHomePage(
+                          title:
+                            Translation.splashTitle.getString(context),
+                        )
                       ),
                     );
                   },
@@ -153,8 +205,11 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
 
   @override
   void dispose() {
-    _charityEventTitleController.dispose();
-    _charityEventDescriptionController.dispose();
+    _targetMoneyController.dispose();
+    _currentCollectedController.dispose();
+    _startDateController.dispose();
+    _endDateController.dispose();
+    _bankAccountController.dispose();
     super.dispose();
   }
 }
