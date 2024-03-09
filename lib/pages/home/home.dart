@@ -106,8 +106,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             builder: (context) => OrganizationProfilePage(
                                   organizationName: organizationUser
                                       .organizers.organizationName,
-                                  organizationContact:
-                                      organizationUser.organizers.organizationContact,
+                                  organizationContact: organizationUser
+                                      .organizers.organizationContact,
                                   organizationAdress: organizationUser
                                       .organizers.organizationAdress,
                                   organizationLink: organizationUser
@@ -229,11 +229,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     )
                   else
                     ProductCard(
-                      imageUrl:
+                      imageUrl: eventDetailsFile.eventDetails.photoEventUrl ??
                           'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
                       title: eventDetailsFile.eventDetails.eventName,
                       description:
-                          'RM ${eventDonationsFile.donationDetails.targetMoney}',
+                          'RM ${eventDonationsFile.donationDetails.targetMoney?.toStringAsFixed(2)}',
                       valueIndicatorProgress: double.parse(((eventDonationsFile
                                       .donationDetails.currentCollected ??
                                   0) /

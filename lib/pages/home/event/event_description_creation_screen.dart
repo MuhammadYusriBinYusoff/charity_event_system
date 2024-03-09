@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/models/models.dart';
-import 'package:charity_event_system/pages/home/event/event.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -177,14 +176,15 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                 child: ElevatedButton(
                   onPressed: () async {
                     //Sementara comment...untuk test gallery page je
-                    // final userUID = organizationUser.organizers.id;
-                    // final newEvent = EventDetailsModel(
-                    //   id: userUID,
-                    //   eventName: _charityEventTitleController.text,
-                    //   eventDescription: _charityEventDescriptionController.text,
-                    //   type: "organizer",
-                    // );
-                    // eventDetailsFile.createEventDetails(newEvent);
+                    final userUID = organizationUser.organizers.id;
+                    final newEvent = EventDetailsModel(
+                      id: userUID,
+                      eventName: _charityEventTitleController.text,
+                      eventDescription: _charityEventDescriptionController.text,
+                      type: "organizer",
+                      photoEventUrl: bannerImageUrl,
+                    );
+                    eventDetailsFile.createEventDetails(newEvent);
 
                     Navigator.push(
                       context,

@@ -27,7 +27,7 @@ class ProgressBarIndicator extends StatelessWidget {
         ),
         SpacerH(value: Dimens.space8,),
         Text(
-          '${(value ?? 0) * 100}%',
+          '${((value ?? 0) * 100).toStringAsFixed(1)}%',
           style: const TextStyle(fontSize: 10,color: Palette.grey),
         ),
       ],
