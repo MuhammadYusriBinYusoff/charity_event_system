@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/home/homes.dart';
 import 'package:charity_event_system/pages/widgets/widgets.dart';
@@ -49,8 +50,8 @@ class ProductCard extends StatelessWidget {
               ClipRRect(
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(0)),
-                child: Image.network(
-                  imageUrl ?? '',
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl ?? '',
                   fit: BoxFit.cover,
                   height: Dimens.space150,
                 ),

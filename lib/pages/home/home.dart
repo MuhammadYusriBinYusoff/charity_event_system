@@ -163,34 +163,27 @@ class _MyHomePageState extends State<MyHomePage> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        const ProductCard(
-                          imageUrl:
-                              'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
-                          title:
-                              'Organization Name', //@TODO LATER should make the title product name should restrict to 56 words
-                          description: 'RM 20000',
-                          valueIndicatorProgress: 0.5,
-                        ),
-                        SpacerH(
-                          value: Dimens.space8,
-                        ),
-                        const ProductCard(
-                          imageUrl:
-                              'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
-                          title: 'Organization Name',
-                          description: 'RM 20000',
-                          valueIndicatorProgress: 0.8,
-                        ),
-                        SpacerH(
-                          value: Dimens.space8,
-                        ),
-                        const ProductCard(
-                          imageUrl:
-                              'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
-                          title: 'Organization Name',
-                          description: 'RM 20000',
-                          valueIndicatorProgress: 0.2,
-                        ),
+                        for (int i = 0;
+                            i < eventDetailsFile.eventDetailsList.length;
+                            i++)
+                          ProductCard(
+                            imageUrl: eventDetailsFile
+                                    .eventDetailsList[i].photoEventUrl ??
+                                'https://www.caspianpolicy.org/no-image.png',
+                            title: eventDetailsFile
+                                    .eventDetailsList[i].eventName ??
+                                '',
+                            description:
+                                'RM ${eventDonationsFile.donationDetailsList[i].targetMoney?.toStringAsFixed(2)}',
+                            valueIndicatorProgress: double.parse(
+                                ((eventDonationsFile.donationDetailsList[i]
+                                                .currentCollected ??
+                                            0) /
+                                        (eventDonationsFile
+                                                .donationDetails.targetMoney ??
+                                            1))
+                                    .toStringAsFixed(2)),
+                          ),
                       ],
                     ),
                   ),
