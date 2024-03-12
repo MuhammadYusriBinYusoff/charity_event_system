@@ -167,6 +167,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             i < eventDetailsFile.eventDetailsList.length;
                             i++)
                           ProductCard(
+                            isEventListClicked: true,
+                            indexCard: i,
                             imageUrl: eventDetailsFile
                                     .eventDetailsList[i].photoEventUrl ??
                                 'https://www.caspianpolicy.org/no-image.png',

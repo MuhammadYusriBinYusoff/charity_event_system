@@ -9,6 +9,8 @@ class ProductCard extends StatelessWidget {
   final String? title;
   final String? description;
   final String? type;
+  final bool? isEventListClicked;
+  final int? indexCard;
   final double? valueIndicatorProgress;
   final VoidCallback? onTap;
 
@@ -18,6 +20,8 @@ class ProductCard extends StatelessWidget {
     this.title,
     this.description,
     this.type,
+    this.isEventListClicked = false,
+    this.indexCard,
     this.valueIndicatorProgress,
     this.onTap,
   });
@@ -26,13 +30,19 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (type == "organizer")
+        if (type == "organizer" && isEventListClicked == false)
+          print("Will continue later to handle manage event");
+
+        if (isEventListClicked == true) {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => EventPostingDescriptionPage(),
+              builder: (context) => EventPostingDescriptionPage(
+                index: indexCard,
+              ),
             ),
           );
+        }
       },
       child: SizedBox(
         width: Dimens.space250,
@@ -41,8 +51,7 @@ class ProductCard extends StatelessWidget {
           color: Palette.white,
           elevation: 4.0,
           shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(0), // Rounded corners for the card
+            borderRadius: BorderRadius.circular(0),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -68,15 +77,15 @@ class ProductCard extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SpacerV(
-                      value: 8.0,
+                    SpacerV(
+                      value: Dimens.space8,
                     ),
                     Text(
                       description ?? '',
                       style: const TextStyle(fontSize: 14),
                     ),
-                    const SpacerV(
-                      value: 8.0,
+                    SpacerV(
+                      value: Dimens.space8,
                     ),
                     ProgressBarIndicator(
                       value: valueIndicatorProgress,
