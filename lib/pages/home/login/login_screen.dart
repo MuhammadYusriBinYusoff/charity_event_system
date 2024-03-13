@@ -79,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                       await organizationUser.fetchAllOrganizers();
                       await eventDetailsFile.fetchAllEventDetails();
                       await eventDonationsFile.fetchAllDonationDetails();
+                      await eventGalleryFile.fetchAllEventGallery();
                       // If sign-in is successful, navigate to the next screen
                       // ignore: use_build_context_synchronously
                       Navigator.push(

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:charity_event_system/common/common.dart';
-import 'package:charity_event_system/pages/localization/locales.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -83,7 +82,7 @@ class _EventPostingDescriptionPageState
                             .photoEventUrl ??
                         'https://www.caspianpolicy.org/no-image.png', // Replace with your image URL
                     width: double.infinity,
-                    height: 200,
+                    height: Dimens.space200,
                     fit: BoxFit.fill,
                   ),
                   SpacerV(value: Dimens.space16),
@@ -108,7 +107,11 @@ class _EventPostingDescriptionPageState
                       CircleIcon(
                           icon: Icons.photo_outlined,
                           onTap: () {
-                            print("photo icon");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GalleryPage(index: widget.index,)),
+                            );
                           }),
                       CircleIcon(
                           icon: Icons.question_mark_outlined,
@@ -148,8 +151,7 @@ class _EventPostingDescriptionPageState
                       ),
                     ],
                   ),
-                )
-              ),
+                )),
             Container(
                 padding: EdgeInsets.all(Dimens.space16),
                 color: Palette.white,
