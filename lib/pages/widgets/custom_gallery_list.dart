@@ -5,18 +5,20 @@ import 'package:flutter/material.dart';
 class ImageListWidget extends StatelessWidget {
   final List<String>? imageUrls;
   final double imageSize;
+  final double imageAppear;
 
   const ImageListWidget({
     Key? key,
     this.imageUrls,
     this.imageSize = 100,
+    this.imageAppear = 3.5, //to make it appear 3 and half picture
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return imageUrls != null && imageUrls!.isNotEmpty
         ? SizedBox(
-          height:imageSize * 3.5,
+          height:imageSize * imageAppear,
           child: ListView.builder(
               shrinkWrap: true,
               itemCount: ((imageUrls!.length) ~/ 2) + ((imageUrls!.length) % 2),

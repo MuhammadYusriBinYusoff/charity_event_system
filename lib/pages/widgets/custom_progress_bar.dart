@@ -5,10 +5,14 @@ import 'package:simple_progress_indicators/simple_progress_indicators.dart';
 
 class ProgressBarIndicator extends StatelessWidget {
   final double? value;
+  final double width;
+  final double height;
 
   const ProgressBarIndicator({
     super.key,
     this.value,
+    this.width = 180.0,
+    this.height = 10,
   });
 
   @override
@@ -17,7 +21,8 @@ class ProgressBarIndicator extends StatelessWidget {
       children: [
         ProgressBar(
           value: value,
-          width: 180.0,
+          width: width,
+          height: height,
           backgroundColor: Palette.greyIndicator,
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
@@ -27,7 +32,7 @@ class ProgressBarIndicator extends StatelessWidget {
         ),
         SpacerH(value: Dimens.space8,),
         Text(
-          '${(value ?? 0) * 100}%',
+          '${((value ?? 0) * 100).toStringAsFixed(1)}%',
           style: const TextStyle(fontSize: 10,color: Palette.grey),
         ),
       ],

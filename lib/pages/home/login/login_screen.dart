@@ -72,11 +72,14 @@ class _LoginPageState extends State<LoginPage> {
                         password: _passwordController.text,
                       );
                             
-                      organizationUser.fetchOrganizerData();
-                      eventDetailsFile.fetchEventDetailsData();
-                      eventDonationsFile.fetchEventDonationData();
-                      eventGalleryFile.fetchEventGalleryData();
-
+                      await organizationUser.fetchOrganizerData();
+                      await eventDetailsFile.fetchEventDetailsData();
+                      await eventDonationsFile.fetchEventDonationData();
+                      await eventGalleryFile.fetchEventGalleryData();
+                      await organizationUser.fetchAllOrganizers();
+                      await eventDetailsFile.fetchAllEventDetails();
+                      await eventDonationsFile.fetchAllDonationDetails();
+                      await eventGalleryFile.fetchAllEventGallery();
                       // If sign-in is successful, navigate to the next screen
                       // ignore: use_build_context_synchronously
                       Navigator.push(

@@ -5,8 +5,10 @@ import 'package:flutter/foundation.dart';
 
 class EventGalleryProvider extends ChangeNotifier {
   EventGalleryModel _eventGallery = EventGalleryModel();
+  List<EventGalleryModel> _eventGalleryList = [];
 
   EventGalleryModel get eventGallery => _eventGallery;
+  List<EventGalleryModel> get eventGalleryList => _eventGalleryList;
 
   Future<void> createEventGallery(EventGalleryModel newEventGallery) async {
     _eventGallery = newEventGallery;
@@ -36,6 +38,19 @@ class EventGalleryProvider extends ChangeNotifier {
       }
     } else {
       print('No user signed in.');
+    }
+  }
+
+  Future<void> fetchAllEventGallery() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance.collection('eventGallery').get();
+
+      _eventGalleryList = querySnapshot.docs
+          .map((doc) => EventGalleryModel.fromSnapshot(doc))
+          .toList();
+    } catch (error) {
+      print('Error fetching gallery List: $error');
     }
   }
 

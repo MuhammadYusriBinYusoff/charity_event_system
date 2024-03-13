@@ -31,7 +31,7 @@ class ImageItem extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(bottom: Dimens.space8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimens.space4),
+          borderRadius: BorderRadius.circular(Dimens.space2),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(Dimens.space8),
@@ -50,7 +50,7 @@ class ImageItem extends StatelessWidget {
                 : const Center(
                     child: Text(
                       'No Image',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                      style: TextStyle(fontSize: 16, color: Palette.grey),
                     ),
                   ),
           ),

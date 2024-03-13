@@ -83,6 +83,7 @@ mixin Translation{
   static const String donationBankAccount = 'donationBankAccount';
   static const String uploadGalleryImage = 'uploadGalleryImage';
   static const String showGalleryImage = 'showGalleryImage';
+  static const String spiralCareDisclaimer = 'spiralCareDisclaimer';
   
 
   static const Map<String,dynamic> EN = {
@@ -160,6 +161,7 @@ mixin Translation{
     donationBankAccount: 'Bank Account',
     uploadGalleryImage: 'Upload Gallery Image',
     showGalleryImage: 'Gallery',
+    spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
 
 
   };
@@ -239,6 +241,7 @@ mixin Translation{
     donationBankAccount: 'Akaun Bank',
     uploadGalleryImage: 'Muat Turun Gambar Galeri',
     showGalleryImage: 'Galleri',
+    spiralCareDisclaimer: 'Penafian Spiral Care: Hai, saya Muhammad Yusri Bin Yusoff, pemilik aplikasi Spiral Care. Bagi pihak penganjur acara, kami memohon sokongan anda. Yakinlah, semua organisasi yang didaftarkan dalam aplikasi kami menjalani pemeriksaan latar belakang yang menyeluruh dan kelulusan oleh pasukan khusus Spiral Care.',
     
   };
 }

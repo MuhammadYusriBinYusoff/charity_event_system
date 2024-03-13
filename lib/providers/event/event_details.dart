@@ -5,8 +5,10 @@ import 'package:flutter/foundation.dart';
 
 class EventDetailsProvider extends ChangeNotifier {
   EventDetailsModel _eventDetails = EventDetailsModel();
+  List<EventDetailsModel> _eventDetailsList = [];
 
   EventDetailsModel get eventDetails => _eventDetails;
+   List<EventDetailsModel> get eventDetailsList => _eventDetailsList;
 
   Future<void> createEventDetails(EventDetailsModel newEventDetails) async {
     _eventDetails = newEventDetails;
@@ -37,6 +39,21 @@ class EventDetailsProvider extends ChangeNotifier {
       }
     } else {
       print('No user signed in.');
+    }
+  }
+
+  Future<void> fetchAllEventDetails() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
+          .collection('eventDetails')
+          .get();
+
+      _eventDetailsList = querySnapshot.docs
+          .map((doc) => EventDetailsModel.fromSnapshot(doc))
+          .toList();
+
+    } catch (error) {
+      print('Error fetching event details List: $error');
     }
   }
 

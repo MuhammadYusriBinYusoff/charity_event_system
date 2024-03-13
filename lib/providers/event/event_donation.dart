@@ -5,10 +5,13 @@ import 'package:flutter/foundation.dart';
 
 class EventDonationProvider extends ChangeNotifier {
   EventDonationModel _donationDetails = EventDonationModel();
+  List<EventDonationModel> _donationDetailsList = [];
 
   EventDonationModel get donationDetails => _donationDetails;
+  List<EventDonationModel> get donationDetailsList => _donationDetailsList;
 
-  Future<void> createDonationDetails(EventDonationModel newDonationDetails) async {
+  Future<void> createDonationDetails(
+      EventDonationModel newDonationDetails) async {
     _donationDetails = newDonationDetails;
     await FirebaseFirestore.instance
         .collection("moneyDonation")
@@ -25,9 +28,9 @@ class EventDonationProvider extends ChangeNotifier {
       String eventDonationId = user.uid;
       CollectionReference eventDonationCollection =
           FirebaseFirestore.instance.collection('moneyDonation');
-      DocumentSnapshot<Map<String, dynamic>> eventDonationData = await eventDonationCollection
-          .doc(eventDonationId)
-          .get() as DocumentSnapshot<Map<String, dynamic>>;
+      DocumentSnapshot<Map<String, dynamic>> eventDonationData =
+          await eventDonationCollection.doc(eventDonationId).get()
+              as DocumentSnapshot<Map<String, dynamic>>;
 
       if (eventDonationData.exists) {
         _donationDetails = EventDonationModel.fromSnapshot(eventDonationData);
@@ -40,9 +43,21 @@ class EventDonationProvider extends ChangeNotifier {
     }
   }
 
-  void resetEventDonation() async{
+  Future<void> fetchAllDonationDetails() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance.collection('moneyDonation').get();
+
+      _donationDetailsList = querySnapshot.docs
+          .map((doc) => EventDonationModel.fromSnapshot(doc))
+          .toList();
+    } catch (error) {
+      print('Error fetching donation List: $error');
+    }
+  }
+
+  void resetEventDonation() async {
     _donationDetails = EventDonationModel();
     notifyListeners();
   }
-  
 }

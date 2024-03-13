@@ -7,8 +7,10 @@ import 'package:flutter/foundation.dart';
 
 class OrganizerProvider extends ChangeNotifier {
   OrganizerModel _organizers = OrganizerModel();
+  List<OrganizerModel> _organizerList = [];
 
   OrganizerModel get organizers => _organizers;
+  List<OrganizerModel> get organizerList => _organizerList;
 
   Future<void> createOrganizer(OrganizerModel newOrganizer) async {
     _organizers = newOrganizer;
@@ -43,76 +45,49 @@ class OrganizerProvider extends ChangeNotifier {
   }
 
   // Function to update user data
-  Future<void> updateOrganizerData(String? organizerId, Map<String, dynamic> dataToUpdate) async {
+  Future<void> updateOrganizerData(
+      String? organizerId, Map<String, dynamic> dataToUpdate) async {
     await FirebaseFirestore.instance
         .collection("organizationAccount")
         .doc(organizerId)
         .update(dataToUpdate);
-    
+
     _organizers.organizationName = dataToUpdate['organizationName'] ?? '';
-     _organizers.organizationContact = dataToUpdate['organizationContact'] ?? '';
-     _organizers.organizationAdress = dataToUpdate['organizationAdress'] ?? '';
-     _organizers.organizationLink = dataToUpdate['organizationLink'] ?? '';
-     _organizers.profileImageLink = dataToUpdate['profileImageLink'] ?? '';
+    _organizers.organizationContact = dataToUpdate['organizationContact'] ?? '';
+    _organizers.organizationAdress = dataToUpdate['organizationAdress'] ?? '';
+    _organizers.organizationLink = dataToUpdate['organizationLink'] ?? '';
+    _organizers.profileImageLink = dataToUpdate['profileImageLink'] ?? '';
     notifyListeners();
   }
 
-  Future<void> updatePicData(String? organizerId, Map<String, dynamic> dataToUpdate) async {
+  Future<void> updatePicData(
+      String? organizerId, Map<String, dynamic> dataToUpdate) async {
     await FirebaseFirestore.instance
         .collection("organizationAccount")
         .doc(organizerId)
         .update(dataToUpdate);
-    
+
     _organizers.picName = dataToUpdate['picName'] ?? '';
-     _organizers.picContact = dataToUpdate['picContact'] ?? '';
-      _organizers.picIc = dataToUpdate['picIc'] ?? '';
-     _organizers.picAdress = dataToUpdate['picAdress'] ?? '';
-     _organizers.picEmail = dataToUpdate['picEmail'] ?? '';
-     _organizers.picPassword = dataToUpdate['picPassword'] ?? '';
+    _organizers.picContact = dataToUpdate['picContact'] ?? '';
+    _organizers.picIc = dataToUpdate['picIc'] ?? '';
+    _organizers.picAdress = dataToUpdate['picAdress'] ?? '';
+    _organizers.picEmail = dataToUpdate['picEmail'] ?? '';
+    _organizers.picPassword = dataToUpdate['picPassword'] ?? '';
     notifyListeners();
   }
 
-  /*List<OrganizerModel> organizer = [];
+  Future<void> fetchAllOrganizers() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('organizationAccount')
+              .get();
 
-  List<OrganizerModel> get organizers => organizer;
-
-  OrganizerProvider() {}
-
-  // Future<void> addOrganizer(OrganizerModel organizer) async {
-  //   await FirebaseFirestore.instance.collection("users").doc(organizer.id).set({
-  //     "organizationName": organizer.organizationName,
-  //     "organizationContact": organizer.organizationContact,
-  //     "organizationAdress": organizer.organizationAdress,
-  //     "organizationLink": organizer.organizationLink,
-  //     "picName": organizer.picName,
-  //     "picContact": organizer.picContact,
-  //     "picIc": organizer.picIc,
-  //     "picAdress": organizer.picAdress, // corrected "address" spelling
-  //     "picEmail": organizer.picEmail,
-  //     "picPassword": organizer.picPassword,
-  //     "id": organizer.id,
-  //   });
-  //   notifyListeners();
-  // }
-
-  Future<void> createOrganizer(OrganizerModel organizer) async {
-    final newUser = OrganizerModel(
-      id: organizer.id,
-      picName: organizer.picName,
-      picContact: organizer.picContact,
-      picIc: organizer.picIc,
-      picAdress: organizer.picAdress, // corrected "address" spelling
-      picEmail: organizer.picEmail,
-      picPassword: organizer.picPassword,
-      organizationName: organizer.organizationName,
-      organizationContact: organizer.organizationContact,
-      organizationAdress: organizer.organizationAdress,
-      organizationLink: organizer.organizationLink,
-    ).toJson();
-
-    await FirebaseFirestore.instance.collection("users").doc(organizer.id).set(newUser);
-    organizers.add(newUser as OrganizerModel);
-    notifyListeners();
+      _organizerList = querySnapshot.docs
+          .map((doc) => OrganizerModel.fromSnapshot(doc))
+          .toList();
+    } catch (error) {
+      print('Error fetching organizers: $error');
+    }
   }
-  */
 }
