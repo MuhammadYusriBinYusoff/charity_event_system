@@ -41,6 +41,7 @@ mixin Translation{
   static const String askOrganizer = "askOrganizer";
   static const String personnelName = "personnelName";
   static const String personnelContact = "personnelContact";
+  static const String personnelIc = "personnelIc";
   static const String personnelAdress = "personnelAdress";
   static const String personnelEmail = "personnelEmail";
   static const String personnelPassword = "personnelPassword";
@@ -58,6 +59,7 @@ mixin Translation{
   static const String cancel = "cancel";
   static const String logout = "logout";
   static const String save = "save";
+  static const String submit = "submit";
 
   //Homepage
   static const String charity2024Title = 'charity2024';
@@ -84,6 +86,7 @@ mixin Translation{
   static const String uploadGalleryImage = 'uploadGalleryImage';
   static const String showGalleryImage = 'showGalleryImage';
   static const String spiralCareDisclaimer = 'spiralCareDisclaimer';
+  static const String volunteerRegisterTitle = 'volunteerRegisterTitle';
   
 
   static const Map<String,dynamic> EN = {
@@ -119,6 +122,7 @@ mixin Translation{
     askOrganizer: 'Organizer',
     personnelName: 'Fullname',
     personnelContact: 'Contact',
+    personnelIc: 'Ic Number',
     personnelAdress: 'Adress',
     personnelEmail: 'E-mail',
     personnelPassword: 'Password',
@@ -137,6 +141,7 @@ mixin Translation{
     cancel: 'Cancel',
     pleaseHintText: 'Please write here',
     save: 'Save',
+    submit: 'Submit',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
@@ -162,6 +167,7 @@ mixin Translation{
     uploadGalleryImage: 'Upload Gallery Image',
     showGalleryImage: 'Gallery',
     spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
+    volunteerRegisterTitle: 'Volunteer Registration Form',
 
 
   };
@@ -199,6 +205,7 @@ mixin Translation{
     askOrganizer: 'Organizer',
     personnelName: 'Nama penuh',
     personnelContact: 'Contact',
+    personnelIc: 'Nombor Ic',
     personnelAdress: 'Alamat',
     personnelEmail: 'E-mel',
     personnelPassword: 'Kata laluan',
@@ -217,6 +224,7 @@ mixin Translation{
     cancel: 'Batal',
     pleaseHintText: 'Sila tulis di sini',
     save: 'Simpan',
+    submit: 'Hantar',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',
@@ -242,6 +250,7 @@ mixin Translation{
     uploadGalleryImage: 'Muat Turun Gambar Galeri',
     showGalleryImage: 'Galleri',
     spiralCareDisclaimer: 'Penafian Spiral Care: Hai, saya Muhammad Yusri Bin Yusoff, pemilik aplikasi Spiral Care. Bagi pihak penganjur acara, kami memohon sokongan anda. Yakinlah, semua organisasi yang didaftarkan dalam aplikasi kami menjalani pemeriksaan latar belakang yang menyeluruh dan kelulusan oleh pasukan khusus Spiral Care.',
-    
+    volunteerRegisterTitle: 'Pendaftaran Sukarelawan',
+
   };
 }

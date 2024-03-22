@@ -103,6 +103,17 @@ class _EventPostingDescriptionPageState
                           icon: Icons.emoji_people_outlined,
                           onTap: () {
                             print("people icon");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      RegisterVolunteerFormPage(
+                                        id: eventDetailsFile
+                                            .eventDetailsList[widget.index ?? 0]
+                                            .id,
+                                        index: widget.index,
+                                      )),
+                            );
                           }),
                       CircleIcon(
                           icon: Icons.photo_outlined,
@@ -110,7 +121,9 @@ class _EventPostingDescriptionPageState
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => GalleryPage(index: widget.index,)),
+                                  builder: (context) => GalleryPage(
+                                        index: widget.index,
+                                      )),
                             );
                           }),
                       CircleIcon(
