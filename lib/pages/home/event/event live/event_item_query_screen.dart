@@ -1,24 +1,27 @@
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/pages.dart';
+import 'package:charity_event_system/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 
 class ItemQueryPage extends StatefulWidget {
-  const ItemQueryPage({super.key});
+  final String? id;
+
+  const ItemQueryPage({
+    super.key,
+    this.id,
+  });
 
   @override
   _ItemQueryPageState createState() => _ItemQueryPageState();
 }
 
 class _ItemQueryPageState extends State<ItemQueryPage> {
-  List<List<String?>> data = [
-    ['1', 'John'],
-    ['2', 'Jane'],
-    ['3', 'Alice'],
-  ];
-
   @override
   Widget build(BuildContext context) {
+    EventItemsProvider eventItem = Provider.of<EventItemsProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(Translation.itemRequestTitle.getString(context)),
@@ -36,28 +39,31 @@ class _ItemQueryPageState extends State<ItemQueryPage> {
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
                 ),
-                border:
-                    Border.all(color: Palette.black),
+                border: Border.all(color: Palette.black),
               ),
               columns: <DataColumn>[
-                buildDataColumn('Id', MediaQuery.of(context).size.width * 0.1,10,0),
                 buildDataColumn(
-                    'Descriptions', MediaQuery.of(context).size.width * 0.8,0,10),
+                    'Id', MediaQuery.of(context).size.width * 0.1, 8, 0),
+                buildDataColumn(Translation.itemName.getString(context),
+                    MediaQuery.of(context).size.width * 0.6, 0, 0),
+                buildDataColumn(Translation.itemQuantity.getString(context),
+                    MediaQuery.of(context).size.width * 0.2, 0, 0),
+                buildDataColumn(
+                    Translation.itemUnit.getString(context), MediaQuery.of(context).size.width * 0.2, 0, 0),
+                buildDataColumn(
+                    Translation.itemDate.getString(context), MediaQuery.of(context).size.width * 0.3, 0, 8),
               ],
-              rows: data.map((row) {
+              rows: eventItem.itemDetailsList.asMap().entries.map((entry) {
+                final index = entry.key;
+                final item = entry.value;
                 return DataRow(
-                  cells: row.map((data) {
-                    return DataCell(
-                      Container(
-                        padding: EdgeInsets.all(Dimens.space8),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Palette.black),
-                        ),
-                        child: Center(child: Text(data ?? '')),
-                      ),
-                    );
-                  }).toList(),
+                  cells: [
+                    buildDataCell((index + 1).toString()),
+                    buildDataCell(item.itemName ?? ''),
+                    buildDataCell(item.itemQuantity ?? ''),
+                    buildDataCell(item.itemUnit ?? ''),
+                    buildDataCell(item.itemDate ?? ''),
+                  ],
                 );
               }).toList(),
             ),
@@ -77,8 +83,7 @@ class _ItemQueryPageState extends State<ItemQueryPage> {
           color: Palette.purpleMain,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(topLeft),
-            topRight:
-                Radius.circular(topRight),
+            topRight: Radius.circular(topRight),
           ),
           border: const Border(
             right: BorderSide(color: Palette.black),
@@ -90,6 +95,18 @@ class _ItemQueryPageState extends State<ItemQueryPage> {
             style: const TextStyle(color: Palette.white),
           ),
         ),
+      ),
+    );
+  }
+
+  DataCell buildDataCell(String text) {
+    return DataCell(
+      Container(
+        padding: EdgeInsets.all(Dimens.space8),
+        decoration: BoxDecoration(
+          border: Border.all(color: Palette.black),
+        ),
+        child: Center(child: Text(text)),
       ),
     );
   }

@@ -175,7 +175,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    //Sementara comment...untuk test gallery page je
+                    //Note:Sementara comment...untuk test gallery page je
                     final userUID = organizationUser.organizers.id;
                     final newEvent = EventDetailsModel(
                       id: userUID,

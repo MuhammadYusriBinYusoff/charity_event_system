@@ -1,12 +1,10 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/models/models.dart';
-import 'package:charity_event_system/pages/home/event/event.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class EventItemAddPage extends StatefulWidget {
@@ -31,7 +29,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
     EventItemsProvider eventItems = Provider.of<EventItemsProvider>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Palette.purpleMain,
@@ -144,7 +142,11 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        // Add onPressed logic for the first button
+                        Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ItemQueryPage()),
+                    );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Palette.purpleMain,
@@ -168,7 +170,23 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        // Add onPressed logic for the second button
+                        final userUID = organizationUser.organizers.id;
+                        final newItem = EventItemsModel(
+                          id: userUID,
+                          itemName: _itemNameController.text,
+                          itemQuantity: _itemQuantityController.text,
+                          itemUnit: _itemUnitController.text,
+                          itemDate: _itemDateController.text,
+                        );
+
+                        eventItems.createItemDetails(newItem);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const EventItemAddPage()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Palette.purpleMain,
@@ -194,21 +212,10 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    final userUID = organizationUser.organizers.id;
-                    final newItem = EventItemsModel(
-                      id: userUID,
-                      itemName: _itemNameController.text,
-                      itemQuantity: _itemQuantityController.text,
-                      itemUnit: _itemUnitController.text,
-                      itemDate: _itemDateController.text,
-                    );
-
-                    eventItems.createItemDetails(newItem);
-
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => EventDonationManagementPage()),
+                          builder: (context) => const EventDonationManagementPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
