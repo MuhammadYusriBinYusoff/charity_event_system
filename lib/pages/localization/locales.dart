@@ -60,6 +60,7 @@ mixin Translation{
   static const String logout = "logout";
   static const String save = "save";
   static const String submit = "submit";
+  static const String insert = "insert";
 
   //Homepage
   static const String charity2024Title = 'charity2024';
@@ -87,6 +88,7 @@ mixin Translation{
   static const String showGalleryImage = 'showGalleryImage';
   static const String spiralCareDisclaimer = 'spiralCareDisclaimer';
   static const String volunteerRegisterTitle = 'volunteerRegisterTitle';
+  static const String itemRequestTitle = 'itemRequestTitle';
   
 
   static const Map<String,dynamic> EN = {
@@ -142,6 +144,7 @@ mixin Translation{
     pleaseHintText: 'Please write here',
     save: 'Save',
     submit: 'Submit',
+    insert: 'Insert',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
@@ -168,6 +171,7 @@ mixin Translation{
     showGalleryImage: 'Gallery',
     spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
     volunteerRegisterTitle: 'Volunteer Registration Form',
+    itemRequestTitle: 'List of Items Needed',
 
 
   };
@@ -225,6 +229,7 @@ mixin Translation{
     pleaseHintText: 'Sila tulis di sini',
     save: 'Simpan',
     submit: 'Hantar',
+    insert: 'Daftarkan',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',
@@ -251,6 +256,7 @@ mixin Translation{
     showGalleryImage: 'Galleri',
     spiralCareDisclaimer: 'Penafian Spiral Care: Hai, saya Muhammad Yusri Bin Yusoff, pemilik aplikasi Spiral Care. Bagi pihak penganjur acara, kami memohon sokongan anda. Yakinlah, semua organisasi yang didaftarkan dalam aplikasi kami menjalani pemeriksaan latar belakang yang menyeluruh dan kelulusan oleh pasukan khusus Spiral Care.',
     volunteerRegisterTitle: 'Pendaftaran Sukarelawan',
+    itemRequestTitle: 'Senarai Barang Di Perlukan',
 
   };
 }

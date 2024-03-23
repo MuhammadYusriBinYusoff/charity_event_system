@@ -1,12 +1,10 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/models/models.dart';
-import 'package:charity_event_system/pages/home/event/event.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class EventItemAddPage extends StatefulWidget {
@@ -31,7 +29,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
     EventItemsProvider eventItems = Provider.of<EventItemsProvider>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Palette.purpleMain,
@@ -78,7 +76,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
               SpacerV(value: Dimens.space16),
               Text(
                 Translation.itemName.getString(context),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -93,7 +91,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
               SpacerV(value: Dimens.space24),
               Text(
                 Translation.itemQuantity.getString(context),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -109,7 +107,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
               SpacerV(value: Dimens.space24),
               Text(
                 Translation.itemUnit.getString(context),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -125,7 +123,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
               SpacerV(value: Dimens.space24),
               Text(
                 Translation.itemDate.getString(context),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -139,61 +137,11 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                 multiLine: true,
               ),
               SpacerV(value: Dimens.space24),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Add onPressed logic for the first button
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Palette.purpleMain,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Dimens.space8),
-                        ),
-                      ),
-                      child: const Text(
-                        'Table',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                    ),
-                  ),
-                  SpacerH(
-                    value: Dimens.space8,
-                  ),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Add onPressed logic for the second button
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Palette.purpleMain,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Dimens.space8),
-                        ),
-                      ),
-                      child: const Text(
-                        'Insert',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SpacerV(value: Dimens.space24),
               SizedBox(
                 width: double.infinity,
                 height: Dimens.space40,
                 child: ElevatedButton(
-                  onPressed: () async {
+                  onPressed: () {
                     final userUID = organizationUser.organizers.id;
                     final newItem = EventItemsModel(
                       id: userUID,
@@ -208,7 +156,35 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => EventDonationManagementPage()),
+                          builder: (context) => const EventItemAddPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Palette.purpleMain,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.space8),
+                    ),
+                  ),
+                  child: Text(
+                    Translation.insert.getString(context),
+                    style: const TextStyle(
+                        color: Palette.white, fontFamily: 'Roborto'),
+                  ),
+                ),
+              ),
+              
+              SpacerV(value: Dimens.space24),
+              SizedBox(
+                width: double.infinity,
+                height: Dimens.space40,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const EventDonationManagementPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

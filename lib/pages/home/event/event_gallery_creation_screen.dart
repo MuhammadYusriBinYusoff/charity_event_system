@@ -19,10 +19,6 @@ class EventGalleryPage extends StatefulWidget {
 }
 
 class _EventGalleryPageState extends State<EventGalleryPage> {
-  final TextEditingController _charityEventTitleController =
-      TextEditingController();
-  final TextEditingController _charityEventDescriptionController =
-      TextEditingController();
 
   TextStyle textStyle = const TextStyle(
     fontFamily: 'Roboto',
@@ -170,6 +166,7 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
+                    //Note: Comment kejap untuk buat item
                     final userUID = organizationUser.organizers.id;
                     final newGallery = EventGalleryModel(
                       id: userUID,

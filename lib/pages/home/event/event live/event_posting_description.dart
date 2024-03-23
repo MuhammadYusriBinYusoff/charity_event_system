@@ -28,6 +28,7 @@ class _EventPostingDescriptionPageState
         Provider.of<EventDetailsProvider>(context);
     EventDonationProvider eventDonationsFile =
         Provider.of<EventDonationProvider>(context);
+    EventItemsProvider eventItem = Provider.of<EventItemsProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -96,13 +97,24 @@ class _EventPostingDescriptionPageState
                           }),
                       CircleIcon(
                           icon: Icons.food_bank_outlined,
-                          onTap: () {
-                            print("food icon");
+                          onTap: () async {
+                            await eventItem.fetchAllItemDetails(
+                              eventDetailsFile
+                                  .eventDetailsList[widget.index ?? 0].id,
+                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ItemQueryPage(
+                                        id: eventDetailsFile
+                                            .eventDetailsList[widget.index ?? 0]
+                                            .id,
+                                      )),
+                            );
                           }),
                       CircleIcon(
                           icon: Icons.emoji_people_outlined,
                           onTap: () {
-                            print("people icon");
                             Navigator.push(
                               context,
                               MaterialPageRoute(
