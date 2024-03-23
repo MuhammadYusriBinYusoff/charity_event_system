@@ -97,12 +97,16 @@ class _EventPostingDescriptionPageState
                       CircleIcon(
                           icon: Icons.food_bank_outlined,
                           onTap: () {
-                            print("food icon");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ItemQueryPage()),
+                            );
                           }),
                       CircleIcon(
                           icon: Icons.emoji_people_outlined,
                           onTap: () {
-                            print("people icon");
                             Navigator.push(
                               context,
                               MaterialPageRoute(

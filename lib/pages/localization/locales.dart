@@ -87,6 +87,7 @@ mixin Translation{
   static const String showGalleryImage = 'showGalleryImage';
   static const String spiralCareDisclaimer = 'spiralCareDisclaimer';
   static const String volunteerRegisterTitle = 'volunteerRegisterTitle';
+  static const String itemRequestTitle = 'itemRequestTitle';
   
 
   static const Map<String,dynamic> EN = {
@@ -168,6 +169,7 @@ mixin Translation{
     showGalleryImage: 'Gallery',
     spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
     volunteerRegisterTitle: 'Volunteer Registration Form',
+    itemRequestTitle: 'List of Items Needed',
 
 
   };
@@ -251,6 +253,7 @@ mixin Translation{
     showGalleryImage: 'Galleri',
     spiralCareDisclaimer: 'Penafian Spiral Care: Hai, saya Muhammad Yusri Bin Yusoff, pemilik aplikasi Spiral Care. Bagi pihak penganjur acara, kami memohon sokongan anda. Yakinlah, semua organisasi yang didaftarkan dalam aplikasi kami menjalani pemeriksaan latar belakang yang menyeluruh dan kelulusan oleh pasukan khusus Spiral Care.',
     volunteerRegisterTitle: 'Pendaftaran Sukarelawan',
+    itemRequestTitle: 'Senarai Barang Di Perlukan',
 
   };
 }
