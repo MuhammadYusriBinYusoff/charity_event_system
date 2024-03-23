@@ -60,6 +60,7 @@ mixin Translation{
   static const String logout = "logout";
   static const String save = "save";
   static const String submit = "submit";
+  static const String insert = "insert";
 
   //Homepage
   static const String charity2024Title = 'charity2024';
@@ -143,6 +144,7 @@ mixin Translation{
     pleaseHintText: 'Please write here',
     save: 'Save',
     submit: 'Submit',
+    insert: 'Insert',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
@@ -227,6 +229,7 @@ mixin Translation{
     pleaseHintText: 'Sila tulis di sini',
     save: 'Simpan',
     submit: 'Hantar',
+    insert: 'Daftarkan',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',

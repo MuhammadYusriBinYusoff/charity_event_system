@@ -76,7 +76,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
               SpacerV(value: Dimens.space16),
               Text(
                 Translation.itemName.getString(context),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -91,7 +91,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
               SpacerV(value: Dimens.space24),
               Text(
                 Translation.itemQuantity.getString(context),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -107,7 +107,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
               SpacerV(value: Dimens.space24),
               Text(
                 Translation.itemUnit.getString(context),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -123,7 +123,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
               SpacerV(value: Dimens.space24),
               Text(
                 Translation.itemDate.getString(context),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
@@ -137,75 +137,43 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                 multiLine: true,
               ),
               SpacerV(value: Dimens.space24),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
+              SizedBox(
+                width: double.infinity,
+                height: Dimens.space40,
+                child: ElevatedButton(
+                  onPressed: () {
+                    final userUID = organizationUser.organizers.id;
+                    final newItem = EventItemsModel(
+                      id: userUID,
+                      itemName: _itemNameController.text,
+                      itemQuantity: _itemQuantityController.text,
+                      itemUnit: _itemUnitController.text,
+                      itemDate: _itemDateController.text,
+                    );
+
+                    eventItems.createItemDetails(newItem);
+
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ItemQueryPage()),
+                          builder: (context) => const EventItemAddPage()),
                     );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Palette.purpleMain,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Dimens.space8),
-                        ),
-                      ),
-                      child: const Text(
-                        'Table',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Palette.purpleMain,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.space8),
                     ),
                   ),
-                  SpacerH(
-                    value: Dimens.space8,
+                  child: Text(
+                    Translation.insert.getString(context),
+                    style: const TextStyle(
+                        color: Palette.white, fontFamily: 'Roborto'),
                   ),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        final userUID = organizationUser.organizers.id;
-                        final newItem = EventItemsModel(
-                          id: userUID,
-                          itemName: _itemNameController.text,
-                          itemQuantity: _itemQuantityController.text,
-                          itemUnit: _itemUnitController.text,
-                          itemDate: _itemDateController.text,
-                        );
-
-                        eventItems.createItemDetails(newItem);
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const EventItemAddPage()),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Palette.purpleMain,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Dimens.space8),
-                        ),
-                      ),
-                      child: const Text(
-                        'Insert',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
+              
               SpacerV(value: Dimens.space24),
               SizedBox(
                 width: double.infinity,
@@ -215,7 +183,8 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const EventDonationManagementPage()),
+                          builder: (context) =>
+                              const EventDonationManagementPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
