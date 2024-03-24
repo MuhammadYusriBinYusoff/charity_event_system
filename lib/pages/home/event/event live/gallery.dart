@@ -27,44 +27,7 @@ class _GalleryPageState extends State<GalleryPage> {
         Provider.of<EventGalleryProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Palette.purpleMain,
-        title: const Center(child: Text('Gallery')),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Palette.white),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(Translation.logOutTitle.getString(context)),
-                  content: Text(Translation.logOutMsg.getString(context)),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(Translation.cancel.getString(context)),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                        eventDetailsFile.resetEventDetails();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
-                        );
-                      },
-                      child: Text(Translation.logout.getString(context)),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(title: "Gallery"),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(Dimens.space8),
