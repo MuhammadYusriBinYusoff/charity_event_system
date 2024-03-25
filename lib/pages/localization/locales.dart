@@ -89,6 +89,14 @@ mixin Translation{
   static const String spiralCareDisclaimer = 'spiralCareDisclaimer';
   static const String volunteerRegisterTitle = 'volunteerRegisterTitle';
   static const String itemRequestTitle = 'itemRequestTitle';
+  static const String feedbackFormTitle = 'feedbackFormTitlte';
+  static const String feedbackQuestion1 = "feedbackQuestion1";
+  static const String feedbackQuestion2 = "feedbackQuestion2";
+  static const String feedbackQuestion3 = "feedbackQuestion3";
+  static const String feedbackQuestion4 = "feedbackQuestion4";
+  static const String feedbackQuestion5 = "feedbackQuestion5";
+  static const String feedbackQuestionHint = "feedbackQuestionHint";
+  static const String feedbackCheck = "feedbackCheck";
   
 
   static const Map<String,dynamic> EN = {
@@ -172,7 +180,14 @@ mixin Translation{
     spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
     volunteerRegisterTitle: 'Volunteer Registration Form',
     itemRequestTitle: 'List of Items Needed',
-
+    feedbackFormTitle: 'Feedback Form',
+    feedbackQuestion1: 'Is the organizer a responsible person?',
+    feedbackQuestion2: 'Does the organizer often upload event photos?',
+    feedbackQuestion3: 'Is all the information provided by the organizer true and not misleading',
+    feedbackQuestion4: 'How much do you recommend this organizer to the public?',
+    feedbackQuestion5: 'Your Comment?',
+    feedbackQuestionHint: 'Rating: 1-5 (Very Bad - Very Good)',
+    feedbackCheck: 'Please give your rating',
 
   };
 
@@ -257,6 +272,14 @@ mixin Translation{
     spiralCareDisclaimer: 'Penafian Spiral Care: Hai, saya Muhammad Yusri Bin Yusoff, pemilik aplikasi Spiral Care. Bagi pihak penganjur acara, kami memohon sokongan anda. Yakinlah, semua organisasi yang didaftarkan dalam aplikasi kami menjalani pemeriksaan latar belakang yang menyeluruh dan kelulusan oleh pasukan khusus Spiral Care.',
     volunteerRegisterTitle: 'Pendaftaran Sukarelawan',
     itemRequestTitle: 'Senarai Barang Di Perlukan',
+    feedbackFormTitle: 'Borang Maklum Balas',
+    feedbackQuestion1: 'Adakah organizer seorang yang bertanggungjawab?',
+    feedbackQuestion2: 'Adakah organizer kerap memuat naik gambar event?',
+    feedbackQuestion3: 'Adakah segala maklumat yang diberikan oleh organizer adalah benar dan tidak mengelirukan',
+    feedbackQuestion4: 'Berapa anda syorkan organizer ini kepada umum?',
+    feedbackQuestion5: 'Komen Anda?',
+    feedbackQuestionHint: 'Penilaian: 1-5 (Sangat Buruk - Sangat Baik)',
+    feedbackCheck: 'Sila berikan penilaian anda'
 
   };
 }

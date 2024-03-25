@@ -3,3 +3,4 @@ export 'event_items.dart';
 export 'event_donation.dart';
 export 'event_gallery.dart';
 export 'event_volunteer.dart';
+export 'event_feedback.dart';

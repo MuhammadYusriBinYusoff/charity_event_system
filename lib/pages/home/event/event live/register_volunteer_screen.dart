@@ -39,9 +39,7 @@ class _RegisterVolunteerFormPageState extends State<RegisterVolunteerFormPage> {
         Provider.of<EventVolunteerProvider>(context);
         
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Translation.volunteerRegisterTitle.getString(context)),
-      ),
+      appBar: CustomAppBar(title: Translation.volunteerRegisterTitle.getString(context)),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(Dimens.space16),

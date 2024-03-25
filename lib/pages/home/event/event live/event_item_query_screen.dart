@@ -23,9 +23,7 @@ class _ItemQueryPageState extends State<ItemQueryPage> {
     EventItemsProvider eventItem = Provider.of<EventItemsProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Translation.itemRequestTitle.getString(context)),
-      ),
+      appBar: CustomAppBar(title: Translation.itemRequestTitle.getString(context)),
       body: Container(
         padding: EdgeInsets.all(Dimens.space12),
         child: SingleChildScrollView(
