@@ -8,10 +8,12 @@ import 'package:provider/provider.dart';
 
 class UserFeedbackPage extends StatefulWidget {
   final String? id;
+  final int? index;
 
   const UserFeedbackPage({
     Key? key,
     this.id,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -142,7 +144,7 @@ class _UserFeedbackPageState extends State<UserFeedbackPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const EventPostingDescriptionPage()),
+                              builder: (context) => EventPostingDescriptionPage(index: widget.index,)),
                         );
                       }
                     },

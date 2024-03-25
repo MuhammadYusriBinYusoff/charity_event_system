@@ -64,6 +64,7 @@ class _EventPostingDescriptionPageState
                                         id: eventDetailsFile
                                             .eventDetailsList[widget.index ?? 0]
                                             .id,
+                                        index: widget.index,
                                       )),
                             );
                           }),
