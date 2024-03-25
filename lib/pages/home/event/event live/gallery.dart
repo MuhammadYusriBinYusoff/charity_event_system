@@ -1,9 +1,7 @@
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 class GalleryPage extends StatefulWidget {
@@ -21,8 +19,6 @@ class GalleryPage extends StatefulWidget {
 class _GalleryPageState extends State<GalleryPage> {
   @override
   Widget build(BuildContext context) {
-    EventDetailsProvider eventDetailsFile =
-        Provider.of<EventDetailsProvider>(context);
     EventGalleryProvider eventGalleryFile =
         Provider.of<EventGalleryProvider>(context);
 

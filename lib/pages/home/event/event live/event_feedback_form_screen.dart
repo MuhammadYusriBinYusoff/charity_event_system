@@ -1,7 +1,10 @@
 import 'package:charity_event_system/common/common.dart';
+import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
+import 'package:charity_event_system/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 
 class UserFeedbackPage extends StatefulWidget {
   final String? id;
@@ -17,20 +20,23 @@ class UserFeedbackPage extends StatefulWidget {
 
 class _UserFeedbackPageState extends State<UserFeedbackPage> {
   final List<String> scoreRate = ['0', '1', '2', '3', '4', '5'];
-  String value1 = '0';
-  String value2 = '0';
-  String value3 = '0';
-  String value4 = '0';
-  String value5 = '0';
+  int value1 = 0;
+  int value2 = 0;
+  int value3 = 0;
+  int value4 = 0;
+  int value5 = 0;
+  int totalValue = 0;
   String? selectedValue;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-        
+    EventFeedbackProvider eventFeedback = Provider.of<EventFeedbackProvider>(context);
+    
     return Scaffold(
-      appBar: CustomAppBar(title: Translation.feedbackFormTitle.getString(context)),
+      appBar:
+          CustomAppBar(title: Translation.feedbackFormTitle.getString(context)),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -40,18 +46,18 @@ class _UserFeedbackPageState extends State<UserFeedbackPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SpacerV(value: Dimens.space32,),
+                SpacerV(
+                  value: Dimens.space32,
+                ),
                 CustomDropdownFormField(
                   hint: Translation.feedbackQuestion1.getString(context),
                   items: scoreRate,
                   onChanged: (value) {
-                    // Do something when selected item is changed.
-                    value1 = value ?? '';
-                    print(value1);
+                    value1 = int.parse(value ?? '0');
                   },
                   validator: (value) {
                     if (value == null) {
-                      return 'Please select gender.';
+                      return Translation.feedbackCheck.getString(context);
                     }
                     return null;
                   },
@@ -61,30 +67,25 @@ class _UserFeedbackPageState extends State<UserFeedbackPage> {
                   hint: Translation.feedbackQuestion2.getString(context),
                   items: scoreRate,
                   onChanged: (value) {
-                    // Do something when selected item is changed.
-                    print("lalalala");
-                    print(value);
+                    value2 = int.parse(value ?? '0');;
                   },
                   validator: (value) {
                     if (value == null) {
-                      return 'Please select gender.';
+                      return Translation.feedbackCheck.getString(context);
                     }
                     return null;
                   },
                 ),
                 SpacerV(value: Dimens.space24),
                 CustomDropdownFormField(
-                  hint:
-                      Translation.feedbackQuestion3.getString(context),
+                  hint: Translation.feedbackQuestion3.getString(context),
                   items: scoreRate,
                   onChanged: (value) {
-                    // Do something when selected item is changed.
-                    print("lalalala");
-                    print(value);
+                    value3 = int.parse(value ?? '0');;
                   },
                   validator: (value) {
                     if (value == null) {
-                      return 'Please select gender.';
+                      return Translation.feedbackCheck.getString(context);
                     }
                     return null;
                   },
@@ -94,13 +95,11 @@ class _UserFeedbackPageState extends State<UserFeedbackPage> {
                   hint: Translation.feedbackQuestion4.getString(context),
                   items: scoreRate,
                   onChanged: (value) {
-                    // Do something when selected item is changed.
-                    print("lalalala");
-                    print(value);
+                    value4 = int.parse(value ?? '0');;
                   },
                   validator: (value) {
                     if (value == null) {
-                      return 'Please select gender.';
+                      return Translation.feedbackCheck.getString(context);
                     }
                     return null;
                   },
@@ -110,8 +109,7 @@ class _UserFeedbackPageState extends State<UserFeedbackPage> {
                   Translation.feedbackQuestion5.getString(context),
                   style: const TextStyle(
                     fontSize: 13,
-                    fontWeight:
-                        FontWeight.w500,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 SpacerV(value: Dimens.space8),
@@ -122,28 +120,46 @@ class _UserFeedbackPageState extends State<UserFeedbackPage> {
                 ),
                 SpacerV(value: Dimens.space30),
                 SizedBox(
-                width: double.infinity,
-                height: Dimens.space40,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
+                  width: double.infinity,
+                  height: Dimens.space40,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
+                        totalValue = value1 + value2 + value3 + value4;
+                        final newFeedback = EventFeedbackModel(
+                          id: widget.id,
+                          responsibilityScore: value1,
+                          updateGalleryScore: value2,
+                          informationUptoDateScore: value3,
+                          recommendationScore: value4,
+                          currentScoreCollected: totalValue,
+                          comment:_commentController.text,
+                        );
+
+                        eventFeedback.createFeedbackDetails(newFeedback);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EventPostingDescriptionPage()),
+                        );
                       }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Palette.purpleMain,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Dimens.space8),
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Palette.purpleMain,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(Dimens.space8),
+                      ),
+                    ),
+                    child: Text(
+                      Translation.submit.getString(context),
+                      style: const TextStyle(
+                          color: Palette.white, fontFamily: 'Roborto'),
                     ),
                   ),
-                  child: Text(
-                    Translation.submit.getString(context),
-                    style: const TextStyle(
-                        color: Palette.white, fontFamily: 'Roborto'),
-                  ),
                 ),
-              ),
               ],
             ),
           ),
