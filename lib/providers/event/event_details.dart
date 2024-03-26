@@ -42,6 +42,15 @@ class EventDetailsProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> updateEventDetails(EventDetailsModel newEventDetails) async {
+    _eventDetails = newEventDetails;
+    await FirebaseFirestore.instance
+        .collection("eventDetails")
+        .doc(newEventDetails.id)
+        .update(_eventDetails.toJson());
+    notifyListeners();
+  }
+
   Future<void> fetchAllEventDetails() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance

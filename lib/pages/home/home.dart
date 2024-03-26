@@ -185,6 +185,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 .donationDetails.targetMoney ??
                                             1))
                                     .toStringAsFixed(2)),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      EventPostingDescriptionPage(
+                                    index: i,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                       ],
                     ),
@@ -217,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const EventDescriptionPage(),
+                            builder: (context) => EventDescriptionPage(),
                           ),
                         );
                       },
@@ -236,6 +247,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                   1))
                           .toStringAsFixed(2)),
                       type: eventDetailsFile.eventDetails.type,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventDescriptionPage(imageUrl: eventDetailsFile.eventDetails.photoEventUrl, title: eventDetailsFile.eventDetails.eventName, description: eventDetailsFile.eventDetails.eventDescription, session: "update"),
+                          ),
+                        );
+                      },
                     ),
                 ],
               ),

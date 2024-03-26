@@ -12,7 +12,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EventDescriptionPage extends StatefulWidget {
-  const EventDescriptionPage({Key? key}) : super(key: key);
+  String? imageUrl;
+  String? title;
+  String? description;
+  String? session;
+
+  EventDescriptionPage({
+    Key? key,
+    this.imageUrl,
+    this.title,
+    this.description,
+    this.session,
+  }) : super(key: key);
 
   @override
   _EventDescriptionPageState createState() => _EventDescriptionPageState();
@@ -31,6 +42,14 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
   String? bannerImageUrl;
   bool isLoading = false;
 
+  @override
+  void initState() {
+    super.initState();
+    _charityEventTitleController.text = widget.title ?? "";
+    _charityEventDescriptionController.text = widget.description ?? "";
+    bannerImageUrl = widget.imageUrl ?? "";
+  }
+
   Future<XFile?> pickImage() async {
     ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -47,7 +66,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
 
     try {
       setState(() {
-        isLoading = true; // Show loading indicator
+        isLoading = true;
       });
       await referenceImageToUpload.putFile(File(file.path));
       bannerImageUrl = await referenceImageToUpload.getDownloadURL();
@@ -130,82 +149,95 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                 height: Dimens.space160,
                 bannerImageUrl: bannerImageUrl,
                 onPressed: () async {
-                  XFile? file = await pickImage(); 
+                  XFile? file = await pickImage();
 
                   if (file != null) {
-                    await uploadImage(file,
-                        organizationUser.organizers.id);
+                    await uploadImage(file, organizationUser.organizers.id);
                   }
                 },
               ),
               SpacerV(value: Dimens.space24),
-              Text(
-                Translation.eventTitle.getString(context),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SpacerV(
-                value: Dimens.space8,
-              ),
-              buildTextField(
+              CustomTextField(
                 controller: _charityEventTitleController,
-                hintText: Translation.pleaseHintText.getString(context),
+                labelText: Translation.eventTitle.getString(context),
               ),
               SpacerV(value: Dimens.space24),
-              Text(
-                Translation.eventDescription.getString(context),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SpacerV(
-                value: Dimens.space8,
-              ),
-              buildTextField(
+              CustomTextField(
                 controller: _charityEventDescriptionController,
-                hintText: Translation.pleaseHintText.getString(context),
+                labelText: Translation.eventDescription.getString(context),
                 multiLine: true,
               ),
               SpacerV(value: Dimens.space24),
               SizedBox(
                 width: double.infinity,
                 height: Dimens.space40,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    //Note:Sementara comment...untuk test gallery page je
-                    final userUID = organizationUser.organizers.id;
-                    final newEvent = EventDetailsModel(
-                      id: userUID,
-                      eventName: _charityEventTitleController.text,
-                      eventDescription: _charityEventDescriptionController.text,
-                      type: "organizer",
-                      photoEventUrl: bannerImageUrl,
-                    );
-                    eventDetailsFile.createEventDetails(newEvent);
+                child: widget.session == "update"
+                    ? ElevatedButton(
+                        onPressed: () async {
+                          final userUID = organizationUser.organizers.id;
+                          final newEvent = EventDetailsModel(
+                            id: userUID,
+                            eventName: _charityEventTitleController.text,
+                            eventDescription:
+                                _charityEventDescriptionController.text,
+                            type: "organizer",
+                            photoEventUrl: bannerImageUrl,
+                          );
+                          eventDetailsFile.updateEventDetails(newEvent);
 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EventGalleryPage(),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MyHomePage(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Palette.purpleMain,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Dimens.space8),
+                          ),
+                        ),
+                        child: Text(
+                          Translation.save.getString(context),
+                          style: const TextStyle(
+                              color: Palette.white, fontFamily: 'Roboto'),
+                        ),
+                      )
+                    : ElevatedButton(
+                        onPressed: () async {
+                          final userUID = organizationUser.organizers.id;
+                          final newEvent = EventDetailsModel(
+                            id: userUID,
+                            eventName: _charityEventTitleController.text,
+                            eventDescription:
+                                _charityEventDescriptionController.text,
+                            type: "organizer",
+                            photoEventUrl: bannerImageUrl,
+                          );
+                          eventDetailsFile.createEventDetails(newEvent);
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EventGalleryPage(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Palette.purpleMain,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(Dimens.space8),
+                          ),
+                        ),
+                        child: Text(
+                          Translation.next.getString(context),
+                          style: const TextStyle(
+                              color: Palette.white, fontFamily: 'Roboto'),
+                        ),
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Palette.purpleMain,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Dimens.space8),
-                    ),
-                  ),
-                  child: Text(
-                    Translation.next.getString(context),
-                    style: const TextStyle(
-                        color: Palette.white, fontFamily: 'Roborto'),
-                  ),
-                ),
               ),
             ],
           ),
