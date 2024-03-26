@@ -24,6 +24,8 @@ class _MyHomePageState extends State<MyHomePage> {
         Provider.of<EventDetailsProvider>(context);
     EventDonationProvider eventDonationsFile =
         Provider.of<EventDonationProvider>(context);
+    EventGalleryProvider eventGalleryFile =
+        Provider.of<EventGalleryProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
@@ -248,10 +250,17 @@ class _MyHomePageState extends State<MyHomePage> {
                           .toStringAsFixed(2)),
                       type: eventDetailsFile.eventDetails.type,
                       onTap: () {
+                        //@YUSRI: Save for later (this is used to edit event descreiptyion)
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => EventDescriptionPage(imageUrl: eventDetailsFile.eventDetails.photoEventUrl, title: eventDetailsFile.eventDetails.eventName, description: eventDetailsFile.eventDetails.eventDescription, session: "update"),
+                        //   ),
+                        // );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EventDescriptionPage(imageUrl: eventDetailsFile.eventDetails.photoEventUrl, title: eventDetailsFile.eventDetails.eventName, description: eventDetailsFile.eventDetails.eventDescription, session: "update"),
+                            builder: (context) => EventGalleryPage(imageUrlList: eventGalleryFile.eventGallery.imageGalleryUrls,session: "update"),
                           ),
                         );
                       },

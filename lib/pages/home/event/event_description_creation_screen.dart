@@ -12,12 +12,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EventDescriptionPage extends StatefulWidget {
-  String? imageUrl;
-  String? title;
-  String? description;
-  String? session;
+  final String? imageUrl;
+  final String? title;
+  final String? description;
+  final String? session;
 
-  EventDescriptionPage({
+  const EventDescriptionPage({
     Key? key,
     this.imageUrl,
     this.title,
@@ -221,7 +221,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const EventGalleryPage(),
+                              builder: (context) => EventGalleryPage(),
                             ),
                           );
                         },

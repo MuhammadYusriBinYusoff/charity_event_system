@@ -61,6 +61,7 @@ mixin Translation{
   static const String save = "save";
   static const String submit = "submit";
   static const String insert = "insert";
+  static const String delete = "delete";
 
   //Homepage
   static const String charity2024Title = 'charity2024';
@@ -86,6 +87,8 @@ mixin Translation{
   static const String donationBankAccount = 'donationBankAccount';
   static const String uploadGalleryImage = 'uploadGalleryImage';
   static const String showGalleryImage = 'showGalleryImage';
+  static const String deleteGalleryTitle = 'deleteGalleryTitle';
+  static const String deleteGalleryImageQuestion = 'deleteGalleryImageQuestion';
   static const String spiralCareDisclaimer = 'spiralCareDisclaimer';
   static const String volunteerRegisterTitle = 'volunteerRegisterTitle';
   static const String itemRequestTitle = 'itemRequestTitle';
@@ -153,6 +156,7 @@ mixin Translation{
     save: 'Save',
     submit: 'Submit',
     insert: 'Insert',
+    delete: 'Delete',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
@@ -177,6 +181,8 @@ mixin Translation{
     donationBankAccount: 'Bank Account',
     uploadGalleryImage: 'Upload Gallery Image',
     showGalleryImage: 'Gallery',
+    deleteGalleryTitle: 'Delete Image?',
+    deleteGalleryImageQuestion: 'Are you sure you want to delete this image?',
     spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
     volunteerRegisterTitle: 'Volunteer Registration Form',
     itemRequestTitle: 'List of Items Needed',
@@ -245,6 +251,7 @@ mixin Translation{
     save: 'Simpan',
     submit: 'Hantar',
     insert: 'Daftarkan',
+    delete: 'Padam',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',
@@ -269,6 +276,8 @@ mixin Translation{
     donationBankAccount: 'Akaun Bank',
     uploadGalleryImage: 'Muat Turun Gambar Galeri',
     showGalleryImage: 'Galleri',
+    deleteGalleryTitle: 'Padam, Gambar',
+    deleteGalleryImageQuestion: 'Adakah awak yakin untuk padam gambar ini',
     spiralCareDisclaimer: 'Penafian Spiral Care: Hai, saya Muhammad Yusri Bin Yusoff, pemilik aplikasi Spiral Care. Bagi pihak penganjur acara, kami memohon sokongan anda. Yakinlah, semua organisasi yang didaftarkan dalam aplikasi kami menjalani pemeriksaan latar belakang yang menyeluruh dan kelulusan oleh pasukan khusus Spiral Care.',
     volunteerRegisterTitle: 'Pendaftaran Sukarelawan',
     itemRequestTitle: 'Senarai Barang Di Perlukan',

@@ -2,12 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 class ImageItem extends StatelessWidget {
   final String imageUrl;
   final double imageSize;
   final int index;
   final List<String>? imageUrls;
+  final String? session;
+  final Function onDelete;
 
   const ImageItem({
     Key? key,
@@ -15,6 +18,8 @@ class ImageItem extends StatelessWidget {
     required this.imageSize,
     required this.index,
     this.imageUrls,
+    this.session,
+    required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -24,9 +29,38 @@ class ImageItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HomePhotoView(urls: imageUrls, start: index,),
+            builder: (context) => HomePhotoView(
+              urls: imageUrls,
+              start: index,
+            ),
           ),
         );
+      },
+      onLongPress: () {
+        if (session == "update") {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(Translation.deleteGalleryTitle.getString(context)),
+              content: Text(Translation.deleteGalleryImageQuestion.getString(context)),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(Translation.cancel.getString(context)),
+                ),
+                TextButton(
+                  onPressed: () {
+                    onDelete();
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(Translation.delete.getString(context)),
+                ),
+              ],
+            ),
+          );
+        }
       },
       child: Container(
         margin: EdgeInsets.only(bottom: Dimens.space8),
