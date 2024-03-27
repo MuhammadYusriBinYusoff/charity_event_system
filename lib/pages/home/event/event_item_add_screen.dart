@@ -184,7 +184,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              const EventDonationManagementPage()),
+                              EventDonationManagementPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

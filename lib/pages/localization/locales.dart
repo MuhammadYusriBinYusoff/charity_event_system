@@ -86,6 +86,7 @@ mixin Translation{
   static const String donationStartDate = 'donationStartDate';
   static const String donationEndDate = 'donationEndDate';
   static const String donationBankAccount = 'donationBankAccount';
+  static const String donationQrcode = 'donationQrcode';
   static const String uploadGalleryImage = 'uploadGalleryImage';
   static const String showGalleryImage = 'showGalleryImage';
   static const String deleteGalleryTitle = 'deleteGalleryTitle';
@@ -182,6 +183,7 @@ mixin Translation{
     donationStartDate: 'Start Date',
     donationEndDate: 'End Date',
     donationBankAccount: 'Bank Account',
+    donationQrcode: 'Qr Code',
     uploadGalleryImage: 'Upload Gallery Image',
     showGalleryImage: 'Gallery',
     deleteGalleryTitle: 'Delete Image?',
@@ -279,6 +281,7 @@ mixin Translation{
     donationStartDate: 'Tarikh Mula',
     donationEndDate: 'Tarikh Akhir',
     donationBankAccount: 'Akaun Bank',
+    donationQrcode: 'Kod Qr',
     uploadGalleryImage: 'Muat Turun Gambar Galeri',
     showGalleryImage: 'Galleri',
     deleteGalleryTitle: 'Padam, Gambar',

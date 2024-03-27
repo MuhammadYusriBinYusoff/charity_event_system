@@ -7,6 +7,7 @@ class EventDonationModel {
   final String? startDate;
   final String? endDate;
   final String? bankAccount;
+  final String? photoEventUrl;
 
   EventDonationModel({
     this.id,
@@ -15,6 +16,7 @@ class EventDonationModel {
     this.startDate,
     this.endDate,
     this.bankAccount,
+    this.photoEventUrl,
   });
 
   static EventDonationModel fromSnapshot(
@@ -26,6 +28,7 @@ class EventDonationModel {
       startDate: snapshot['startDate'],
       endDate: snapshot['endDate'],
       bankAccount: snapshot['bankAccount'],
+      photoEventUrl: snapshot['photoEventUrl']
     );
   }
 
@@ -37,6 +40,7 @@ class EventDonationModel {
       "startDate": startDate,
       "endDate": endDate,
       "bankAccount": bankAccount,
+      "photoEventUrl": photoEventUrl,
     };
   }
 }

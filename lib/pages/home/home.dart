@@ -26,7 +26,8 @@ class _MyHomePageState extends State<MyHomePage> {
         Provider.of<EventDonationProvider>(context);
     EventGalleryProvider eventGalleryFile =
         Provider.of<EventGalleryProvider>(context);
-    EventVolunteerProvider eventVolunteerFile = Provider.of<EventVolunteerProvider>(context);
+    EventVolunteerProvider eventVolunteerFile =
+        Provider.of<EventVolunteerProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
@@ -264,10 +265,30 @@ class _MyHomePageState extends State<MyHomePage> {
                         //     builder: (context) => EventGalleryPage(imageUrlList: eventGalleryFile.eventGallery.imageGalleryUrls,session: "update"),
                         //   ),
                         // );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const VolunteerQueryPage(),
+                        //   ),
+                        // );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const VolunteerQueryPage(),
+                            builder: (context) => EventDonationManagementPage(
+                              targetMoney: eventDonationsFile
+                                  .donationDetails.targetMoney,
+                              currentCollected: eventDonationsFile
+                                  .donationDetails.currentCollected,
+                              startDate:
+                                  eventDonationsFile.donationDetails.startDate,
+                              endDate:
+                                  eventDonationsFile.donationDetails.endDate,
+                              bankAccount: eventDonationsFile
+                                  .donationDetails.bankAccount,
+                              photoEventUrl: eventDonationsFile
+                                  .donationDetails.photoEventUrl,
+                              session: "update",
+                            ),
                           ),
                         );
                       },
