@@ -26,6 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
         Provider.of<EventDonationProvider>(context);
     EventGalleryProvider eventGalleryFile =
         Provider.of<EventGalleryProvider>(context);
+    EventVolunteerProvider eventVolunteerFile = Provider.of<EventVolunteerProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
@@ -257,10 +258,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         //     builder: (context) => EventDescriptionPage(imageUrl: eventDetailsFile.eventDetails.photoEventUrl, title: eventDetailsFile.eventDetails.eventName, description: eventDetailsFile.eventDetails.eventDescription, session: "update"),
                         //   ),
                         // );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => EventGalleryPage(imageUrlList: eventGalleryFile.eventGallery.imageGalleryUrls,session: "update"),
+                        //   ),
+                        // );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EventGalleryPage(imageUrlList: eventGalleryFile.eventGallery.imageGalleryUrls,session: "update"),
+                            builder: (context) => const VolunteerQueryPage(),
                           ),
                         );
                       },

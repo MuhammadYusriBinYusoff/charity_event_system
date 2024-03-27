@@ -11,14 +11,14 @@ class EventVolunteerProvider extends ChangeNotifier {
   List<VolunteerModel> get volunteerDetailsList => _volunteerDetailsList;
 
   Future<void> createVolunteerDetails(
-      VolunteerModel newVolunteerDetails) async {
+      VolunteerModel newVolunteerDetails, String? organizerId) async {
     _volunteerDetails = newVolunteerDetails;
 
     FirebaseFirestore.instance
         .collection("volunteer")
-        .doc(newVolunteerDetails.id)
+        .doc(organizerId)
         .collection("list volunteer")
-        .doc()
+        .doc(newVolunteerDetails.id)
         .set(_volunteerDetails.toJson());
     notifyListeners();
   }
@@ -29,20 +29,42 @@ class EventVolunteerProvider extends ChangeNotifier {
 
     if (user != null) {
       String eventVolunteerId = user.uid;
-      CollectionReference eventVolunteerCollection =
-          FirebaseFirestore.instance.collection('volunteer');
-      DocumentSnapshot<Map<String, dynamic>> eventVolunteerData =
-          await eventVolunteerCollection.doc(eventVolunteerId).get()
-              as DocumentSnapshot<Map<String, dynamic>>;
+      try {
+        QuerySnapshot<Map<String, dynamic>> querySnapshot =
+            await FirebaseFirestore.instance
+                .collection('volunteer')
+                .doc(eventVolunteerId)
+                .collection("list volunteer")
+                .get();
 
-      if (eventVolunteerData.exists) {
-        _volunteerDetails = VolunteerModel.fromSnapshot(eventVolunteerData);
+        _volunteerDetailsList = querySnapshot.docs
+            .map((doc) => VolunteerModel.fromSnapshot(doc))
+            .toList();
+
         notifyListeners();
-      } else {
-        print('Volunteer data not found.');
+      } catch (error) {
+        print('Error fetching volunteer List: $error');
       }
     } else {
       print('No user signed in.');
+    }
+  }
+
+  Future<void> deleteEventVolunteer(String? volunteerId) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection("volunteer")
+            .doc(user.uid)
+            .collection("list volunteer")
+            .doc(volunteerId)
+            .delete();
+
+        notifyListeners();
+      }
+    } catch (error) {
+      print('Error deleting volunteer: $error');
     }
   }
 

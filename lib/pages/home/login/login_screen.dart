@@ -28,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
     EventDetailsProvider eventDetailsFile = Provider.of<EventDetailsProvider>(context);
     EventDonationProvider eventDonationsFile = Provider.of<EventDonationProvider>(context);
     EventGalleryProvider eventGalleryFile = Provider.of<EventGalleryProvider>(context);
+    EventVolunteerProvider eventVolunteerFile = Provider.of<EventVolunteerProvider>(context);
     
     return Scaffold(
       appBar: AppBar(
@@ -76,6 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                       await eventDetailsFile.fetchEventDetailsData();
                       await eventDonationsFile.fetchEventDonationData();
                       await eventGalleryFile.fetchEventGalleryData();
+                      await eventVolunteerFile.fetchEventVolunteerData();
                       await organizationUser.fetchAllOrganizers();
                       await eventDetailsFile.fetchAllEventDetails();
                       await eventDonationsFile.fetchAllDonationDetails();

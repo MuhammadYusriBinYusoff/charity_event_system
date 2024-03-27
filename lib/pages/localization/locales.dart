@@ -62,6 +62,7 @@ mixin Translation{
   static const String submit = "submit";
   static const String insert = "insert";
   static const String delete = "delete";
+  static const String action = "action";
 
   //Homepage
   static const String charity2024Title = 'charity2024';
@@ -91,6 +92,7 @@ mixin Translation{
   static const String deleteGalleryImageQuestion = 'deleteGalleryImageQuestion';
   static const String spiralCareDisclaimer = 'spiralCareDisclaimer';
   static const String volunteerRegisterTitle = 'volunteerRegisterTitle';
+  static const String volunteerOrganizerView = 'volunteerOrganizerView';
   static const String itemRequestTitle = 'itemRequestTitle';
   static const String feedbackFormTitle = 'feedbackFormTitlte';
   static const String feedbackQuestion1 = "feedbackQuestion1";
@@ -157,6 +159,7 @@ mixin Translation{
     submit: 'Submit',
     insert: 'Insert',
     delete: 'Delete',
+    action: 'Action',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
@@ -185,6 +188,7 @@ mixin Translation{
     deleteGalleryImageQuestion: 'Are you sure you want to delete this image?',
     spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
     volunteerRegisterTitle: 'Volunteer Registration Form',
+    volunteerOrganizerView: 'Volunteer Checklist',
     itemRequestTitle: 'List of Items Needed',
     feedbackFormTitle: 'Feedback Form',
     feedbackQuestion1: 'Is the organizer a responsible person?',
@@ -252,6 +256,7 @@ mixin Translation{
     submit: 'Hantar',
     insert: 'Daftarkan',
     delete: 'Padam',
+    action: 'Tindakan',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',
@@ -280,6 +285,7 @@ mixin Translation{
     deleteGalleryImageQuestion: 'Adakah awak yakin untuk padam gambar ini',
     spiralCareDisclaimer: 'Penafian Spiral Care: Hai, saya Muhammad Yusri Bin Yusoff, pemilik aplikasi Spiral Care. Bagi pihak penganjur acara, kami memohon sokongan anda. Yakinlah, semua organisasi yang didaftarkan dalam aplikasi kami menjalani pemeriksaan latar belakang yang menyeluruh dan kelulusan oleh pasukan khusus Spiral Care.',
     volunteerRegisterTitle: 'Pendaftaran Sukarelawan',
+    volunteerOrganizerView: 'Senarai Sukarelawan',
     itemRequestTitle: 'Senarai Barang Di Perlukan',
     feedbackFormTitle: 'Borang Maklum Balas',
     feedbackQuestion1: 'Adakah organizer seorang yang bertanggungjawab?',
