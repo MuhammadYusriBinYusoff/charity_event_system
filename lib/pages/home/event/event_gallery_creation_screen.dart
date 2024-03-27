@@ -12,14 +12,20 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EventGalleryPage extends StatefulWidget {
-  const EventGalleryPage({Key? key}) : super(key: key);
+  final List<String>? imageUrlList;
+  final String? session;
+
+  const EventGalleryPage({
+    Key? key,
+    this.imageUrlList,
+    this.session,
+  }) : super(key: key);
 
   @override
   _EventGalleryPageState createState() => _EventGalleryPageState();
 }
 
 class _EventGalleryPageState extends State<EventGalleryPage> {
-
   TextStyle textStyle = const TextStyle(
     fontFamily: 'Roboto',
   );
@@ -28,6 +34,12 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
   List<String>? bannerImageUrlList;
   bool isLoading = false;
 
+   @override
+    void initState() {
+      super.initState();
+      bannerImageUrlList = widget.imageUrlList;
+    }
+
   Future<List<XFile>> pickMultipleImages() async {
     ImagePicker imagePicker = ImagePicker();
     List<XFile>? file = await imagePicker.pickMultiImage();
@@ -35,9 +47,8 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
     for (var image in file) {
       print('Image path: ${image.path}');
     }
-    return file ?? [];
+    return file;
   }
-
 
   Future<void> uploadImages(List<XFile> files, String? userId) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
@@ -46,7 +57,7 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
 
     try {
       setState(() {
-        isLoading = true; 
+        isLoading = true;
       });
 
       for (var file in files) {
@@ -158,13 +169,41 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
               SpacerV(
                 value: Dimens.space8,
               ),
-              ImageListWidget(imageUrls: bannerImageUrlList),
-
+              ImageListWidget(imageUrls: bannerImageUrlList,session: widget.session,),
               SpacerV(value: Dimens.space24),
               SizedBox(
                 width: double.infinity,
                 height: Dimens.space40,
-                child: ElevatedButton(
+                child: widget.session == "update"
+                ? ElevatedButton(
+                  onPressed: () async {
+                    final userUID = organizationUser.organizers.id;
+                    final newGallery = EventGalleryModel(
+                      id: userUID,
+                      imageGalleryUrls: bannerImageUrlList,
+                    );
+
+                    eventGalleryFile.updateEventGallery(newGallery);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyHomePage(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Palette.purpleMain,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.space8),
+                    ),
+                  ),
+                  child: Text(
+                    Translation.save.getString(context),
+                    style: const TextStyle(
+                        color: Palette.white, fontFamily: 'Roborto'),
+                  ),
+                ) : ElevatedButton(
                   onPressed: () async {
                     //Note: Comment kejap untuk buat item
                     final userUID = organizationUser.organizers.id;

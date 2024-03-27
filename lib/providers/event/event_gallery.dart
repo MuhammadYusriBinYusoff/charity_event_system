@@ -19,6 +19,15 @@ class EventGalleryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateEventGallery(EventGalleryModel newEventGallery) async {
+    _eventGallery = newEventGallery;
+    await FirebaseFirestore.instance
+        .collection("eventGallery")
+        .doc(newEventGallery.id)
+        .update(_eventGallery.toJson());
+    notifyListeners();
+  }
+
   Future<void> fetchEventGalleryData() async {
     User? user = FirebaseAuth.instance.currentUser;
 

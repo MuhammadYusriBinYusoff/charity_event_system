@@ -6,6 +6,7 @@ import 'package:charity_event_system/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class RegisterVolunteerFormPage extends StatefulWidget {
   final String? id;
@@ -77,8 +78,10 @@ class _RegisterVolunteerFormPageState extends State<RegisterVolunteerFormPage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
+                    String newId = const Uuid().v4();
+
                     final newVolunteer = VolunteerModel(
-                      id: widget.id,
+                      id: newId,
                       volunteerName: _volunteerNameController.text ,
                       volunteerContact: _volunteerContactController.text,
                       volunteerIc: _volunteerIcController.text,
@@ -86,7 +89,7 @@ class _RegisterVolunteerFormPageState extends State<RegisterVolunteerFormPage> {
                       volunteerEmail: _volunteerEmailController.text,
                     );
 
-                    eventVolunteer.createVolunteerDetails(newVolunteer);
+                    eventVolunteer.createVolunteerDetails(newVolunteer, widget.id);
 
                     //[@TODO YUSRI] Later for display all volunteer name
                     //await eventVolunteer.fetchAllVolunteerDetails(widget.id);

@@ -62,11 +62,5 @@ class _CustomTextFieldState extends State<CustomTextField> {
       ),
     );
   }
-
-  @override
-  void dispose() {
-    _textEditingController.dispose();
-    super.dispose();
-  }
 }
 

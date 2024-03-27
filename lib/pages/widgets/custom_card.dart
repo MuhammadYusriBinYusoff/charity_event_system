@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:charity_event_system/common/common.dart';
-import 'package:charity_event_system/pages/home/homes.dart';
 import 'package:charity_event_system/pages/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -29,21 +28,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (type == "organizer" && isEventListClicked == false)
-          print("Will continue later to handle manage event");
-
-        if (isEventListClicked == true) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EventPostingDescriptionPage(
-                index: indexCard,
-              ),
-            ),
-          );
-        }
-      },
+      onTap: onTap,
       child: SizedBox(
         width: Dimens.space250,
         height: Dimens.space280,
