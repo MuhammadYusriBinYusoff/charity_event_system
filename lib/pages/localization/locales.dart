@@ -103,6 +103,13 @@ mixin Translation{
   static const String feedbackQuestion5 = "feedbackQuestion5";
   static const String feedbackQuestionHint = "feedbackQuestionHint";
   static const String feedbackCheck = "feedbackCheck";
+  static const String manageDesciption = "manageDesciption";
+  static const String manageItem = "manageItem";
+  static const String manageDonation = "manageDonation";
+  static const String manageVolunteer = "manageVolunteer";
+  static const String teamPlanning = "teamPlanning";
+  static const String manageGallery = "manageGallery";
+  static const String feedbackCollection = "feedbackCollection";
   
 
   static const Map<String,dynamic> EN = {
@@ -200,6 +207,13 @@ mixin Translation{
     feedbackQuestion5: 'Your Comment?',
     feedbackQuestionHint: 'Rating: 1-5 (Very Bad - Very Good)',
     feedbackCheck: 'Please give your rating',
+    manageDesciption: 'Manage Event',
+    manageDonation: 'Manage Donation',
+    manageGallery: 'Manage Gallery',
+    feedbackCollection: 'User Comment',
+    teamPlanning: 'Collaboration',
+    manageVolunteer: 'Manage Volunteer',
+    manageItem: 'Manage item',
 
   };
 
@@ -297,7 +311,14 @@ mixin Translation{
     feedbackQuestion4: 'Berapa anda syorkan organizer ini kepada umum?',
     feedbackQuestion5: 'Komen Anda?',
     feedbackQuestionHint: 'Penilaian: 1-5 (Sangat Buruk - Sangat Baik)',
-    feedbackCheck: 'Sila berikan penilaian anda'
+    feedbackCheck: 'Sila berikan penilaian anda',
+    manageDesciption: 'Urus Event',
+    manageDonation: 'Urus Sumbangan',
+    manageGallery: 'Urus Galeri',
+    feedbackCollection: 'Komen user',
+    teamPlanning: 'Kolaborasi',
+    manageVolunteer: 'Urus Sukarelawan',
+    manageItem: 'Urus barang',
 
   };
 }

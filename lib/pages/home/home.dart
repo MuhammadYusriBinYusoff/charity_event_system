@@ -232,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EventDescriptionPage(),
+                            builder: (context) => const EventDescriptionPage(),
                           ),
                         );
                       },
@@ -253,42 +253,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       type: eventDetailsFile.eventDetails.type,
                       onTap: () {
                         //@YUSRI: Save for later (this is used to edit event descreiptyion)
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => EventDescriptionPage(imageUrl: eventDetailsFile.eventDetails.photoEventUrl, title: eventDetailsFile.eventDetails.eventName, description: eventDetailsFile.eventDetails.eventDescription, session: "update"),
-                        //   ),
-                        // );
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => EventGalleryPage(imageUrlList: eventGalleryFile.eventGallery.imageGalleryUrls,session: "update"),
-                        //   ),
-                        // );
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const VolunteerQueryPage(),
-                        //   ),
-                        // );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EventDonationManagementPage(
-                              targetMoney: eventDonationsFile
-                                  .donationDetails.targetMoney,
-                              currentCollected: eventDonationsFile
-                                  .donationDetails.currentCollected,
-                              startDate:
-                                  eventDonationsFile.donationDetails.startDate,
-                              endDate:
-                                  eventDonationsFile.donationDetails.endDate,
-                              bankAccount: eventDonationsFile
-                                  .donationDetails.bankAccount,
-                              photoEventUrl: eventDonationsFile
-                                  .donationDetails.photoEventUrl,
-                              session: "update",
-                            ),
+                            builder: (context) => const CategoryPage(),
                           ),
                         );
                       },

@@ -13,3 +13,4 @@ export 'custom_photo_view.dart';
 export 'custom_item_circle_button.dart';
 export 'custom_dropdown_button.dart';
 export 'custom_app_bar.dart';
+export 'custom_fade_scale_animation.dart';
