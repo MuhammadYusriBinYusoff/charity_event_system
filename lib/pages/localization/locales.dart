@@ -63,6 +63,8 @@ mixin Translation{
   static const String insert = "insert";
   static const String delete = "delete";
   static const String action = "action";
+  static const String done = "done";
+  static const String skip = "skip";
 
   //Homepage
   static const String charity2024Title = 'charity2024';
@@ -70,6 +72,14 @@ mixin Translation{
   static const String myEventTitle = "myEventTitle";
   static const String myEventSubtitle = "myEventSubtitle";
   static const String pleaseHintText = "pleaseHintText";
+
+  //Onboarding
+  static const String onBoardingTitle1 = "onBoardingTitle1";
+  static const String onBoardingTitle2 = "onBoardingTitle2";
+  static const String onBoardingTitle3 = "onBoardingTitle3";
+  static const String onBoardingSubtitle1 = "onBoardingSubtitle1";
+  static const String onBoardingSubtitle2 = "onBoardingSubtitle2";
+  static const String onBoardingSubtitle3 = "onBoardingSubtitle3";
 
   //Event
   static const String createEventTitle = 'createEventTitle';
@@ -168,12 +178,22 @@ mixin Translation{
     insert: 'Insert',
     delete: 'Delete',
     action: 'Action',
+    done: 'Done',
+    skip: 'Skip',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
     charity2024Subtitle: 'Collection of activity from organizer',
     myEventTitle: 'My Event',
     myEventSubtitle: 'Organizer can create their event here',
+
+    //Onboarding
+    onBoardingTitle1: 'Tech for Good: Levitating Society through Innovative Charity Initiatives',
+    onBoardingSubtitle1: 'Empowering Change: Levitate with Technology for Charity',
+    onBoardingTitle2: 'Transform Lives: Donate Today',
+    onBoardingSubtitle2: 'Empower change and make a difference through your generosity – every donation counts',
+    onBoardingTitle3: 'Join the Community: Empower, Connect, Inspire',
+    onBoardingSubtitle3: 'Connect with a community dedicated to positive change and meaningful connections',
 
     //Event
     createEventTitle: 'Create new event',
@@ -273,12 +293,22 @@ mixin Translation{
     insert: 'Daftarkan',
     delete: 'Padam',
     action: 'Tindakan',
+    done: 'Selesai',
+    skip: 'Skip',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',
     charity2024Subtitle: 'Koleksi aktviti daripada organizer',
     myEventTitle: 'Event Saya',
     myEventSubtitle: 'Organizer boleh buat program amal di sini',
+
+    //OnBoarding
+    onBoardingTitle1: 'Teknologi untuk Kebaikan: Memanfaatkan Masyarakat melalui Inisiatif Amal Inovatif',
+    onBoardingSubtitle1: 'Memperkasakan Perubahan: Memanfaatkan Teknologi untuk Amal',
+    onBoardingTitle2: 'Perubahan Hidup: Derma Hari Ini',
+    onBoardingSubtitle2: 'Perkasakan perubahan dan buat perubahan melalui kemurahan hati anda - setiap derma adalah penting',
+    onBoardingTitle3: 'Sertai Komuniti: Perkasa, Sambung, Inspirasi',
+    onBoardingSubtitle3: 'Berhubung dengan komuniti yang berdedikasi untuk perubahan positif dan hubungan bermakna',
 
     //Event
     createEventTitle: 'Buat Event Baru',
