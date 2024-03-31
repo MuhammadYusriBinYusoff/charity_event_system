@@ -108,6 +108,8 @@ mixin Translation{
   static const String spiralCareDisclaimer = 'spiralCareDisclaimer';
   static const String volunteerRegisterTitle = 'volunteerRegisterTitle';
   static const String volunteerOrganizerView = 'volunteerOrganizerView';
+  static const String volunteerInfoTitle = 'volunteerInfoTitle';
+  static const String volunteerInfoSub = 'volunteerInfoSub';
   static const String itemRequestTitle = 'itemRequestTitle';
   static const String feedbackFormTitle = 'feedbackFormTitlte';
   static const String feedbackQuestion1 = "feedbackQuestion1";
@@ -226,6 +228,8 @@ mixin Translation{
     spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
     volunteerRegisterTitle: 'Volunteer Registration Form',
     volunteerOrganizerView: 'Volunteer Checklist',
+    volunteerInfoTitle: 'Volunteer Name',
+    volunteerInfoSub: 'Organizer can view the volunteer who interest to contribute to your event. You can remove any volunteer that want to cancel their registration here too!',
     itemRequestTitle: 'List of Items Needed',
     feedbackFormTitle: 'Feedback Form',
     feedbackQuestion1: 'Is the organizer a responsible person?',
@@ -345,6 +349,8 @@ mixin Translation{
     spiralCareDisclaimer: 'Penafian Spiral Care: Hai, saya Muhammad Yusri Bin Yusoff, pemilik aplikasi Spiral Care. Bagi pihak penganjur acara, kami memohon sokongan anda. Yakinlah, semua organisasi yang didaftarkan dalam aplikasi kami menjalani pemeriksaan latar belakang yang menyeluruh dan kelulusan oleh pasukan khusus Spiral Care.',
     volunteerRegisterTitle: 'Pendaftaran Sukarelawan',
     volunteerOrganizerView: 'Senarai Sukarelawan',
+    volunteerInfoTitle: 'Nama Sukarelawan',
+    volunteerInfoSub: 'Organizer boleh melihat sukarelawan yang berminat untuk menyumbang kepada acara anda. Anda boleh mengalih keluar mana-mana sukarelawan yang ingin membatalkan pendaftaran mereka di sini juga!',
     itemRequestTitle: 'Senarai Barang Di Perlukan',
     feedbackFormTitle: 'Borang Maklum Balas',
     feedbackQuestion1: 'Adakah organizer seorang yang bertanggungjawab?',
