@@ -99,6 +99,8 @@ mixin Translation{
   static const String donationEndDate = 'donationEndDate';
   static const String donationBankAccount = 'donationBankAccount';
   static const String donationQrcode = 'donationQrcode';
+  static const String donationInfoTitle = 'donationInfoTitle';
+  static const String donationInfoSub = 'donationInfoSub';
   static const String uploadGalleryImage = 'uploadGalleryImage';
   static const String showGalleryImage = 'showGalleryImage';
   static const String deleteGalleryTitle = 'deleteGalleryTitle';
@@ -214,6 +216,8 @@ mixin Translation{
     donationStartDate: 'Start Date',
     donationEndDate: 'End Date',
     donationBankAccount: 'Bank Account',
+    donationInfoTitle: 'Donation Information',
+    donationInfoSub: 'Organizer can state the amount of money they need and set the dateline. All information will be displayed on homepage',
     donationQrcode: 'Qr Code',
     uploadGalleryImage: 'Upload Gallery Image',
     showGalleryImage: 'Gallery',
@@ -331,6 +335,8 @@ mixin Translation{
     donationStartDate: 'Tarikh Mula',
     donationEndDate: 'Tarikh Akhir',
     donationBankAccount: 'Akaun Bank',
+    donationInfoTitle: 'Informasi Donasi',
+    donationInfoSub: 'Organizer boleh menyatakan jumlah wang yang mereka perlukan dan menetapkan garis tarikh. Semua maklumat akan dipaparkan di laman utama',
     donationQrcode: 'Kod Qr',
     uploadGalleryImage: 'Muat Turun Gambar Galeri',
     showGalleryImage: 'Galleri',
