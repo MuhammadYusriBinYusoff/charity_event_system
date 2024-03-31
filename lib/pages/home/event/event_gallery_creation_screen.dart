@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
@@ -26,10 +25,6 @@ class EventGalleryPage extends StatefulWidget {
 }
 
 class _EventGalleryPageState extends State<EventGalleryPage> {
-  TextStyle textStyle = const TextStyle(
-    fontFamily: 'Roboto',
-  );
-
   String? bannerImageUrl;
   List<String>? bannerImageUrlList;
   bool isLoading = false;
@@ -94,6 +89,7 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
         Provider.of<EventGalleryProvider>(context);
 
     return Scaffold(
+      backgroundColor: Palette.lightGrey,
       appBar: AppBar(
         backgroundColor: Palette.purpleMain,
         actions: [
@@ -131,111 +127,135 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(Dimens.space16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SpacerV(value: Dimens.space16),
-              Text(
-                Translation.uploadGalleryImage.getString(context),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SpacerV(
-                value: Dimens.space8,
-              ),
-              SinglePhotoAddingButton(
-                width: MediaQuery.of(context).size.width * 0.44,
-                height: Dimens.space100,
-                onPressed: () async {
-                  List<XFile> file = await pickMultipleImages();
-
-                  if (file.isNotEmpty) {
-                    await uploadImages(file, organizationUser.organizers.id);
-                  }
-                },
-              ),
-              SpacerV(value: Dimens.space24),
-              Text(
-                Translation.showGalleryImage.getString(context),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SpacerV(
-                value: Dimens.space8,
-              ),
-              ImageListWidget(imageUrls: bannerImageUrlList,session: widget.session,),
-              SpacerV(value: Dimens.space24),
-              SizedBox(
-                width: double.infinity,
-                height: Dimens.space40,
-                child: widget.session == "update"
-                ? ElevatedButton(
-                  onPressed: () async {
-                    final userUID = organizationUser.organizers.id;
-                    final newGallery = EventGalleryModel(
-                      id: userUID,
-                      imageGalleryUrls: bannerImageUrlList,
-                    );
-
-                    eventGalleryFile.updateEventGallery(newGallery);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MyHomePage(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Palette.purpleMain,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Dimens.space8),
+        child: Column(
+          children: [
+            const QuoteCard(
+              imagePath: Images.societyIcon,
+              quote:
+                  "All of you are shepherds and each of you is responsible for his flock.",
+              author: "- Hadis Riwayat Al-Bukhari",
+            ),
+            Container(
+              padding: EdgeInsets.all(Dimens.space16),
+              color: Palette.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    Translation.galleryInfoTitle.getString(context),
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  child: Text(
-                    Translation.save.getString(context),
+                  Text(
+                    Translation.galleryInfoSub.getString(context),
                     style: const TextStyle(
-                        color: Palette.white, fontFamily: 'Roborto'),
-                  ),
-                ) : ElevatedButton(
-                  onPressed: () async {
-                    //Note: Comment kejap untuk buat item
-                    final userUID = organizationUser.organizers.id;
-                    final newGallery = EventGalleryModel(
-                      id: userUID,
-                      imageGalleryUrls: bannerImageUrlList,
-                    );
-
-                    eventGalleryFile.createEventGallery(newGallery);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const EventItemAddPage(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Palette.purpleMain,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(Dimens.space8),
+                      fontSize: 14,
                     ),
                   ),
-                  child: Text(
-                    Translation.next.getString(context),
+                  SpacerV(value: Dimens.space16),
+                  Text(
+                    Translation.uploadGalleryImage.getString(context),
                     style: const TextStyle(
-                        color: Palette.white, fontFamily: 'Roborto'),
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
+                  SpacerV(
+                    value: Dimens.space8,
+                  ),
+                  SinglePhotoAddingButton(
+                    width: MediaQuery.of(context).size.width * 0.44,
+                    height: Dimens.space100,
+                    onPressed: () async {
+                      List<XFile> file = await pickMultipleImages();
+            
+                      if (file.isNotEmpty) {
+                        await uploadImages(file, organizationUser.organizers.id);
+                      }
+                    },
+                  ),
+                  SpacerV(value: Dimens.space24),
+                  Text(
+                    Translation.showGalleryImage.getString(context),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SpacerV(
+                    value: Dimens.space8,
+                  ),
+                  ImageListWidget(imageUrls: bannerImageUrlList,session: widget.session,),
+                  SpacerV(value: Dimens.space24),
+                  SizedBox(
+                    width: double.infinity,
+                    height: Dimens.space40,
+                    child: widget.session == "update"
+                    ? ElevatedButton(
+                      onPressed: () async {
+                        final userUID = organizationUser.organizers.id;
+                        final newGallery = EventGalleryModel(
+                          id: userUID,
+                          imageGalleryUrls: bannerImageUrlList,
+                        );
+            
+                        eventGalleryFile.updateEventGallery(newGallery);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyHomePage(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Palette.purpleMain,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(Dimens.space8),
+                        ),
+                      ),
+                      child: Text(
+                        Translation.save.getString(context),
+                        style: const TextStyle(
+                            color: Palette.white),
+                      ),
+                    ) : ElevatedButton(
+                      onPressed: () async {
+                        //Note: Comment kejap untuk buat item
+                        final userUID = organizationUser.organizers.id;
+                        final newGallery = EventGalleryModel(
+                          id: userUID,
+                          imageGalleryUrls: bannerImageUrlList,
+                        );
+            
+                        eventGalleryFile.createEventGallery(newGallery);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EventItemAddPage(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Palette.purpleMain,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(Dimens.space8),
+                        ),
+                      ),
+                      child: Text(
+                        Translation.next.getString(context),
+                        style: const TextStyle(
+                            color: Palette.white),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

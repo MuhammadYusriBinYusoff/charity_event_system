@@ -103,6 +103,8 @@ mixin Translation{
   static const String donationInfoSub = 'donationInfoSub';
   static const String uploadGalleryImage = 'uploadGalleryImage';
   static const String showGalleryImage = 'showGalleryImage';
+  static const String galleryInfoTitle = 'galleryInfoTitle';
+  static const String galleryInfoSub = 'gallerynfoSub';
   static const String deleteGalleryTitle = 'deleteGalleryTitle';
   static const String deleteGalleryImageQuestion = 'deleteGalleryImageQuestion';
   static const String spiralCareDisclaimer = 'spiralCareDisclaimer';
@@ -225,6 +227,8 @@ mixin Translation{
     showGalleryImage: 'Gallery',
     deleteGalleryTitle: 'Delete Image?',
     deleteGalleryImageQuestion: 'Are you sure you want to delete this image?',
+    galleryInfoTitle: 'Gallery Information',
+    galleryInfoSub: 'What organizer can do on this page \n1. Organizer can upload and view their image \n2. To delete image, organizer need to hold pressed the picture they want to delete',
     spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
     volunteerRegisterTitle: 'Volunteer Registration Form',
     volunteerOrganizerView: 'Volunteer Checklist',
@@ -346,6 +350,8 @@ mixin Translation{
     showGalleryImage: 'Galleri',
     deleteGalleryTitle: 'Padam, Gambar',
     deleteGalleryImageQuestion: 'Adakah awak yakin untuk padam gambar ini',
+    galleryInfoTitle: 'Informasi Galleri',
+    galleryInfoSub: 'Perkara yang boleh dilakukan oleh organizer di halaman ini \n1. Organizer boleh memuat naik dan melihat imej mereka \n2. Untuk memadamkan imej, organizer perlu menahan tekan gambar yang ingin dipadamkan',
     spiralCareDisclaimer: 'Penafian Spiral Care: Hai, saya Muhammad Yusri Bin Yusoff, pemilik aplikasi Spiral Care. Bagi pihak penganjur acara, kami memohon sokongan anda. Yakinlah, semua organisasi yang didaftarkan dalam aplikasi kami menjalani pemeriksaan latar belakang yang menyeluruh dan kelulusan oleh pasukan khusus Spiral Care.',
     volunteerRegisterTitle: 'Pendaftaran Sukarelawan',
     volunteerOrganizerView: 'Senarai Sukarelawan',
