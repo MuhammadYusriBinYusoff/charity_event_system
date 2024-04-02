@@ -181,14 +181,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                 '',
                             description:
                                 'RM ${eventDonationsFile.donationDetailsList[i].targetMoney?.toStringAsFixed(2)}',
-                            valueIndicatorProgress: double.parse(
-                                ((eventDonationsFile.donationDetailsList[i]
-                                                .currentCollected ??
-                                            0) /
-                                        (eventDonationsFile
-                                                .donationDetails.targetMoney ??
-                                            1))
-                                    .toStringAsFixed(2)),
+                            valueIndicatorProgress: ((eventDonationsFile
+                                        .donationDetailsList[i]
+                                        .currentCollected ??
+                                    0) /
+                                (eventDonationsFile
+                                        .donationDetailsList[i].targetMoney ??
+                                    1)),
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -244,12 +243,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       title: eventDetailsFile.eventDetails.eventName,
                       description:
                           'RM ${eventDonationsFile.donationDetails.targetMoney?.toStringAsFixed(2)}',
-                      valueIndicatorProgress: double.parse(((eventDonationsFile
-                                      .donationDetails.currentCollected ??
-                                  0) /
-                              (eventDonationsFile.donationDetails.targetMoney ??
-                                  1))
-                          .toStringAsFixed(2)),
+                      valueIndicatorProgress: ((eventDonationsFile
+                                  .donationDetails.currentCollected ??
+                              0) /
+                          (eventDonationsFile.donationDetails.targetMoney ??
+                              1)),
                       type: eventDetailsFile.eventDetails.type,
                       onTap: () {
                         //@YUSRI: Save for later (this is used to edit event descreiptyion)
