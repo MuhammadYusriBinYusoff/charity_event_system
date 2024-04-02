@@ -93,6 +93,10 @@ mixin Translation{
   static const String itemQuantity = 'itemQuantity';
   static const String itemUnit = 'itemUnit';
   static const String itemDate = 'itemDate';
+  static const String itemTable = 'itemTable';
+  static const String itemInfoTitle = 'itemInfoTitle';
+  static const String itemInfoSub = 'itemInfoSub';
+  static const String itemListBorder = 'itemListBorder';
   static const String donationTarget = 'donationTarget';
   static const String donationCurrent = 'donationCurrent';
   static const String donationStartDate = 'donationStartDate';
@@ -215,6 +219,10 @@ mixin Translation{
     itemQuantity: 'Quantity',
     itemUnit: 'Unit',
     itemDate: 'Date',
+    itemTable: 'View Item List',
+    itemInfoTitle: 'Item Information',
+    itemInfoSub: 'Organizer can list out all item they need such as food,stationery,books etc.',
+    itemListBorder: 'Want to Change Your Item List?',
     donationTarget: 'Target Money',
     donationCurrent: 'Current Collected',
     donationStartDate: 'Start Date',
@@ -243,13 +251,13 @@ mixin Translation{
     feedbackQuestion5: 'Your Comment?',
     feedbackQuestionHint: 'Rating: 1-5 (Very Bad - Very Good)',
     feedbackCheck: 'Please give your rating',
-    manageDesciption: 'Manage Event',
-    manageDonation: 'Manage Donation',
-    manageGallery: 'Manage Gallery',
-    feedbackCollection: 'User Comment',
+    manageDesciption: 'My Event',
+    manageDonation: 'Donation',
+    manageGallery: 'Gallery',
+    feedbackCollection: 'Feedback',
     teamPlanning: 'Collaboration',
-    manageVolunteer: 'Manage Volunteer',
-    manageItem: 'Manage item',
+    manageVolunteer: 'Volunteer',
+    manageItem: 'Item List',
 
   };
 
@@ -338,6 +346,10 @@ mixin Translation{
     itemQuantity: 'Jumlah',
     itemUnit: 'Unit',
     itemDate: 'Tarikh',
+    itemTable: 'Lihat Senarai Barang',
+    itemInfoTitle: 'Informasi Barang',
+    itemInfoSub: 'Organizer boleh menyenaraikan segala barang yang diperlukan seperti makanan,alat tulis, buku and lain-lain lagi.',
+    itemListBorder: 'Ingin Ubah Senarai Barang Anda?',
     donationTarget: 'Target Duit',
     donationCurrent: 'Jumlah Terkumpul Sekarang',
     donationStartDate: 'Tarikh Mula',
@@ -366,13 +378,13 @@ mixin Translation{
     feedbackQuestion5: 'Komen Anda?',
     feedbackQuestionHint: 'Penilaian: 1-5 (Sangat Buruk - Sangat Baik)',
     feedbackCheck: 'Sila berikan penilaian anda',
-    manageDesciption: 'Urus Event',
-    manageDonation: 'Urus Sumbangan',
-    manageGallery: 'Urus Galeri',
-    feedbackCollection: 'Komen user',
+    manageDesciption: 'Event Saya',
+    manageDonation: 'Sumbangan',
+    manageGallery: 'Galeri',
+    feedbackCollection: 'Maklum Balas',
     teamPlanning: 'Kolaborasi',
-    manageVolunteer: 'Urus Sukarelawan',
-    manageItem: 'Urus barang',
+    manageVolunteer: 'Sukarelawan',
+    manageItem: 'Senarai Barang',
 
   };
 }

@@ -163,7 +163,7 @@ class _EventDonationManagementPageState
                       fontSize: 14,
                     ),
                   ),
-                  SpacerV(value: Dimens.space12),
+                  SpacerV(value: Dimens.space20),
                   CustomTextField(
                     controller: _targetMoneyController,
                     labelText: Translation.donationTarget.getString(context),

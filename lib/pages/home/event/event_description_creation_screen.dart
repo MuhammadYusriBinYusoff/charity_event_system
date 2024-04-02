@@ -152,10 +152,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                     ),
                   ),
                   SpacerV(
-                    value: Dimens.space12,
-                  ),
-                  SpacerV(
-                    value: Dimens.space8,
+                    value: Dimens.space20,
                   ),
                   SinglePhotoAddingButton(
                     width: double.infinity,

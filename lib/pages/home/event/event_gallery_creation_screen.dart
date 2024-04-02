@@ -234,7 +234,7 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const EventItemAddPage(),
+                            builder: (context) => const EventItemAddPage(session: 'none'),
                           ),
                         );
                       },

@@ -30,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         Provider.of<EventGalleryProvider>(context);
     EventVolunteerProvider eventVolunteerFile =
         Provider.of<EventVolunteerProvider>(context);
+    EventItemsProvider eventItems = Provider.of<EventItemsProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -77,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                       await eventDonationsFile.fetchEventDonationData();
                       await eventGalleryFile.fetchEventGalleryData();
                       await eventVolunteerFile.fetchEventVolunteerData();
+                      await eventItems.fetchEventItemData();
                       await organizationUser.fetchAllOrganizers();
                       await eventDetailsFile.fetchAllEventDetails();
                       await eventDonationsFile.fetchAllDonationDetails();

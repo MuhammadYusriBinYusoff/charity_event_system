@@ -44,7 +44,7 @@ class _VolunteerQueryPageState extends State<VolunteerQueryPage> {
                 fontSize: 14,
               ),
             ),
-            SpacerV(value: Dimens.space12),
+            SpacerV(value: Dimens.space20),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SingleChildScrollView(

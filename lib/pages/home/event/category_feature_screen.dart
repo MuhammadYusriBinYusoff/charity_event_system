@@ -69,16 +69,12 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    OrganizerProvider organizationUser =
-        Provider.of<OrganizerProvider>(context);
     EventDetailsProvider eventDetailsFile =
         Provider.of<EventDetailsProvider>(context);
     EventDonationProvider eventDonationsFile =
         Provider.of<EventDonationProvider>(context);
     EventGalleryProvider eventGalleryFile =
         Provider.of<EventGalleryProvider>(context);
-    EventVolunteerProvider eventVolunteerFile =
-        Provider.of<EventVolunteerProvider>(context);
 
     return Card(
       elevation: 4.0,
@@ -131,6 +127,12 @@ class CategoryCard extends StatelessWidget {
                 ),
               ),
             );
+          } else if (categoryItem.name == Translation.manageItem.getString(context)) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const EventItemAddPage()),
+            );
           }
         },
         child: Container(
@@ -156,7 +158,7 @@ class CategoryCard extends StatelessWidget {
               Text(
                 categoryItem.name,
                 style: const TextStyle(
-                  fontSize: 14.0,
+                  fontSize: 13.0,
                   fontWeight: FontWeight.bold,
                   color: Palette.black,
                 ),
