@@ -18,66 +18,67 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  TextStyle textStyle = const TextStyle(
-    fontFamily: 'Roboto',
-  );
-
   @override
   Widget build(BuildContext context) {
-    OrganizerProvider organizationUser = Provider.of<OrganizerProvider>(context);
-    EventDetailsProvider eventDetailsFile = Provider.of<EventDetailsProvider>(context);
-    EventDonationProvider eventDonationsFile = Provider.of<EventDonationProvider>(context);
-    EventGalleryProvider eventGalleryFile = Provider.of<EventGalleryProvider>(context);
-    EventVolunteerProvider eventVolunteerFile = Provider.of<EventVolunteerProvider>(context);
-    
+    OrganizerProvider organizationUser =
+        Provider.of<OrganizerProvider>(context);
+    EventDetailsProvider eventDetailsFile =
+        Provider.of<EventDetailsProvider>(context);
+    EventDonationProvider eventDonationsFile =
+        Provider.of<EventDonationProvider>(context);
+    EventGalleryProvider eventGalleryFile =
+        Provider.of<EventGalleryProvider>(context);
+    EventVolunteerProvider eventVolunteerFile =
+        Provider.of<EventVolunteerProvider>(context);
+    EventItemsProvider eventItems = Provider.of<EventItemsProvider>(context);
+
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title:
-            Text(Translation.loginTitle.getString(context), style: textStyle),
-        centerTitle: true,
-      ),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(Dimens.space16),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SpacerV(value: Dimens.space32),
+              SpacerV(value: Dimens.space24),
+              Text(Translation.loginTitle.getString(context),
+                  style: const TextStyle(
+                    fontSize: 24,
+                  )),
+              SpacerV(value: Dimens.space40),
               SvgPicture.asset(
                 Images.splashIcon,
                 width: 200,
                 height: 200,
               ),
               SpacerV(value: Dimens.space64),
-              buildTextField(
+              CustomTextField(
                 controller: _usernameController,
                 labelText: Translation.loginEmail.getString(context),
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _passwordController,
                 labelText: Translation.loginPassword.getString(context),
                 obscureText: true,
               ),
-              SpacerV(value: Dimens.space16),
+              SpacerV(value: Dimens.space32),
               SizedBox(
                 width: double.infinity,
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
                     try {
-                      await FirebaseAuth.instance
-                          .signInWithEmailAndPassword(
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
                         email: _usernameController.text,
                         password: _passwordController.text,
                       );
-                            
+
                       await organizationUser.fetchOrganizerData();
                       await eventDetailsFile.fetchEventDetailsData();
                       await eventDonationsFile.fetchEventDonationData();
                       await eventGalleryFile.fetchEventGalleryData();
                       await eventVolunteerFile.fetchEventVolunteerData();
+                      await eventItems.fetchEventItemData();
                       await organizationUser.fetchAllOrganizers();
                       await eventDetailsFile.fetchAllEventDetails();
                       await eventDonationsFile.fetchAllDonationDetails();
@@ -88,25 +89,22 @@ class _LoginPageState extends State<LoginPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => MyHomePage(
-                            title:
-                                Translation.splashTitle.getString(context),
+                            title: Translation.splashTitle.getString(context),
                           ),
                         ),
                       );
                     } catch (error) {
-                      print("Error: $error");
-                      // Handle specific Firebase authentication exceptions
                       String errorMessage =
                           Translation.generalErrorMsg.getString(context);
                       if (error is FirebaseAuthException) {
                         switch (error.code) {
                           case 'invalid-credential':
-                            errorMessage =
-                                Translation.credentialErrorMsg.getString(context);
+                            errorMessage = Translation.credentialErrorMsg
+                                .getString(context);
                             break;
                           default:
-                            errorMessage =
-                                Translation.authenticationErrorMsg.getString(context);
+                            errorMessage = Translation.authenticationErrorMsg
+                                .getString(context);
                             break;
                         }
                       }
@@ -115,15 +113,19 @@ class _LoginPageState extends State<LoginPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text(Translation.errorTitle.getString(context), style: textStyle),
+                            title: Text(
+                              Translation.errorTitle.getString(context),
+                            ),
                             content: Text(errorMessage),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context)
-                                      .pop(); // Dismiss the dialog
+                                      .pop();
                                 },
-                                child: Text(Translation.ok.getString(context), style: textStyle),
+                                child: Text(
+                                  Translation.ok.getString(context),
+                                ),
                               ),
                             ],
                           );
@@ -140,28 +142,21 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: Text(
                     Translation.loginTitle.getString(context),
-                    style: const TextStyle(
-                        color: Palette.white, fontFamily: 'Roborto'),
+                    style: const TextStyle(color: Palette.white),
                   ),
                 ),
               ),
               SpacerV(value: Dimens.space16),
               GestureDetector(
                 onTap: () {
-                  // Add your navigation logic here
-                  print('Navigate to sign up screen');
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                         builder: (context) => UserChosen()),
+                    MaterialPageRoute(builder: (context) => UserChosen()),
                   );
                 },
                 child: Text(
                   Translation.loginQuestion.getString(context),
-                  style: const TextStyle(
-                      color: Palette
-                          .blueLink,
-                      fontFamily: 'Roborto'),
+                  style: const TextStyle(color: Palette.blueLink),
                 ),
               ),
             ],

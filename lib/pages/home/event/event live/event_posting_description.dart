@@ -208,7 +208,12 @@ class _EventPostingDescriptionPageState
                           const TextStyle(fontSize: 14, fontFamily: 'Roberto'),
                     ),
                     SpacerV(value: Dimens.space24),
-                    Image.network('https://www.caspianpolicy.org/no-image.png'),
+                    CachedNetworkImage(
+                    imageUrl: eventDonationsFile.donationDetailsList[widget.index ?? 0].photoEventUrl ??
+                        'https://www.caspianpolicy.org/no-image.png', // Replace with your image URL
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                  ),
                   ],
                 ))
           ],

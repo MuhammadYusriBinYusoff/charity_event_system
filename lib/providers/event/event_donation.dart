@@ -20,6 +20,15 @@ class EventDonationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateDonationDetails(EventDonationModel newDonationDetails) async {
+    _donationDetails = newDonationDetails;
+    await FirebaseFirestore.instance
+        .collection("moneyDonation")
+        .doc(newDonationDetails.id)
+        .update(_donationDetails.toJson());
+    notifyListeners();
+  }
+
   Future<void> fetchEventDonationData() async {
     // Get the current user
     User? user = FirebaseAuth.instance.currentUser;

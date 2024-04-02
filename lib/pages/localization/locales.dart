@@ -63,6 +63,8 @@ mixin Translation{
   static const String insert = "insert";
   static const String delete = "delete";
   static const String action = "action";
+  static const String done = "done";
+  static const String skip = "skip";
 
   //Homepage
   static const String charity2024Title = 'charity2024';
@@ -71,28 +73,49 @@ mixin Translation{
   static const String myEventSubtitle = "myEventSubtitle";
   static const String pleaseHintText = "pleaseHintText";
 
+  //Onboarding
+  static const String onBoardingTitle1 = "onBoardingTitle1";
+  static const String onBoardingTitle2 = "onBoardingTitle2";
+  static const String onBoardingTitle3 = "onBoardingTitle3";
+  static const String onBoardingSubtitle1 = "onBoardingSubtitle1";
+  static const String onBoardingSubtitle2 = "onBoardingSubtitle2";
+  static const String onBoardingSubtitle3 = "onBoardingSubtitle3";
+
   //Event
   static const String createEventTitle = 'createEventTitle';
   static const String createEventSubtitle = 'createEventSubtitle';
   static const String eventTitle = 'eventTitle';
   static const String eventDescription = 'eventDescription';
+  static const String eventInfoTitle = 'eventInfoTitle';
+  static const String eventInfoSub = 'eventInfoSub';
   static const String photoPosting ='photoPhosting';
   static const String itemName = 'itemName';
   static const String itemQuantity = 'itemQuantity';
   static const String itemUnit = 'itemUnit';
   static const String itemDate = 'itemDate';
+  static const String itemTable = 'itemTable';
+  static const String itemInfoTitle = 'itemInfoTitle';
+  static const String itemInfoSub = 'itemInfoSub';
+  static const String itemListBorder = 'itemListBorder';
   static const String donationTarget = 'donationTarget';
   static const String donationCurrent = 'donationCurrent';
   static const String donationStartDate = 'donationStartDate';
   static const String donationEndDate = 'donationEndDate';
   static const String donationBankAccount = 'donationBankAccount';
+  static const String donationQrcode = 'donationQrcode';
+  static const String donationInfoTitle = 'donationInfoTitle';
+  static const String donationInfoSub = 'donationInfoSub';
   static const String uploadGalleryImage = 'uploadGalleryImage';
   static const String showGalleryImage = 'showGalleryImage';
+  static const String galleryInfoTitle = 'galleryInfoTitle';
+  static const String galleryInfoSub = 'gallerynfoSub';
   static const String deleteGalleryTitle = 'deleteGalleryTitle';
   static const String deleteGalleryImageQuestion = 'deleteGalleryImageQuestion';
   static const String spiralCareDisclaimer = 'spiralCareDisclaimer';
   static const String volunteerRegisterTitle = 'volunteerRegisterTitle';
   static const String volunteerOrganizerView = 'volunteerOrganizerView';
+  static const String volunteerInfoTitle = 'volunteerInfoTitle';
+  static const String volunteerInfoSub = 'volunteerInfoSub';
   static const String itemRequestTitle = 'itemRequestTitle';
   static const String feedbackFormTitle = 'feedbackFormTitlte';
   static const String feedbackQuestion1 = "feedbackQuestion1";
@@ -102,6 +125,13 @@ mixin Translation{
   static const String feedbackQuestion5 = "feedbackQuestion5";
   static const String feedbackQuestionHint = "feedbackQuestionHint";
   static const String feedbackCheck = "feedbackCheck";
+  static const String manageDesciption = "manageDesciption";
+  static const String manageItem = "manageItem";
+  static const String manageDonation = "manageDonation";
+  static const String manageVolunteer = "manageVolunteer";
+  static const String teamPlanning = "teamPlanning";
+  static const String manageGallery = "manageGallery";
+  static const String feedbackCollection = "feedbackCollection";
   
 
   static const Map<String,dynamic> EN = {
@@ -160,6 +190,8 @@ mixin Translation{
     insert: 'Insert',
     delete: 'Delete',
     action: 'Action',
+    done: 'Done',
+    skip: 'Skip',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
@@ -167,28 +199,49 @@ mixin Translation{
     myEventTitle: 'My Event',
     myEventSubtitle: 'Organizer can create their event here',
 
+    //Onboarding
+    onBoardingTitle1: 'Tech for Good: Levitating Society through Innovative Charity Initiatives',
+    onBoardingSubtitle1: 'Empowering Change: Levitate with Technology for Charity',
+    onBoardingTitle2: 'Transform Lives: Donate Today',
+    onBoardingSubtitle2: 'Empower change and make a difference through your generosity – every donation counts',
+    onBoardingTitle3: 'Join the Community: Empower, Connect, Inspire',
+    onBoardingSubtitle3: 'Connect with a community dedicated to positive change and meaningful connections',
+
     //Event
     createEventTitle: 'Create new event',
     createEventSubtitle: 'Tap to add new file',
     eventTitle: 'Event Title',
     eventDescription: 'Event Description',
+    eventInfoTitle: "Event's Information",
+    eventInfoSub: 'Organizer can register their events details here. All the details will be appear on homepage',
     photoPosting: 'Event Banner',
     itemName: 'Item Name',
     itemQuantity: 'Quantity',
     itemUnit: 'Unit',
     itemDate: 'Date',
+    itemTable: 'View Item List',
+    itemInfoTitle: 'Item Information',
+    itemInfoSub: 'Organizer can list out all item they need such as food,stationery,books etc.',
+    itemListBorder: 'Want to Change Your Item List?',
     donationTarget: 'Target Money',
     donationCurrent: 'Current Collected',
     donationStartDate: 'Start Date',
     donationEndDate: 'End Date',
     donationBankAccount: 'Bank Account',
+    donationInfoTitle: 'Donation Information',
+    donationInfoSub: 'Organizer can state the amount of money they need and set the dateline. All information will be displayed on homepage',
+    donationQrcode: 'Qr Code',
     uploadGalleryImage: 'Upload Gallery Image',
     showGalleryImage: 'Gallery',
     deleteGalleryTitle: 'Delete Image?',
     deleteGalleryImageQuestion: 'Are you sure you want to delete this image?',
+    galleryInfoTitle: 'Gallery Information',
+    galleryInfoSub: 'What organizer can do on this page \n1. Organizer can upload and view their image \n2. To delete image, organizer need to hold pressed the picture they want to delete',
     spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
     volunteerRegisterTitle: 'Volunteer Registration Form',
     volunteerOrganizerView: 'Volunteer Checklist',
+    volunteerInfoTitle: 'Volunteer Name',
+    volunteerInfoSub: 'Organizer can view the volunteer who interest to contribute to your event. You can remove any volunteer that want to cancel their registration here too!',
     itemRequestTitle: 'List of Items Needed',
     feedbackFormTitle: 'Feedback Form',
     feedbackQuestion1: 'Is the organizer a responsible person?',
@@ -198,6 +251,13 @@ mixin Translation{
     feedbackQuestion5: 'Your Comment?',
     feedbackQuestionHint: 'Rating: 1-5 (Very Bad - Very Good)',
     feedbackCheck: 'Please give your rating',
+    manageDesciption: 'My Event',
+    manageDonation: 'Donation',
+    manageGallery: 'Gallery',
+    feedbackCollection: 'Feedback',
+    teamPlanning: 'Collaboration',
+    manageVolunteer: 'Volunteer',
+    manageItem: 'Item List',
 
   };
 
@@ -257,6 +317,8 @@ mixin Translation{
     insert: 'Daftarkan',
     delete: 'Padam',
     action: 'Tindakan',
+    done: 'Selesai',
+    skip: 'Skip',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',
@@ -264,28 +326,49 @@ mixin Translation{
     myEventTitle: 'Event Saya',
     myEventSubtitle: 'Organizer boleh buat program amal di sini',
 
+    //OnBoarding
+    onBoardingTitle1: 'Teknologi untuk Kebaikan: Memanfaatkan Masyarakat melalui Inisiatif Amal Inovatif',
+    onBoardingSubtitle1: 'Memperkasakan Perubahan: Memanfaatkan Teknologi untuk Amal',
+    onBoardingTitle2: 'Perubahan Hidup: Derma Hari Ini',
+    onBoardingSubtitle2: 'Perkasakan perubahan dan buat perubahan melalui kemurahan hati anda - setiap derma adalah penting',
+    onBoardingTitle3: 'Sertai Komuniti: Perkasa, Sambung, Inspirasi',
+    onBoardingSubtitle3: 'Berhubung dengan komuniti yang berdedikasi untuk perubahan positif dan hubungan bermakna',
+
     //Event
     createEventTitle: 'Buat Event Baru',
     createEventSubtitle: 'Tekan untuk buat file baru',
     eventTitle: 'Tajuk Event',
     eventDescription: 'Deskripsi Event',
+    eventInfoTitle: "Informasi Event",
+    eventInfoSub: 'Organizer boleh mendaftarkan butiran acara mereka di sini. Semua butiran akan dipaparkan di laman utama',
     photoPosting: 'Iklan Event',
     itemName: 'Nama barang',
     itemQuantity: 'Jumlah',
     itemUnit: 'Unit',
     itemDate: 'Tarikh',
+    itemTable: 'Lihat Senarai Barang',
+    itemInfoTitle: 'Informasi Barang',
+    itemInfoSub: 'Organizer boleh menyenaraikan segala barang yang diperlukan seperti makanan,alat tulis, buku and lain-lain lagi.',
+    itemListBorder: 'Ingin Ubah Senarai Barang Anda?',
     donationTarget: 'Target Duit',
     donationCurrent: 'Jumlah Terkumpul Sekarang',
     donationStartDate: 'Tarikh Mula',
     donationEndDate: 'Tarikh Akhir',
     donationBankAccount: 'Akaun Bank',
+    donationInfoTitle: 'Informasi Donasi',
+    donationInfoSub: 'Organizer boleh menyatakan jumlah wang yang mereka perlukan dan menetapkan garis tarikh. Semua maklumat akan dipaparkan di laman utama',
+    donationQrcode: 'Kod Qr',
     uploadGalleryImage: 'Muat Turun Gambar Galeri',
     showGalleryImage: 'Galleri',
     deleteGalleryTitle: 'Padam, Gambar',
     deleteGalleryImageQuestion: 'Adakah awak yakin untuk padam gambar ini',
+    galleryInfoTitle: 'Informasi Galleri',
+    galleryInfoSub: 'Perkara yang boleh dilakukan oleh organizer di halaman ini \n1. Organizer boleh memuat naik dan melihat imej mereka \n2. Untuk memadamkan imej, organizer perlu menahan tekan gambar yang ingin dipadamkan',
     spiralCareDisclaimer: 'Penafian Spiral Care: Hai, saya Muhammad Yusri Bin Yusoff, pemilik aplikasi Spiral Care. Bagi pihak penganjur acara, kami memohon sokongan anda. Yakinlah, semua organisasi yang didaftarkan dalam aplikasi kami menjalani pemeriksaan latar belakang yang menyeluruh dan kelulusan oleh pasukan khusus Spiral Care.',
     volunteerRegisterTitle: 'Pendaftaran Sukarelawan',
     volunteerOrganizerView: 'Senarai Sukarelawan',
+    volunteerInfoTitle: 'Nama Sukarelawan',
+    volunteerInfoSub: 'Organizer boleh melihat sukarelawan yang berminat untuk menyumbang kepada acara anda. Anda boleh mengalih keluar mana-mana sukarelawan yang ingin membatalkan pendaftaran mereka di sini juga!',
     itemRequestTitle: 'Senarai Barang Di Perlukan',
     feedbackFormTitle: 'Borang Maklum Balas',
     feedbackQuestion1: 'Adakah organizer seorang yang bertanggungjawab?',
@@ -294,7 +377,14 @@ mixin Translation{
     feedbackQuestion4: 'Berapa anda syorkan organizer ini kepada umum?',
     feedbackQuestion5: 'Komen Anda?',
     feedbackQuestionHint: 'Penilaian: 1-5 (Sangat Buruk - Sangat Baik)',
-    feedbackCheck: 'Sila berikan penilaian anda'
+    feedbackCheck: 'Sila berikan penilaian anda',
+    manageDesciption: 'Event Saya',
+    manageDonation: 'Sumbangan',
+    manageGallery: 'Galeri',
+    feedbackCollection: 'Maklum Balas',
+    teamPlanning: 'Kolaborasi',
+    manageVolunteer: 'Sukarelawan',
+    manageItem: 'Senarai Barang',
 
   };
 }

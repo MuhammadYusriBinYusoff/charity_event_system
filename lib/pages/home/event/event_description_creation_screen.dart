@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
@@ -34,10 +33,6 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
       TextEditingController();
   final TextEditingController _charityEventDescriptionController =
       TextEditingController();
-
-  TextStyle textStyle = const TextStyle(
-    fontFamily: 'Roboto',
-  );
 
   String? bannerImageUrl;
   bool isLoading = false;
@@ -90,6 +85,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
         Provider.of<EventDetailsProvider>(context);
 
     return Scaffold(
+      backgroundColor: Palette.lightGrey,
       appBar: AppBar(
         backgroundColor: Palette.purpleMain,
         actions: [
@@ -128,119 +124,137 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(Dimens.space16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SpacerV(value: Dimens.space64),
-              Text(
-                Translation.photoPosting.getString(context),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SpacerV(
-                value: Dimens.space8,
-              ),
-              SinglePhotoAddingButton(
-                width: double.infinity,
-                height: Dimens.space160,
-                bannerImageUrl: bannerImageUrl,
-                onPressed: () async {
-                  XFile? file = await pickImage();
+        child: Column(
+          children: [
+            const QuoteCard(
+              imagePath: Images.societyIcon,
+              quote:
+                  "All of you are shepherds and each of you is responsible for his flock.",
+              author: "- Hadis Riwayat Al-Bukhari",
+            ),
+            Container(
+              padding: EdgeInsets.all(Dimens.space16),
+              color: Palette.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    Translation.eventInfoTitle.getString(context),
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    Translation.eventInfoSub.getString(context),
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  SpacerV(
+                    value: Dimens.space20,
+                  ),
+                  SinglePhotoAddingButton(
+                    width: double.infinity,
+                    height: Dimens.space200,
+                    bannerImageUrl: bannerImageUrl,
+                    onPressed: () async {
+                      XFile? file = await pickImage();
 
-                  if (file != null) {
-                    await uploadImage(file, organizationUser.organizers.id);
-                  }
-                },
-              ),
-              SpacerV(value: Dimens.space24),
-              CustomTextField(
-                controller: _charityEventTitleController,
-                labelText: Translation.eventTitle.getString(context),
-              ),
-              SpacerV(value: Dimens.space24),
-              CustomTextField(
-                controller: _charityEventDescriptionController,
-                labelText: Translation.eventDescription.getString(context),
-                multiLine: true,
-              ),
-              SpacerV(value: Dimens.space24),
-              SizedBox(
-                width: double.infinity,
-                height: Dimens.space40,
-                child: widget.session == "update"
-                    ? ElevatedButton(
-                        onPressed: () async {
-                          final userUID = organizationUser.organizers.id;
-                          final newEvent = EventDetailsModel(
-                            id: userUID,
-                            eventName: _charityEventTitleController.text,
-                            eventDescription:
-                                _charityEventDescriptionController.text,
-                            type: "organizer",
-                            photoEventUrl: bannerImageUrl,
-                          );
-                          eventDetailsFile.updateEventDetails(newEvent);
+                      if (file != null) {
+                        await uploadImage(file, organizationUser.organizers.id);
+                      }
+                    },
+                  ),
+                  SpacerV(value: Dimens.space24),
+                  CustomTextField(
+                    controller: _charityEventTitleController,
+                    labelText: Translation.eventTitle.getString(context),
+                  ),
+                  SpacerV(value: Dimens.space24),
+                  CustomTextField(
+                    controller: _charityEventDescriptionController,
+                    labelText: Translation.eventDescription.getString(context),
+                    multiLine: true,
+                  ),
+                  SpacerV(value: Dimens.space24),
+                  SizedBox(
+                    width: double.infinity,
+                    height: Dimens.space40,
+                    child: widget.session == "update"
+                        ? ElevatedButton(
+                            onPressed: () async {
+                              final userUID = organizationUser.organizers.id;
+                              final newEvent = EventDetailsModel(
+                                id: userUID,
+                                eventName: _charityEventTitleController.text,
+                                eventDescription:
+                                    _charityEventDescriptionController.text,
+                                type: "organizer",
+                                photoEventUrl: bannerImageUrl,
+                              );
+                              eventDetailsFile.updateEventDetails(newEvent);
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MyHomePage(),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MyHomePage(),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Palette.purpleMain,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.space8),
+                              ),
                             ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Palette.purpleMain,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(Dimens.space8),
-                          ),
-                        ),
-                        child: Text(
-                          Translation.save.getString(context),
-                          style: const TextStyle(
-                              color: Palette.white, fontFamily: 'Roboto'),
-                        ),
-                      )
-                    : ElevatedButton(
-                        onPressed: () async {
-                          final userUID = organizationUser.organizers.id;
-                          final newEvent = EventDetailsModel(
-                            id: userUID,
-                            eventName: _charityEventTitleController.text,
-                            eventDescription:
-                                _charityEventDescriptionController.text,
-                            type: "organizer",
-                            photoEventUrl: bannerImageUrl,
-                          );
-                          eventDetailsFile.createEventDetails(newEvent);
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EventGalleryPage(),
+                            child: Text(
+                              Translation.save.getString(context),
+                              style: const TextStyle(
+                                  color: Palette.white),
                             ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Palette.purpleMain,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(Dimens.space8),
+                          )
+                        : ElevatedButton(
+                            onPressed: () async {
+                              final userUID = organizationUser.organizers.id;
+                              final newEvent = EventDetailsModel(
+                                id: userUID,
+                                eventName: _charityEventTitleController.text,
+                                eventDescription:
+                                    _charityEventDescriptionController.text,
+                                type: "organizer",
+                                photoEventUrl: bannerImageUrl,
+                              );
+                              eventDetailsFile.createEventDetails(newEvent);
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const EventGalleryPage(),
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Palette.purpleMain,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.space8),
+                              ),
+                            ),
+                            child: Text(
+                              Translation.next.getString(context),
+                              style: const TextStyle(
+                                  color: Palette.white),
+                            ),
                           ),
-                        ),
-                        child: Text(
-                          Translation.next.getString(context),
-                          style: const TextStyle(
-                              color: Palette.white, fontFamily: 'Roboto'),
-                        ),
-                      ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

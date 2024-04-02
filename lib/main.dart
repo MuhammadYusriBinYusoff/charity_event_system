@@ -87,6 +87,7 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Palette.purpleMain),
             useMaterial3: true,
+            fontFamily: 'Roboto',
           ),
           supportedLocales: localization.supportedLocales,
           localizationsDelegates: localization.localizationsDelegates,

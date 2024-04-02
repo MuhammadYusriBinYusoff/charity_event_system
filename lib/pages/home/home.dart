@@ -26,7 +26,8 @@ class _MyHomePageState extends State<MyHomePage> {
         Provider.of<EventDonationProvider>(context);
     EventGalleryProvider eventGalleryFile =
         Provider.of<EventGalleryProvider>(context);
-    EventVolunteerProvider eventVolunteerFile = Provider.of<EventVolunteerProvider>(context);
+    EventVolunteerProvider eventVolunteerFile =
+        Provider.of<EventVolunteerProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
@@ -180,14 +181,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                 '',
                             description:
                                 'RM ${eventDonationsFile.donationDetailsList[i].targetMoney?.toStringAsFixed(2)}',
-                            valueIndicatorProgress: double.parse(
-                                ((eventDonationsFile.donationDetailsList[i]
-                                                .currentCollected ??
-                                            0) /
-                                        (eventDonationsFile
-                                                .donationDetails.targetMoney ??
-                                            1))
-                                    .toStringAsFixed(2)),
+                            valueIndicatorProgress: ((eventDonationsFile
+                                        .donationDetailsList[i]
+                                        .currentCollected ??
+                                    0) /
+                                (eventDonationsFile
+                                        .donationDetailsList[i].targetMoney ??
+                                    1)),
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -231,7 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EventDescriptionPage(),
+                            builder: (context) => const EventDescriptionPage(),
                           ),
                         );
                       },
@@ -243,31 +243,18 @@ class _MyHomePageState extends State<MyHomePage> {
                       title: eventDetailsFile.eventDetails.eventName,
                       description:
                           'RM ${eventDonationsFile.donationDetails.targetMoney?.toStringAsFixed(2)}',
-                      valueIndicatorProgress: double.parse(((eventDonationsFile
-                                      .donationDetails.currentCollected ??
-                                  0) /
-                              (eventDonationsFile.donationDetails.targetMoney ??
-                                  1))
-                          .toStringAsFixed(2)),
+                      valueIndicatorProgress: ((eventDonationsFile
+                                  .donationDetails.currentCollected ??
+                              0) /
+                          (eventDonationsFile.donationDetails.targetMoney ??
+                              1)),
                       type: eventDetailsFile.eventDetails.type,
                       onTap: () {
                         //@YUSRI: Save for later (this is used to edit event descreiptyion)
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => EventDescriptionPage(imageUrl: eventDetailsFile.eventDetails.photoEventUrl, title: eventDetailsFile.eventDetails.eventName, description: eventDetailsFile.eventDetails.eventDescription, session: "update"),
-                        //   ),
-                        // );
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => EventGalleryPage(imageUrlList: eventGalleryFile.eventGallery.imageGalleryUrls,session: "update"),
-                        //   ),
-                        // );
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const VolunteerQueryPage(),
+                            builder: (context) => const CategoryPage(),
                           ),
                         );
                       },
