@@ -6,3 +6,4 @@ export 'event_gallery_creation_screen.dart';
 export 'event_volunteer_query_screen.dart';
 export 'category_feature_screen.dart';
 export 'event_item_manage_screen.dart';
+export 'event_collaboration_screen.dart';
