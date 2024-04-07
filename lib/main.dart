@@ -51,6 +51,7 @@ Future main() async {
         ChangeNotifierProvider(create: (context) => EventGalleryProvider()),
         ChangeNotifierProvider(create: (context) => EventVolunteerProvider()),
         ChangeNotifierProvider(create: (context) => EventFeedbackProvider()),
+        ChangeNotifierProvider(create: (context) => EventCollaborationProvider()),
       ],
       child: const MyApp(),
     ),
