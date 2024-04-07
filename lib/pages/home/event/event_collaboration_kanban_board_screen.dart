@@ -1,9 +1,10 @@
 import 'package:appflowy_board/appflowy_board.dart';
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/models/models.dart';
-import 'package:charity_event_system/pages/widgets/spacer_v.dart';
+import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -112,16 +113,14 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
       stretchGroupHeight: false,
     );
     return StreamBuilder<List<EventCollaborationModel>>(
-      stream: eventCollaboration
-          .collaborationDataStream,
+      stream: eventCollaboration.collaborationDataStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(); 
+          return const CircularProgressIndicator();
         }
 
         if (snapshot.hasError) {
-          return Text(
-              'Error: ${snapshot.error}'); 
+          return Text('Error: ${snapshot.error}');
         }
 
         // Clear existing group items
@@ -211,13 +210,7 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
               icon: const Icon(Icons.lightbulb_circle),
               title: SizedBox(
                 width: 60,
-                child: TextField(
-                  controller: TextEditingController()
-                    ..text = columnData.headerData.groupName,
-                  onSubmitted: (val) {
-                    // Handle group name update
-                  },
-                ),
+                child: Text(columnData.headerData.groupName, style: const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
               ),
               addIcon: const Icon(Icons.add, size: 20),
               moreIcon: const Icon(Icons.more_horiz, size: 20),
@@ -312,7 +305,13 @@ class _RichTextCardState extends State<RichTextCard> {
           Provider.of<EventCollaborationProvider>(context);
       return Align(
         alignment: Alignment.centerLeft,
-        child: Padding(
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Palette.lightGrey,
+              width: 2,
+            ),
+          ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: InkWell(
             onTap: _changeTitleAndSubtitle,
@@ -321,21 +320,21 @@ class _RichTextCardState extends State<RichTextCard> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text("Confirm Deletion"),
-                    content: Text("Are you sure you want to delete this card?"),
+                    title: Text(Translation.deleteTaskTitle.getString(context)),
+                    content: Text(Translation.deleteTaskQuestion.getString(context)),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text("Cancel"),
+                        child: Text(Translation.cancel.getString(context)),
                       ),
                       TextButton(
                         onPressed: () {
                           eventCollaboration.deleteEventCollaboration(_uid);
                           Navigator.of(context).pop();
                         },
-                        child: Text("Delete"),
+                        child: Text(Translation.delete.getString(context)),
                       ),
                     ],
                   );
@@ -351,7 +350,9 @@ class _RichTextCardState extends State<RichTextCard> {
                       fontSize: 14, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.left,
                 ),
-                SpacerV(value: Dimens.space12),
+                SpacerV(
+                  value: Dimens.space12,
+                ),
                 Text(
                   _title,
                   style: const TextStyle(fontSize: 14, color: Colors.blue),
@@ -362,11 +363,32 @@ class _RichTextCardState extends State<RichTextCard> {
                   style: const TextStyle(fontSize: 12, color: Palette.grey),
                   textAlign: TextAlign.left,
                 ),
-                const SizedBox(height: 10),
+                SpacerV(
+                  value: Dimens.space10,
+                ),
                 Text(
                   _timeCreated,
                   style: const TextStyle(fontSize: 12, color: Colors.red),
-                )
+                ),
+                SpacerV(
+                  value: Dimens.space10,
+                ),
+                Row(
+                  children: [
+                    const CircleAvatar(
+                      radius: 12,
+                      backgroundColor: Colors.green,
+                      child: Icon(Icons.person, size: 18),
+                    ),
+                    SpacerH(
+                      value: Dimens.space8,
+                    ),
+                    const Text(
+                      "John Doe",
+                      style: TextStyle(fontSize: 12, color: Colors.black),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -388,24 +410,39 @@ class _RichTextCardState extends State<RichTextCard> {
         EventCollaborationProvider eventCollaboration =
             Provider.of<EventCollaborationProvider>(context);
         return AlertDialog(
-          title: Text('Change Title and Subtitle'),
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(14.0),
+            side: const BorderSide(
+              color: Palette.purpleMain,
+              width: 3, 
+            ),
+          ),
+          title: Text(
+            _id,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
+              CustomTextField(
                 controller: titleController,
-                decoration: InputDecoration(labelText: 'Title'),
+                labelText: Translation.taskTitle.getString(context),
               ),
-              TextField(
+              SpacerV(
+                value: Dimens.space8,
+              ),
+              CustomTextField(
                 controller: descriptionController,
-                decoration: InputDecoration(labelText: 'Subtitle'),
+                labelText: Translation.taskDescription.getString(context),
+                multiLine: true,
               ),
             ],
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('Cancel'),
+              child: Text(Translation.cancel.getString(context)),
             ),
             TextButton(
               onPressed: () {
@@ -417,7 +454,7 @@ class _RichTextCardState extends State<RichTextCard> {
                     _uid, _title, _description);
                 Navigator.pop(context);
               },
-              child: Text('Save'),
+              child: Text(Translation.save.getString(context)),
             ),
           ],
         );

@@ -132,6 +132,10 @@ mixin Translation{
   static const String teamPlanning = "teamPlanning";
   static const String manageGallery = "manageGallery";
   static const String feedbackCollection = "feedbackCollection";
+  static const String deleteTaskTitle = 'deleteTaskTitle';
+  static const String deleteTaskQuestion = 'deleteTaskQuestion';
+  static const String taskTitle = 'taskTitle';
+  static const String taskDescription = 'taskDescription';
   
 
   static const Map<String,dynamic> EN = {
@@ -258,6 +262,10 @@ mixin Translation{
     teamPlanning: 'Collaboration',
     manageVolunteer: 'Volunteer',
     manageItem: 'Item List',
+    deleteTaskTitle: 'Confirm Deletion',
+    deleteTaskQuestion: 'Are you sure you want to delete this task',
+    taskTitle: 'Title of task',
+    taskDescription: 'Description of task',
 
   };
 
@@ -385,6 +393,10 @@ mixin Translation{
     teamPlanning: 'Kolaborasi',
     manageVolunteer: 'Sukarelawan',
     manageItem: 'Senarai Barang',
+    deleteTaskTitle: 'Sahkan Pemadaman',
+    deleteTaskQuestion: 'Adakah awak pasti untuk padam tugasan ini',
+    taskTitle: 'Tajuk tugasan',
+    taskDescription: 'Ulasan tugasan',
 
   };
 }
