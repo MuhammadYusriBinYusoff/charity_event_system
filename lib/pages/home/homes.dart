@@ -1,4 +1,4 @@
-export 'home.dart';
+export 'app_home_screen.dart';
 export 'splash_screen.dart';
 export 'login/login.dart';
 export 'sign up/signup.dart';
