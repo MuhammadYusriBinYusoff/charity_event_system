@@ -52,7 +52,7 @@ class _SignUpPageState extends State<SignUpPage> {
       });
     } catch (error) {
       setState(() {
-        isLoading = false; 
+        isLoading = false;
       });
       print(error);
     }
@@ -70,7 +70,9 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SpacerV(value: Dimens.space32,),
+              SpacerV(
+                value: Dimens.space32,
+              ),
               Stack(
                 children: [
                   Center(
@@ -94,7 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: IconButton(
                       onPressed: () async {
                         XFile? file = await pickImage(); // Step 1: pick image
-        
+
                         if (file != null) {
                           await uploadImage(file); // Step 2: upload image
                         }
@@ -107,24 +109,28 @@ class _SignUpPageState extends State<SignUpPage> {
               SpacerV(
                 value: Dimens.space64,
               ),
-              buildTextField(
+              CustomTextField(
                 controller: _organizationNameController,
                 labelText: Translation.organizationName.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _organizationContactController,
                 labelText: Translation.organizationContact.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _organizationAdressController,
                 labelText: Translation.organizationAdress.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _organizationLinkController,
                 labelText: Translation.organizationLink.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(
@@ -138,21 +144,60 @@ class _SignUpPageState extends State<SignUpPage> {
                     String organizationAdress =
                         _organizationAdressController.text;
                     String organizationLink = _organizationLinkController.text;
-                    
-                    print(
-                        'Name: $organizationName, Contact: $organizationContact, Adress: $organizationAdress, Link: $organizationLink');
-        
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PICSignUpPage(
-                                organizationName: organizationName,
-                                organizationContact: organizationContact,
-                                organizationAddress: organizationAdress,
-                                organizationLink: organizationLink,
-                                profileImageLink: imageUrl,
-                              )),
-                    );
+
+                    if (organizationName.isNotEmpty &&
+                        organizationContact.isNotEmpty &&
+                        organizationAdress.isNotEmpty &&
+                        organizationLink.isNotEmpty) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PICSignUpPage(
+                                  organizationName: organizationName,
+                                  organizationContact: organizationContact,
+                                  organizationAddress: organizationAdress,
+                                  organizationLink: organizationLink,
+                                  profileImageLink: imageUrl,
+                                )),
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          backgroundColor: Palette.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: const BorderSide(color: Palette.black),
+                          ),
+                          title: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.error, color: Palette.redButton),
+                              SpacerH(value: Dimens.space10),
+                              Text(
+                                Translation.errorTitle.getString(context),
+                                style: TextStyle(color: Palette.black),
+                              ),
+                            ],
+                          ),
+                          content: Text(
+                            Translation.errorFieldNotFilled.getString(context),
+                            style: TextStyle(color: Palette.black),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                "OK",
+                                style: TextStyle(color: Palette.black),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Palette.purpleMain,

@@ -38,8 +38,8 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    OrganizerProvider organizationUser = Provider.of<OrganizerProvider>(context);
-
+    OrganizerProvider organizationUser =
+        Provider.of<OrganizerProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -51,34 +51,40 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildTextField(
+              CustomTextField(
                 controller: _picNameController,
                 labelText: Translation.picFullname.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _picContactController,
                 labelText: Translation.picContact.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _picIcController,
                 labelText: Translation.picIcNumber.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _picAdressController,
                 labelText: Translation.picAdress.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _picEmailController,
                 labelText: Translation.picEmail.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _picPasswordController,
                 labelText: Translation.picPassword.getString(context),
+                compulsory: true,
                 obscureText: true,
               ),
               SpacerV(value: Dimens.space16),
@@ -87,38 +93,82 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    try {
-                      final userCredential = await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                        email: _picEmailController.text,
-                        password: _picPasswordController.text,
-                      );
-                      final String? userUID = userCredential.user?.uid;
+                    if (_picNameController.text.isNotEmpty &&
+                        _picContactController.text.isNotEmpty &&
+                        _picIcController.text.isNotEmpty &&
+                        _picAdressController.text.isNotEmpty &&
+                        _picEmailController.text.isNotEmpty &&
+                        _picPasswordController.text.isNotEmpty) {
+                      try {
+                        final userCredential = await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                          email: _picEmailController.text,
+                          password: _picPasswordController.text,
+                        );
+                        final String? userUID = userCredential.user?.uid;
 
-                      final newUser = OrganizerModel(
-                        id: userUID,
-                        picName: _picNameController.text,
-                        picContact: _picContactController.text,
-                        picIc: _picIcController.text,
-                        picAdress: _picAdressController.text,
-                        picEmail: _picEmailController.text,
-                        picPassword: _picPasswordController.text,
-                        organizationName: widget.organizationName,
-                        organizationContact: widget.organizationContact,
-                        organizationAdress: widget.organizationAddress,
-                        organizationLink: widget.organizationLink,
-                        profileImageLink: widget.profileImageLink,
-                      );
+                        final newUser = OrganizerModel(
+                          id: userUID,
+                          picName: _picNameController.text,
+                          picContact: _picContactController.text,
+                          picIc: _picIcController.text,
+                          picAdress: _picAdressController.text,
+                          picEmail: _picEmailController.text,
+                          picPassword: _picPasswordController.text,
+                          organizationName: widget.organizationName,
+                          organizationContact: widget.organizationContact,
+                          organizationAdress: widget.organizationAddress,
+                          organizationLink: widget.organizationLink,
+                          profileImageLink: widget.profileImageLink,
+                        );
 
-                      organizationUser.createOrganizer(newUser);
+                        organizationUser.createOrganizer(newUser);
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
+                      } catch (error) {
+                        print("Error: $error");
+                      }
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          backgroundColor: Palette.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: const BorderSide(color: Palette.black),
+                          ),
+                          title: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.error, color: Palette.redButton),
+                              SpacerH(value: Dimens.space10),
+                              Text(
+                                Translation.errorTitle.getString(context),
+                                style: TextStyle(color: Palette.black),
+                              ),
+                            ],
+                          ),
+                          content: Text(
+                            Translation.errorFieldNotFilled.getString(context),
+                            style: TextStyle(color: Palette.black),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                "OK",
+                                style: TextStyle(color: Palette.black),
+                              ),
+                            ),
+                          ],
+                        ),
                       );
-                    } catch (error) {
-                      print("Error: $error");
                     }
                   },
                   style: ElevatedButton.styleFrom(

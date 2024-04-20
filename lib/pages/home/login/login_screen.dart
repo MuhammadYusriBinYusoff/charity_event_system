@@ -22,8 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
-    PersonnelProvider personnelUser =
-        Provider.of<PersonnelProvider>(context);
+    PersonnelProvider personnelUser = Provider.of<PersonnelProvider>(context);
     EventDetailsProvider eventDetailsFile =
         Provider.of<EventDetailsProvider>(context);
     EventDonationProvider eventDonationsFile =
@@ -119,18 +118,39 @@ class _LoginPageState extends State<LoginPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text(
-                              Translation.errorTitle.getString(context),
+                            backgroundColor:
+                                Palette.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                              side: const BorderSide(
+                                  color: Palette.black),
                             ),
-                            content: Text(errorMessage),
+                            title: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.error,
+                                    color: Palette.redButton),
+                                SpacerH(value: Dimens.space10),
+                                Text(
+                                  Translation.errorTitle
+                                      .getString(context),
+                                  style: const TextStyle(color: Palette.black),
+                                ),
+                              ],
+                            ),
+                            content: Text(
+                              errorMessage, 
+                              style: const TextStyle(color: Palette.black),
+                            ),
                             actions: [
                               TextButton(
                                 onPressed: () {
-                                  Navigator.of(context)
-                                      .pop();
+                                  Navigator.of(context).pop();
                                 },
                                 child: Text(
-                                  Translation.ok.getString(context),
+                                  Translation.ok
+                                      .getString(context),
+                                  style: const TextStyle(color: Palette.black),
                                 ),
                               ),
                             ],

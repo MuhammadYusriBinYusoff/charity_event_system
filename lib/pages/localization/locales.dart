@@ -52,6 +52,7 @@ mixin Translation{
   static const String credentialErrorMsg = "credentialErrorMsg";
   static const String authenticationErrorMsg = "authenticationErrorMsg";
   static const String ok = "ok";
+  static const String errorFieldNotFilled = 'errorFieldNotFilled';
 
   //General things
   static const String logOutTitle = "logOutTitle";
@@ -182,6 +183,7 @@ mixin Translation{
     credentialErrorMsg: 'Invalid credentials. Please try again.',
     authenticationErrorMsg: 'Authentication failed. Please try again later.',
     ok: 'Ok',
+    errorFieldNotFilled: 'Please fill in all required fields.',
 
     //General things
     logOutTitle: 'Log Out',
@@ -313,6 +315,7 @@ mixin Translation{
     credentialErrorMsg: 'Bukti kelayakan tidak sah. Sila cuba lagi.',
     authenticationErrorMsg: 'Pengesahan gagal. Sila cuba sebentar lagi.',
     ok: 'Baik',
+    errorFieldNotFilled: 'Sila isi ruangan merah yang disediakan',
 
     //General things
     logOutTitle: 'Log Keluar',
