@@ -8,8 +8,10 @@ import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   String? title;
+  bool? showPreviousButton;
 
-  CustomAppBar({Key? key, this.title}) : super(key: key);
+  CustomAppBar({Key? key, this.title, this.showPreviousButton})
+      : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -18,8 +20,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     EventDetailsProvider eventDetailsFile =
         Provider.of<EventDetailsProvider>(context);
-        
+    OrganizerProvider organizationUser =
+        Provider.of<OrganizerProvider>(context);
+    PersonnelProvider personnelUser = Provider.of<PersonnelProvider>(context);
+
     return AppBar(
+      automaticallyImplyLeading: showPreviousButton ?? true,
       backgroundColor: Palette.purpleMain,
       title: Center(
         child: Text(
@@ -34,25 +40,63 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: Text(Translation.logOutTitle.getString(context)),
-                content: Text(Translation.logOutMsg.getString(context)),
+                backgroundColor: Palette.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(10.0),
+                  side: const BorderSide(color: Palette.black),
+                ),
+                title: Row(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.error,
+                        color: Palette.redButton),
+                    SpacerH(value: Dimens.space10),
+                    Text(
+                      Translation.logOutTitle.getString(context),
+                      style: const TextStyle(
+                          color: Palette.black),
+                    ),
+                  ],
+                ),
+                content: Text(
+                  Translation.logOutMsg.getString(context),
+                  style: const TextStyle(
+                      color: Palette.black),
+                ),
                 actions: [
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(Translation.cancel.getString(context)),
+                    child: Text(
+                      Translation.cancel.getString(context),
+                      style: const TextStyle(
+                          color: Palette.black),
+                    ),
                   ),
                   TextButton(
                     onPressed: () {
                       FirebaseAuth.instance.signOut();
                       eventDetailsFile.resetEventDetails();
+                      organizationUser.resetOrganizersDetails();
+                      personnelUser.resetPersonnelsDetails();
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
                       );
                     },
-                    child: Text(Translation.logout.getString(context)),
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          Palette.redButton),
+                    ),
+                    child: Text(
+                      Translation.logout.getString(context),
+                      style: const TextStyle(
+                          color: Palette.white),
+                    ),
                   ),
                 ],
               ),

@@ -1,7 +1,6 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
@@ -42,46 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Palette.purpleMain,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Palette.white),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(Translation.logOutTitle.getString(context)),
-                  content: Text(Translation.logOutMsg.getString(context)),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(Translation.cancel.getString(context)),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                        eventDetailsFile.resetEventDetails();
-                        organizationUser.resetOrganizersDetails();
-                        personnelUser.resetPersonnelsDetails();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
-                        );
-                      },
-                      child: Text(Translation.logout.getString(context)),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      appBar: CustomAppBar(showPreviousButton: false,),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
