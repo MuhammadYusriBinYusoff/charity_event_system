@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/home/splash_screen.dart';
 import 'package:charity_event_system/pages/localization/locales.dart';
@@ -45,6 +44,7 @@ Future main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => OrganizerProvider()),
+        ChangeNotifierProvider(create: (context) => PersonnelProvider()),
         ChangeNotifierProvider(create: (context) => EventDetailsProvider()),
         ChangeNotifierProvider(create: (context) => EventItemsProvider()),
         ChangeNotifierProvider(create: (context) => EventDonationProvider()),
@@ -74,7 +74,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

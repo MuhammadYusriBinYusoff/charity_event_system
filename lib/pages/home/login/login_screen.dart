@@ -22,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
+    PersonnelProvider personnelUser =
+        Provider.of<PersonnelProvider>(context);
     EventDetailsProvider eventDetailsFile =
         Provider.of<EventDetailsProvider>(context);
     EventDonationProvider eventDonationsFile =
@@ -76,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                       );
 
                       await organizationUser.fetchOrganizerData();
+                      await personnelUser.fetchPersonnelData();
                       await eventDetailsFile.fetchEventDetailsData();
                       await eventDonationsFile.fetchEventDonationData();
                       await eventGalleryFile.fetchEventGalleryData();

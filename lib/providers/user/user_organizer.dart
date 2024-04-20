@@ -90,4 +90,9 @@ class OrganizerProvider extends ChangeNotifier {
       print('Error fetching organizers: $error');
     }
   }
+
+  void resetOrganizersDetails() async{
+    _organizers = OrganizerModel();
+    notifyListeners();
+  }
 }
