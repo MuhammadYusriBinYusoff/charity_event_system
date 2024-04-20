@@ -41,7 +41,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
-      appBar: CustomAppBar(showPreviousButton: false,),
+      appBar: CustomAppBar(
+        showPreviousButton: false,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -77,22 +79,43 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OrganizationProfilePage(
-                                  organizationName: organizationUser
-                                      .organizers.organizationName,
-                                  organizationContact: organizationUser
-                                      .organizers.organizationContact,
-                                  organizationAdress: organizationUser
-                                      .organizers.organizationAdress,
-                                  organizationLink: organizationUser
-                                      .organizers.organizationLink,
-                                  profileImageLink: organizationUser
-                                      .organizers.profileImageLink,
-                                )),
-                      );
+                      if (organizationUser.organizers.id != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OrganizationProfilePage(
+                                    organizationName: organizationUser
+                                        .organizers.organizationName,
+                                    organizationContact: organizationUser
+                                        .organizers.organizationContact,
+                                    organizationAdress: organizationUser
+                                        .organizers.organizationAdress,
+                                    organizationLink: organizationUser
+                                        .organizers.organizationLink,
+                                    profileImageLink: organizationUser
+                                        .organizers.profileImageLink,
+                                  )),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PersonnelProfilePage(
+                                    personnelName:
+                                        personnelUser.personnels.personnelName,
+                                    personnelContact: personnelUser
+                                        .personnels.personnelContact,
+                                    personnelAdress: personnelUser
+                                        .personnels.personnelAdress,
+                                    personnelEmail:
+                                        personnelUser.personnels.personnelEmail,
+                                    personnelPassword: personnelUser
+                                        .personnels.personnelPassword,
+                                    profileImageLink: personnelUser
+                                        .personnels.profileImageLink,
+                                  )),
+                        );
+                      }
                     },
                     child: CircleAvatar(
                       radius: Dimens.space32,
