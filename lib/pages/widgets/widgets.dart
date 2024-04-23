@@ -15,3 +15,4 @@ export 'custom_dropdown_button.dart';
 export 'custom_app_bar.dart';
 export 'custom_fade_scale_animation.dart';
 export 'custom_quote_card.dart';
+export 'custom_error_dialog_1.dart';

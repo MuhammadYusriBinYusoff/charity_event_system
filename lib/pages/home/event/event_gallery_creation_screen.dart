@@ -12,11 +12,13 @@ import 'package:provider/provider.dart';
 class EventGalleryPage extends StatefulWidget {
   final List<String>? imageUrlList;
   final String? session;
+  EventDetailsModel? newEvent;
 
-  const EventGalleryPage({
+  EventGalleryPage({
     Key? key,
     this.imageUrlList,
     this.session,
+    this.newEvent,
   }) : super(key: key);
 
   @override

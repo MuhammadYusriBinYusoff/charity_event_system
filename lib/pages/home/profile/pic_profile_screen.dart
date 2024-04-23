@@ -25,24 +25,16 @@ class PicProfilePage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<PicProfilePage> createState() =>
-      _PicProfilePageState();
+  State<PicProfilePage> createState() => _PicProfilePageState();
 }
 
 class _PicProfilePageState extends State<PicProfilePage> {
-  final TextEditingController _picNameController =
-      TextEditingController();
-  final TextEditingController _picContactController =
-      TextEditingController();
-  final TextEditingController _picIcController =
-      TextEditingController();
-  final TextEditingController _picAdressController =
-      TextEditingController();
-  final TextEditingController _picEmailController =
-      TextEditingController();
-  final TextEditingController _picPasswordController =
-      TextEditingController();
-
+  final TextEditingController _picNameController = TextEditingController();
+  final TextEditingController _picContactController = TextEditingController();
+  final TextEditingController _picIcController = TextEditingController();
+  final TextEditingController _picAdressController = TextEditingController();
+  final TextEditingController _picEmailController = TextEditingController();
+  final TextEditingController _picPasswordController = TextEditingController();
 
   @override
   void initState() {
@@ -76,32 +68,38 @@ class _PicProfilePageState extends State<PicProfilePage> {
               CustomTextField(
                 controller: _picNameController,
                 labelText: Translation.picFullname.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picContactController,
                 labelText: Translation.picContact.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picIcController,
                 labelText: Translation.picIcNumber.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picAdressController,
                 labelText: Translation.picAdress.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picEmailController,
                 labelText: Translation.picEmail.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picPasswordController,
                 labelText: Translation.picPassword.getString(context),
                 obscureText: true,
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(
@@ -109,32 +107,47 @@ class _PicProfilePageState extends State<PicProfilePage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    try {
-                      String? userId = organizationUser.organizers.id;
+                    if (_picNameController.text.isNotEmpty &&
+                        _picContactController.text.isNotEmpty &&
+                        _picIcController.text.isNotEmpty &&
+                        _picAdressController.text.isNotEmpty &&
+                        _picEmailController.text.isNotEmpty &&
+                        _picPasswordController.text.isNotEmpty) {
+                      try {
+                        String? userId = organizationUser.organizers.id;
 
-                      Map<String, dynamic> dataToUpdate = {
-                        'picName': _picNameController.text,
-                        'picContact':
-                            _picContactController.text,
-                        'picIc': _picIcController.text,
-                        'picAdress': _picAdressController.text,
-                        'picEmail': _picEmailController.text,
-                        'picPassword': _picPasswordController.text,
-                      };
+                        Map<String, dynamic> dataToUpdate = {
+                          'picName': _picNameController.text,
+                          'picContact': _picContactController.text,
+                          'picIc': _picIcController.text,
+                          'picAdress': _picAdressController.text,
+                          'picEmail': _picEmailController.text,
+                          'picPassword': _picPasswordController.text,
+                        };
 
-                      await organizationUser.updatePicData(
-                          userId, dataToUpdate);
+                        await organizationUser.updatePicData(
+                            userId, dataToUpdate);
 
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MyHomePage(
-                                  title: '',
-                                )),
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyHomePage(
+                                    title: '',
+                                  )),
+                        );
+                      } catch (error) {
+                        print("Error: $error");
+                      }
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorAlertDialog(
+                          title: Translation.errorTitle.getString(context),
+                          content: Translation.errorFieldNotFilled
+                              .getString(context),
+                        ),
                       );
-                    } catch (error) {
-                      print("Error: $error");
                     }
                   },
                   style: ElevatedButton.styleFrom(

@@ -28,8 +28,7 @@ class PersonnelProfilePage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<PersonnelProfilePage> createState() =>
-      _PersonnelProfilePageState();
+  State<PersonnelProfilePage> createState() => _PersonnelProfilePageState();
 }
 
 class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
@@ -57,7 +56,8 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
   // Function to upload image to Firebase Storage
   Future<void> uploadImage(XFile file, String? userId) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages = referenceRoot.child('profileImage').child(userId ?? '');
+    Reference referenceDirImages =
+        referenceRoot.child('profileImage').child(userId ?? '');
     Reference referenceImageToUpload = referenceDirImages.child(file.name);
 
     try {
@@ -133,7 +133,10 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
                         XFile? file = await pickImage(); // Step 1: pick image
 
                         if (file != null) {
-                          await uploadImage(file,organizationUser.organizers.id); // Step 2: upload image
+                          await uploadImage(
+                              file,
+                              organizationUser
+                                  .organizers.id); // Step 2: upload image
                         }
                       },
                       icon: const Icon(Icons.add_a_photo),
@@ -147,26 +150,31 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
               CustomTextField(
                 controller: _personnelNameController,
                 labelText: Translation.personnelName.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _personnelContactController,
                 labelText: Translation.personnelContact.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _personnelAdressController,
                 labelText: Translation.personnelAdress.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _personnelEmailController,
                 labelText: Translation.personnelEmail.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _personnelPasswordController,
                 labelText: Translation.personnelPassword.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(
@@ -174,32 +182,47 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    try {
-                      String? userId = personnelUser.personnels.id;
+                    if (_personnelEmailController.text.isNotEmpty &&
+                        _personnelPasswordController.text.isNotEmpty &&
+                        _personnelNameController.text.isNotEmpty &&
+                        _personnelContactController.text.isNotEmpty &&
+                        _personnelAdressController.text.isNotEmpty) {
+                      try {
+                        String? userId = personnelUser.personnels.id;
 
-                      Map<String, dynamic> dataToUpdate = {
-                        'personnelName': _personnelNameController.text,
-                        'personnelContact':
-                            _personnelContactController.text,
-                        'personnelAdress': _personnelAdressController.text,
-                        'personnelEmail': _personnelEmailController.text,
-                        'personnelPassword': _personnelPasswordController.text,
-                        'profileImageLink': imageUrl,
-                      };
+                        Map<String, dynamic> dataToUpdate = {
+                          'personnelName': _personnelNameController.text,
+                          'personnelContact': _personnelContactController.text,
+                          'personnelAdress': _personnelAdressController.text,
+                          'personnelEmail': _personnelEmailController.text,
+                          'personnelPassword':
+                              _personnelPasswordController.text,
+                          'profileImageLink': imageUrl,
+                        };
 
-                      await personnelUser.updatePersonnelData(
-                          userId, dataToUpdate);
+                        await personnelUser.updatePersonnelData(
+                            userId, dataToUpdate);
 
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MyHomePage(
-                                  title: '',
-                                )),
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyHomePage(
+                                    title: '',
+                                  )),
+                        );
+                      } catch (error) {
+                        print("Error: $error");
+                      }
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorAlertDialog(
+                          title: Translation.errorTitle.getString(context),
+                          content: Translation.errorFieldNotFilled
+                              .getString(context),
+                        ),
                       );
-                    } catch (error) {
-                      print("Error: $error");
                     }
                   },
                   style: ElevatedButton.styleFrom(

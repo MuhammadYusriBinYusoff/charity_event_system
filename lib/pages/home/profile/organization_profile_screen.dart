@@ -53,7 +53,8 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
   // Function to upload image to Firebase Storage
   Future<void> uploadImage(XFile file, String? userId) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages = referenceRoot.child('profileImage').child(userId ?? '');
+    Reference referenceDirImages =
+        referenceRoot.child('profileImage').child(userId ?? '');
     Reference referenceImageToUpload = referenceDirImages.child(file.name);
 
     try {
@@ -127,7 +128,10 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
                         XFile? file = await pickImage(); // Step 1: pick image
 
                         if (file != null) {
-                          await uploadImage(file,organizationUser.organizers.id); // Step 2: upload image
+                          await uploadImage(
+                              file,
+                              organizationUser
+                                  .organizers.id); // Step 2: upload image
                         }
                       },
                       icon: const Icon(Icons.add_a_photo),
@@ -141,21 +145,25 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
               CustomTextField(
                 controller: _organizationNameController,
                 labelText: Translation.organizationName.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _organizationContactController,
                 labelText: Translation.organizationContact.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _organizationAdressController,
                 labelText: Translation.organizationAdress.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _organizationLinkController,
                 labelText: Translation.organizationLink.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(
@@ -163,42 +171,56 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    try {
-                      String? userId = organizationUser.organizers.id;
+                    if (_organizationNameController.text.isNotEmpty &&
+                        _organizationContactController.text.isNotEmpty &&
+                        _organizationAdressController.text.isNotEmpty &&
+                        _organizationLinkController.text.isNotEmpty) {
+                      try {
+                        String? userId = organizationUser.organizers.id;
 
-                      Map<String, dynamic> dataToUpdate = {
-                        'organizationName': _organizationNameController.text,
-                        'organizationContact':
-                            _organizationContactController.text,
-                        'organizationAdress': _organizationAdressController.text,
-                        'organizationLink': _organizationLinkController.text,
-                        'profileImageLink': imageUrl,
-                      };
+                        Map<String, dynamic> dataToUpdate = {
+                          'organizationName': _organizationNameController.text,
+                          'organizationContact':
+                              _organizationContactController.text,
+                          'organizationAdress':
+                              _organizationAdressController.text,
+                          'organizationLink': _organizationLinkController.text,
+                          'profileImageLink': imageUrl,
+                        };
 
-                      await organizationUser.updateOrganizerData(
-                          userId, dataToUpdate);
+                        await organizationUser.updateOrganizerData(
+                            userId, dataToUpdate);
 
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PicProfilePage(
-                                  picName: organizationUser
-                                      .organizers.picName,
-                                  picContact:
-                                      organizationUser.organizers.picContact,
-                                  picIc:
-                                      organizationUser.organizers.picIc,
-                                  picAdress: organizationUser
-                                      .organizers.picAdress,
-                                  picEmail: organizationUser
-                                      .organizers.picEmail,
-                                  picPassword: organizationUser
-                                      .organizers.picPassword,
-                                )),
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PicProfilePage(
+                                    picName:
+                                        organizationUser.organizers.picName,
+                                    picContact:
+                                        organizationUser.organizers.picContact,
+                                    picIc: organizationUser.organizers.picIc,
+                                    picAdress:
+                                        organizationUser.organizers.picAdress,
+                                    picEmail:
+                                        organizationUser.organizers.picEmail,
+                                    picPassword:
+                                        organizationUser.organizers.picPassword,
+                                  )),
+                        );
+                      } catch (error) {
+                        print("Error: $error");
+                      }
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorAlertDialog(
+                          title: Translation.errorTitle.getString(context),
+                          content: Translation.errorFieldNotFilled
+                              .getString(context),
+                        ),
                       );
-                    } catch (error) {
-                      print("Error: $error");
                     }
                   },
                   style: ElevatedButton.styleFrom(

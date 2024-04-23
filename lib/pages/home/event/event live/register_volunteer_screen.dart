@@ -1,4 +1,3 @@
-
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/models/event/event.dart';
 import 'package:charity_event_system/pages/pages.dart';
@@ -16,10 +15,11 @@ class RegisterVolunteerFormPage extends StatefulWidget {
     Key? key,
     this.id,
     this.index,
-    }) : super(key: key);
+  }) : super(key: key);
 
   @override
-  State<RegisterVolunteerFormPage> createState() => _RegisterVolunteerFormPageState();
+  State<RegisterVolunteerFormPage> createState() =>
+      _RegisterVolunteerFormPageState();
 }
 
 class _RegisterVolunteerFormPageState extends State<RegisterVolunteerFormPage> {
@@ -29,48 +29,55 @@ class _RegisterVolunteerFormPageState extends State<RegisterVolunteerFormPage> {
       TextEditingController();
   final TextEditingController _volunteerAdressController =
       TextEditingController();
-      final TextEditingController _volunteerIcController =
-      TextEditingController();
+  final TextEditingController _volunteerIcController = TextEditingController();
   final TextEditingController _volunteerEmailController =
       TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-      EventVolunteerProvider eventVolunteer =
+    EventVolunteerProvider eventVolunteer =
         Provider.of<EventVolunteerProvider>(context);
-        
+
     return Scaffold(
-      appBar: CustomAppBar(title: Translation.volunteerRegisterTitle.getString(context)),
+      appBar: CustomAppBar(
+          title: Translation.volunteerRegisterTitle.getString(context)),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(Dimens.space16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SpacerV(value: Dimens.space40,),
-              buildTextField(
+              SpacerV(
+                value: Dimens.space40,
+              ),
+              CustomTextField(
                 controller: _volunteerNameController,
                 labelText: Translation.personnelName.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _volunteerAdressController,
                 labelText: Translation.personnelAdress.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _volunteerIcController,
                 labelText: Translation.personnelIc.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _volunteerContactController,
                 labelText: Translation.personnelContact.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _volunteerEmailController,
                 labelText: Translation.personnelEmail.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(
@@ -78,28 +85,40 @@ class _RegisterVolunteerFormPageState extends State<RegisterVolunteerFormPage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    String newId = const Uuid().v4();
+                    if (_volunteerNameController.text.isNotEmpty &&
+                        _volunteerAdressController.text.isNotEmpty &&
+                        _volunteerIcController.text.isNotEmpty &&
+                        _volunteerContactController.text.isNotEmpty &&
+                        _volunteerEmailController.text.isNotEmpty) {
+                      String newId = const Uuid().v4();
+                      final newVolunteer = VolunteerModel(
+                        id: newId,
+                        volunteerName: _volunteerNameController.text,
+                        volunteerContact: _volunteerContactController.text,
+                        volunteerIc: _volunteerIcController.text,
+                        volunteerAdress: _volunteerAdressController.text,
+                        volunteerEmail: _volunteerEmailController.text,
+                      );
+                      eventVolunteer.createVolunteerDetails(
+                          newVolunteer, widget.id);
 
-                    final newVolunteer = VolunteerModel(
-                      id: newId,
-                      volunteerName: _volunteerNameController.text ,
-                      volunteerContact: _volunteerContactController.text,
-                      volunteerIc: _volunteerIcController.text,
-                      volunteerAdress: _volunteerAdressController.text,
-                      volunteerEmail: _volunteerEmailController.text,
-                    );
-
-                    eventVolunteer.createVolunteerDetails(newVolunteer, widget.id);
-
-                    //[@TODO YUSRI] Later for display all volunteer name
-                    //await eventVolunteer.fetchAllVolunteerDetails(widget.id);
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EventPostingDescriptionPage(index: widget.index,)
-                      ),
-                    );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EventPostingDescriptionPage(
+                                  index: widget.index,
+                                )),
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorAlertDialog(
+                          title: Translation.errorTitle.getString(context),
+                          content: Translation.errorFieldNotFilled
+                              .getString(context),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Palette.purpleMain,

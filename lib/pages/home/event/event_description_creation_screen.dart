@@ -133,12 +133,14 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                   CustomTextField(
                     controller: _charityEventTitleController,
                     labelText: Translation.eventTitle.getString(context),
+                    compulsory: true,
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
                     controller: _charityEventDescriptionController,
                     labelText: Translation.eventDescription.getString(context),
                     multiLine: true,
+                    compulsory: true,
                   ),
                   SpacerV(value: Dimens.space24),
                   SizedBox(
@@ -175,29 +177,42 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                             ),
                             child: Text(
                               Translation.save.getString(context),
-                              style: const TextStyle(
-                                  color: Palette.white),
+                              style: const TextStyle(color: Palette.white),
                             ),
                           )
                         : ElevatedButton(
                             onPressed: () async {
-                              final userUID = organizationUser.organizers.id;
-                              final newEvent = EventDetailsModel(
-                                id: userUID,
-                                eventName: _charityEventTitleController.text,
-                                eventDescription:
-                                    _charityEventDescriptionController.text,
-                                type: "organizer",
-                                photoEventUrl: bannerImageUrl,
-                              );
-                              eventDetailsFile.createEventDetails(newEvent);
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const EventGalleryPage(),
-                                ),
-                              );
+                              if (_charityEventTitleController
+                                      .text.isNotEmpty &&
+                                  _charityEventDescriptionController
+                                      .text.isNotEmpty) {
+                                final userUID = organizationUser.organizers.id;
+                                final newEvent = EventDetailsModel(
+                                  id: userUID,
+                                  eventName: _charityEventTitleController.text,
+                                  eventDescription:
+                                      _charityEventDescriptionController.text,
+                                  type: "organizer",
+                                  photoEventUrl: bannerImageUrl,
+                                );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EventGalleryPage(newEvent: newEvent,),
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => ErrorAlertDialog(
+                                    title: Translation.errorTitle
+                                        .getString(context),
+                                    content: Translation.errorFieldNotFilled
+                                        .getString(context),
+                                  ),
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Palette.purpleMain,
@@ -209,8 +224,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                             ),
                             child: Text(
                               Translation.next.getString(context),
-                              style: const TextStyle(
-                                  color: Palette.white),
+                              style: const TextStyle(color: Palette.white),
                             ),
                           ),
                   ),

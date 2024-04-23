@@ -188,38 +188,10 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
                     } else {
                       showDialog(
                         context: context,
-                        builder: (context) => AlertDialog(
-                          backgroundColor: Palette.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side: const BorderSide(color: Palette.black),
-                          ),
-                          title: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.error, color: Palette.redButton),
-                              SpacerH(value: Dimens.space10),
-                              Text(
-                                Translation.errorTitle.getString(context),
-                                style: const TextStyle(color: Palette.black),
-                              ),
-                            ],
-                          ),
-                          content: Text(
-                            Translation.errorFieldNotFilled.getString(context),
-                            style: const TextStyle(color: Palette.black),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text(
-                                "OK",
-                                style: TextStyle(color: Palette.black),
-                              ),
-                            ),
-                          ],
+                        builder: (context) => ErrorAlertDialog(
+                          title: Translation.errorTitle.getString(context),
+                          content: Translation.errorFieldNotFilled
+                              .getString(context),
                         ),
                       );
                     }
@@ -232,9 +204,7 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
                     ),
                   ),
                   child: Text(
-                    Translation.next.getString(context),
-                    style: const TextStyle(
-                        color: Palette.white, fontFamily: 'Roborto'),
+                    Translation.signupTitle.getString(context),
                   ),
                 ),
               ),
