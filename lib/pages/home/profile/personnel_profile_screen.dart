@@ -150,31 +150,26 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
               CustomTextField(
                 controller: _personnelNameController,
                 labelText: Translation.personnelName.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _personnelContactController,
                 labelText: Translation.personnelContact.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _personnelAdressController,
                 labelText: Translation.personnelAdress.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _personnelEmailController,
                 labelText: Translation.personnelEmail.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _personnelPasswordController,
                 labelText: Translation.personnelPassword.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(

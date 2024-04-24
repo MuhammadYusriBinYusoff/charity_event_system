@@ -145,25 +145,21 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
               CustomTextField(
                 controller: _organizationNameController,
                 labelText: Translation.organizationName.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _organizationContactController,
                 labelText: Translation.organizationContact.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _organizationAdressController,
                 labelText: Translation.organizationAdress.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _organizationLinkController,
                 labelText: Translation.organizationLink.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(

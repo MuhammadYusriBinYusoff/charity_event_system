@@ -133,14 +133,12 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                   CustomTextField(
                     controller: _charityEventTitleController,
                     labelText: Translation.eventTitle.getString(context),
-                    compulsory: true,
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
                     controller: _charityEventDescriptionController,
                     labelText: Translation.eventDescription.getString(context),
                     multiLine: true,
-                    compulsory: true,
                   ),
                   SpacerV(value: Dimens.space24),
                   SizedBox(

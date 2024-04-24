@@ -68,38 +68,32 @@ class _PicProfilePageState extends State<PicProfilePage> {
               CustomTextField(
                 controller: _picNameController,
                 labelText: Translation.picFullname.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picContactController,
                 labelText: Translation.picContact.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picIcController,
                 labelText: Translation.picIcNumber.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picAdressController,
                 labelText: Translation.picAdress.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picEmailController,
                 labelText: Translation.picEmail.getString(context),
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picPasswordController,
                 labelText: Translation.picPassword.getString(context),
                 obscureText: true,
-                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(

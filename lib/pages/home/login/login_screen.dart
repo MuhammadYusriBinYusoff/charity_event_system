@@ -64,6 +64,24 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: Translation.loginPassword.getString(context),
                 obscureText: true,
               ),
+              SpacerV(value: Dimens.space8),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ForgotPasswordForm()),
+                  );
+                },
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    Translation.loginForgotPassword.getString(context),
+                    style: const TextStyle(
+                      color: Palette.blueLink,
+                    ),
+                  ),
+                ),
+              ),
               SpacerV(value: Dimens.space32),
               SizedBox(
                 width: double.infinity,
@@ -118,12 +136,10 @@ class _LoginPageState extends State<LoginPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            backgroundColor:
-                                Palette.white,
+                            backgroundColor: Palette.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
-                              side: const BorderSide(
-                                  color: Palette.black),
+                              side: const BorderSide(color: Palette.black),
                             ),
                             title: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -132,14 +148,13 @@ class _LoginPageState extends State<LoginPage> {
                                     color: Palette.redButton),
                                 SpacerH(value: Dimens.space10),
                                 Text(
-                                  Translation.errorTitle
-                                      .getString(context),
+                                  Translation.errorTitle.getString(context),
                                   style: const TextStyle(color: Palette.black),
                                 ),
                               ],
                             ),
                             content: Text(
-                              errorMessage, 
+                              errorMessage,
                               style: const TextStyle(color: Palette.black),
                             ),
                             actions: [
@@ -148,8 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                                   Navigator.of(context).pop();
                                 },
                                 child: Text(
-                                  Translation.ok
-                                      .getString(context),
+                                  Translation.ok.getString(context),
                                   style: const TextStyle(color: Palette.black),
                                 ),
                               ),

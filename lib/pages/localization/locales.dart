@@ -21,6 +21,11 @@ mixin Translation{
   static const String loginEmail = 'loginEmail';
   static const String loginPassword = 'loginPassword';
   static const String loginQuestion = "loginQuestion?";
+  static const String loginForgotPassword = "loginForgotPassword";
+  static const String emailResetPasswordTitle = "emailResetPasswordTitle";
+  static const String resetPassword = "resetPassword";
+  static const String forgetPassword = "forgetPassword";
+  static const String pleaseEnterEmail = "pleaseEnterEmail";
 
   //For Signup
   static const String signupTitle = 'signUpTitle';
@@ -53,6 +58,8 @@ mixin Translation{
   static const String authenticationErrorMsg = "authenticationErrorMsg";
   static const String ok = "ok";
   static const String errorFieldNotFilled = 'errorFieldNotFilled';
+  static const String successEmailMsg = 'successEmailMsg';
+  static const String errorEmailMsg = 'errorEmailMsg:';
 
   //General things
   static const String logOutTitle = "logOutTitle";
@@ -66,6 +73,8 @@ mixin Translation{
   static const String action = "action";
   static const String done = "done";
   static const String skip = "skip";
+  static const String home = "home";
+  static const String langugae = "Change Language";
 
   //Homepage
   static const String charity2024Title = 'charity2024';
@@ -152,6 +161,11 @@ mixin Translation{
     loginEmail: 'E-mail',
     loginPassword: 'Password',
     loginQuestion: 'Don’t have an account?',
+    loginForgotPassword: 'Forgot password?',
+    emailResetPasswordTitle: 'Please enter a valid email address',
+    resetPassword: 'Reset Password',
+    forgetPassword: 'Forget Password',
+    pleaseEnterEmail: 'Enter your email to reset password:',
     
     //For Signup page
     signupTitle: 'Sign-Up',
@@ -184,6 +198,8 @@ mixin Translation{
     authenticationErrorMsg: 'Authentication failed. Please try again later.',
     ok: 'Ok',
     errorFieldNotFilled: 'Please fill in all required fields.',
+    successEmailMsg: 'Password reset email sent successfully',
+    errorEmailMsg: 'Error sending password reset email',
 
     //General things
     logOutTitle: 'Log Out',
@@ -198,6 +214,8 @@ mixin Translation{
     action: 'Action',
     done: 'Done',
     skip: 'Skip',
+    home: 'Home',
+    langugae: 'Languages',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
@@ -284,6 +302,11 @@ mixin Translation{
     loginEmail: 'E-mel',
     loginPassword: 'Kata laluan',
     loginQuestion: 'Tiada akaun?',
+    loginForgotPassword: 'Lupa kata laluan?',
+    emailResetPasswordTitle: 'Sila masukkan e-mel yang sah',
+    resetPassword: 'Tetapkan Semula Kata Laluan',
+    forgetPassword: 'Lupa Kata Laluan',
+    pleaseEnterEmail: 'Masukkan Emel anda untuk tetapan semula kata laluan:',
 
     //For Signup page
     signupTitle: 'Pendaftaran',
@@ -316,6 +339,8 @@ mixin Translation{
     authenticationErrorMsg: 'Pengesahan gagal. Sila cuba sebentar lagi.',
     ok: 'Baik',
     errorFieldNotFilled: 'Sila isi ruangan merah yang disediakan',
+    successEmailMsg: 'E-mel tetapan semula kata laluan berjaya dihantar',
+    errorEmailMsg: 'Ralat menghantar e-mel tetapan semula kata laluan',
 
     //General things
     logOutTitle: 'Log Keluar',
@@ -330,6 +355,8 @@ mixin Translation{
     action: 'Tindakan',
     done: 'Selesai',
     skip: 'Skip',
+    home: 'Muka Depan',
+    langugae: 'Tukar Bahasa',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',

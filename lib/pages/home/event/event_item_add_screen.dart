@@ -33,7 +33,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
 
     return Scaffold(
       backgroundColor: Palette.lightGrey,
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -164,7 +164,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Palette.purpleMain,
+                          backgroundColor: Palette.black,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(Dimens.space8),
