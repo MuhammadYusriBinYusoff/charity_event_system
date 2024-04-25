@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       backgroundColor: Palette.purpleLow,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         showPreviousButton: false,
       ),
       body: SingleChildScrollView(

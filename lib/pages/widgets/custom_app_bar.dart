@@ -9,8 +9,9 @@ import 'package:flutter_localization/flutter_localization.dart';
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
   final bool? showPreviousButton;
+  final bool? hideLogout;
 
-  const CustomAppBar({Key? key, this.title, this.showPreviousButton})
+  const CustomAppBar({Key? key, this.title, this.showPreviousButton, this.hideLogout = false})
       : super(key: key);
 
   @override
@@ -32,7 +33,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
           style: const TextStyle(color: Palette.white, fontSize: 18),
         ),
       ),
-      actions: [
+      actions: widget.hideLogout == false ? [
         DropdownButtonHideUnderline(
           child: DropdownButton2(
             customButton: const Icon(
@@ -80,10 +81,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
         SpacerH(
           value: Dimens.space10,
         ),
-      ],
+      ] : null,
     );
   }
 }
+
 
 class MenuItem {
   const MenuItem({

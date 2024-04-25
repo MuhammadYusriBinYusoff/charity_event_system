@@ -141,6 +141,7 @@ mixin Translation{
   static const String manageVolunteer = "manageVolunteer";
   static const String teamPlanning = "teamPlanning";
   static const String manageGallery = "manageGallery";
+  static const String items = "items";
   static const String feedbackCollection = "feedbackCollection";
   static const String deleteTaskTitle = 'deleteTaskTitle';
   static const String deleteTaskQuestion = 'deleteTaskQuestion';
@@ -278,6 +279,7 @@ mixin Translation{
     manageDesciption: 'My Event',
     manageDonation: 'Donation',
     manageGallery: 'Gallery',
+    items: 'Items',
     feedbackCollection: 'Feedback',
     teamPlanning: 'Collaboration',
     manageVolunteer: 'Volunteer',
@@ -419,6 +421,7 @@ mixin Translation{
     manageDesciption: 'Event Saya',
     manageDonation: 'Sumbangan',
     manageGallery: 'Galeri',
+    items: 'Barang',
     feedbackCollection: 'Maklum Balas',
     teamPlanning: 'Kolaborasi',
     manageVolunteer: 'Sukarelawan',

@@ -31,7 +31,7 @@ class _EventPostingDescriptionPageState
     EventItemsProvider eventItem = Provider.of<EventItemsProvider>(context);
 
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -51,72 +51,145 @@ class _EventPostingDescriptionPageState
                     fit: BoxFit.fill,
                   ),
                   SpacerV(value: Dimens.space16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleIcon(
-                          icon: Icons.menu_book_outlined,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => UserFeedbackPage(
-                                        id: eventDetailsFile
-                                            .eventDetailsList[widget.index ?? 0]
-                                            .id,
-                                        index: widget.index,
-                                      )),
-                            );
-                          }),
-                      CircleIcon(
-                          icon: Icons.food_bank_outlined,
-                          onTap: () async {
-                            await eventItem.fetchAllItemDetails(
-                              eventDetailsFile
-                                  .eventDetailsList[widget.index ?? 0].id,
-                            );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ItemQueryPage(
-                                        id: eventDetailsFile
-                                            .eventDetailsList[widget.index ?? 0]
-                                            .id,
-                                      )),
-                            );
-                          }),
-                      CircleIcon(
-                          icon: Icons.emoji_people_outlined,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      RegisterVolunteerFormPage(
-                                        id: eventDetailsFile
-                                            .eventDetailsList[widget.index ?? 0]
-                                            .id,
-                                        index: widget.index,
-                                      )),
-                            );
-                          }),
-                      CircleIcon(
-                          icon: Icons.photo_outlined,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => GalleryPage(
-                                        index: widget.index,
-                                      )),
-                            );
-                          }),
-                      CircleIcon(
-                          icon: Icons.question_mark_outlined,
-                          onTap: () {
-                            print("question icon");
-                          }),
-                    ],
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(
+                          children: [
+                            CircleIcon(
+                                icon: Icons.menu_book_outlined,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UserFeedbackPage(
+                                              id: eventDetailsFile
+                                                  .eventDetailsList[
+                                                      widget.index ?? 0]
+                                                  .id,
+                                              index: widget.index,
+                                            )),
+                                  );
+                                }),
+                            Text(
+                              Translation.feedbackCollection.getString(context),
+                              style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: Palette.white),
+                            ),
+                          ],
+                        ),
+                        SpacerH(
+                          value: Dimens.space5,
+                        ),
+                        Column(
+                          children: [
+                            CircleIcon(
+                                icon: Icons.food_bank_outlined,
+                                onTap: () async {
+                                  await eventItem.fetchAllItemDetails(
+                                    eventDetailsFile
+                                        .eventDetailsList[widget.index ?? 0].id,
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ItemQueryPage(
+                                              id: eventDetailsFile
+                                                  .eventDetailsList[
+                                                      widget.index ?? 0]
+                                                  .id,
+                                            )),
+                                  );
+                                }),
+                            Text(
+                              Translation.items.getString(context),
+                              style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: Palette.white),
+                            ),
+                          ],
+                        ),
+                        SpacerH(
+                          value: Dimens.space5,
+                        ),
+                        Column(
+                          children: [
+                            CircleIcon(
+                                icon: Icons.emoji_people_outlined,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RegisterVolunteerFormPage(
+                                              id: eventDetailsFile
+                                                  .eventDetailsList[
+                                                      widget.index ?? 0]
+                                                  .id,
+                                              index: widget.index,
+                                            )),
+                                  );
+                                }),
+                            Text(
+                              Translation.manageVolunteer.getString(context),
+                              style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: Palette.white),
+                            ),
+                          ],
+                        ),
+                        SpacerH(
+                          value: Dimens.space5,
+                        ),
+                        Column(
+                          children: [
+                            CircleIcon(
+                                icon: Icons.photo_outlined,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => GalleryPage(
+                                              index: widget.index,
+                                            )),
+                                  );
+                                }),
+                            Text(
+                              Translation.manageGallery.getString(context),
+                              style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: Palette.white),
+                            ),
+                          ],
+                        ),
+                        SpacerH(
+                          value: Dimens.space5,
+                        ),
+                        Column(
+                          children: [
+                            CircleIcon(
+                                icon: Icons.people,
+                                onTap: () {
+                                  print("question icon");
+                                }),
+                            Text(
+                              Translation.teamPlanning.getString(context),
+                              style: const TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.bold,
+                                  color: Palette.white),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                   SpacerV(
                     value: Dimens.space16,
@@ -191,13 +264,14 @@ class _EventPostingDescriptionPageState
                     ),
                     SpacerV(value: Dimens.space4),
                     ProgressBarIndicator(
-                      value: double.parse(((eventDonationsFile
-                                      .donationDetailsList[widget.index ?? 0]
-                                      .currentCollected ??
-                                  0) /
-                              (eventDonationsFile.donationDetails.targetMoney ??
-                                  1))
-                          .toStringAsFixed(2)),
+                      value: ((eventDonationsFile
+                                  .donationDetailsList[widget.index ?? 0]
+                                  .currentCollected ??
+                              0) /
+                          (eventDonationsFile
+                                  .donationDetailsList[widget.index ?? 0]
+                                  .targetMoney ??
+                              1)),
                       width: MediaQuery.of(context).size.width * 0.75,
                       height: 12,
                     ),
@@ -209,11 +283,13 @@ class _EventPostingDescriptionPageState
                     ),
                     SpacerV(value: Dimens.space24),
                     CachedNetworkImage(
-                    imageUrl: eventDonationsFile.donationDetailsList[widget.index ?? 0].photoEventUrl ??
-                        'https://www.caspianpolicy.org/no-image.png', // Replace with your image URL
-                    width: double.infinity,
-                    fit: BoxFit.fill,
-                  ),
+                      imageUrl: eventDonationsFile
+                              .donationDetailsList[widget.index ?? 0]
+                              .photoEventUrl ??
+                          'https://www.caspianpolicy.org/no-image.png', // Replace with your image URL
+                      width: double.infinity,
+                      fit: BoxFit.fill,
+                    ),
                   ],
                 ))
           ],

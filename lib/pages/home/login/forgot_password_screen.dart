@@ -17,8 +17,7 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: Translation.forgetPassword.getString(context)),
-      //endDrawer: CustomDrawer(),
+      appBar: CustomAppBar(title: Translation.forgetPassword.getString(context), hideLogout: true,),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
