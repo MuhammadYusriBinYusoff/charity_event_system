@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -69,7 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ForgotPasswordForm()),
+                    MaterialPageRoute(
+                        builder: (context) => const ForgotPasswordForm()),
                   );
                 },
                 child: Align(
@@ -94,28 +98,64 @@ class _LoginPageState extends State<LoginPage> {
                         password: _passwordController.text,
                       );
 
-                      await organizationUser.fetchOrganizerData();
-                      await personnelUser.fetchPersonnelData();
-                      await eventDetailsFile.fetchEventDetailsData();
-                      await eventDonationsFile.fetchEventDonationData();
-                      await eventGalleryFile.fetchEventGalleryData();
-                      await eventVolunteerFile.fetchEventVolunteerData();
-                      await eventItems.fetchEventItemData();
-                      await eventCollaboration.fetchEventCollaborationData();
-                      await organizationUser.fetchAllOrganizers();
-                      await eventDetailsFile.fetchAllEventDetails();
-                      await eventDonationsFile.fetchAllDonationDetails();
-                      await eventGalleryFile.fetchAllEventGallery();
-                      // If sign-in is successful, navigate to the next screen
-                      // ignore: use_build_context_synchronously
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyHomePage(
-                            title: Translation.splashTitle.getString(context),
-                          ),
-                        ),
-                      );
+                      User? user = FirebaseAuth.instance.currentUser;
+                      if (user != null) {
+                        String? role = await getUserCategory(user.uid);
+
+                        if (role == "Admin") {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AdminChosen(),
+                            ),
+                          );
+                        } else {
+                          eventDetailsFile.resetEventDetails();
+                          organizationUser.resetOrganizersDetails();
+                          personnelUser.resetPersonnelsDetails();
+                          await organizationUser.fetchOrganizerData();
+
+                          if (organizationUser.organizers.verify ==
+                                  'Verified' ||
+                              organizationUser.organizers.verify == null) {
+                            eventVolunteerFile.resetEventVolunteer();
+                            eventItems.resetEventItem();
+                            eventDonationsFile.resetEventDonation();
+                            eventGalleryFile.resetEventGallery();
+                            await organizationUser.fetchAllOrganizers();
+                            await personnelUser.fetchPersonnelData();
+                            await eventDetailsFile.fetchEventDetailsData();
+                            await eventDonationsFile.fetchEventDonationData();
+                            await eventGalleryFile.fetchEventGalleryData();
+                            await eventVolunteerFile.fetchEventVolunteerData();
+                            await eventItems.fetchEventItemData();
+                            await eventCollaboration
+                                .fetchEventCollaborationData();
+                            await eventDetailsFile.fetchAllEventDetails();
+                            await eventDonationsFile.fetchAllDonationDetails();
+                            await eventGalleryFile.fetchAllEventGallery();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyHomePage(
+                                  title: Translation.splashTitle
+                                      .getString(context),
+                                ),
+                              ),
+                            );
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => ErrorAlertDialog(
+                                title:
+                                    Translation.errorTitle.getString(context),
+                                content: Translation.errorOrganizerNotVerfied
+                                    .getString(context),
+                              ),
+                            );
+                          }
+                        }
+                      }
                     } catch (error) {
                       String errorMessage =
                           Translation.generalErrorMsg.getString(context);
@@ -131,7 +171,6 @@ class _LoginPageState extends State<LoginPage> {
                             break;
                         }
                       }
-                      // ignore: use_build_context_synchronously
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -204,6 +243,26 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<String?> getUserCategory(String userId) async {
+    try {
+      CollectionReference admin =
+          FirebaseFirestore.instance.collection('admin');
+
+      DocumentSnapshot documentSnapshot = await admin.doc(userId).get();
+
+      if (documentSnapshot.exists && documentSnapshot.data() != null) {
+        Map<String, dynamic> data =
+            documentSnapshot.data() as Map<String, dynamic>;
+        return data['category'] as String?;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      print('Error fetching admin role: $error');
+      return null;
+    }
   }
 
   @override

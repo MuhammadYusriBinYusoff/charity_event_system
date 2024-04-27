@@ -81,5 +81,10 @@ class EventItemsProvider extends ChangeNotifier {
       print('Error deleting item: $error');
     }
   }
+
+  void resetEventItem() async{
+    _itemDetails = EventItemsModel();
+    notifyListeners();
+  }
   
 }

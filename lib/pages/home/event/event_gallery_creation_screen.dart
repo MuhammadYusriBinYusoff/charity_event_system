@@ -12,13 +12,11 @@ import 'package:provider/provider.dart';
 class EventGalleryPage extends StatefulWidget {
   final List<String>? imageUrlList;
   final String? session;
-  EventDetailsModel? newEvent;
 
-  EventGalleryPage({
+  const EventGalleryPage({
     Key? key,
     this.imageUrlList,
     this.session,
-    this.newEvent,
   }) : super(key: key);
 
   @override
@@ -91,7 +89,7 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
 
     return Scaffold(
       backgroundColor: Palette.lightGrey,
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -195,12 +193,13 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
                           id: userUID,
                           imageGalleryUrls: bannerImageUrlList,
                         );
-            
+
                         eventGalleryFile.createEventGallery(newGallery);
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const EventItemAddPage(session: 'none'),
+                            builder: (context) => EventItemAddPage(session: 'none',),
                           ),
                         );
                       },

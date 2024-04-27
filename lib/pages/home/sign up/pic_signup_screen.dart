@@ -8,6 +8,7 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 class PICSignUpPage extends StatefulWidget {
+  final String? organizationNumber;
   final String? organizationName;
   final String? organizationContact;
   final String? organizationAddress;
@@ -16,6 +17,7 @@ class PICSignUpPage extends StatefulWidget {
 
   const PICSignUpPage({
     Key? key,
+    this.organizationNumber,
     this.organizationName,
     this.organizationContact,
     this.organizationAddress,
@@ -114,11 +116,13 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                           picAdress: _picAdressController.text,
                           picEmail: _picEmailController.text,
                           picPassword: _picPasswordController.text,
+                          organizationNumber: widget.organizationNumber,
                           organizationName: widget.organizationName,
                           organizationContact: widget.organizationContact,
                           organizationAdress: widget.organizationAddress,
                           organizationLink: widget.organizationLink,
                           profileImageLink: widget.profileImageLink,
+                          verify: "Not Verified",
                         );
 
                         organizationUser.createOrganizer(newUser);
@@ -151,6 +155,7 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                   ),
                   child: Text(
                     Translation.signupTitle.getString(context),
+                    style: const TextStyle(color: Palette.white),
                   ),
                 ),
               ),

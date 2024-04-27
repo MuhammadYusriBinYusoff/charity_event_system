@@ -156,6 +156,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           final userUID = organizationUser.organizers.id;
+                          eventItems.fetchEventItemData();
                           Navigator.push(
                             context,
                             MaterialPageRoute(

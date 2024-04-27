@@ -14,6 +14,8 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController _organizationNumberController =
+      TextEditingController();
   final TextEditingController _organizationNameController =
       TextEditingController();
   final TextEditingController _organizationContactController =
@@ -25,6 +27,8 @@ class _SignUpPageState extends State<SignUpPage> {
 
   String? imageUrl;
   bool isLoading = false;
+
+  bool isChecked = false;
 
   Future<XFile?> pickImage() async {
     ImagePicker imagePicker = ImagePicker();
@@ -109,6 +113,14 @@ class _SignUpPageState extends State<SignUpPage> {
                 value: Dimens.space64,
               ),
               CustomTextField(
+                controller: _organizationNumberController,
+                labelText: Translation.organizationNumber.getString(context),
+                compulsory: true,
+              ),
+              SpacerV(
+                value: Dimens.space16,
+              ),
+              CustomTextField(
                 controller: _organizationNameController,
                 labelText: Translation.organizationName.getString(context),
                 compulsory: true,
@@ -132,30 +144,48 @@ class _SignUpPageState extends State<SignUpPage> {
                 compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
+              CheckboxListTile(
+                contentPadding: EdgeInsets.zero,
+                controlAffinity: ListTileControlAffinity.leading,
+                activeColor: Colors.green,
+                checkColor: Colors.white,
+                title: Text(
+                    Translation.organizationRosCheck.getString(context),
+                    style: TextStyle(fontSize: 12),),
+                value: isChecked,
+                selected: isChecked,
+                onChanged: (value) {
+                  setState(() {
+                    isChecked = value!;
+                  });
+                },
+              ),
+              SpacerV(value: Dimens.space16),
               SizedBox(
                 width: double.infinity,
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () {
-                    String organizationName = _organizationNameController.text;
-                    String organizationContact =
-                        _organizationContactController.text;
-                    String organizationAdress =
-                        _organizationAdressController.text;
-                    String organizationLink = _organizationLinkController.text;
-
-                    if (organizationName.isNotEmpty &&
-                        organizationContact.isNotEmpty &&
-                        organizationAdress.isNotEmpty &&
-                        organizationLink.isNotEmpty) {
+                    if (_organizationNumberController.text.isNotEmpty &&
+                        _organizationNameController.text.isNotEmpty &&
+                        _organizationContactController.text.isNotEmpty &&
+                        _organizationAdressController.text.isNotEmpty &&
+                        _organizationLinkController.text.isNotEmpty &&
+                        isChecked == true) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => PICSignUpPage(
-                                  organizationName: organizationName,
-                                  organizationContact: organizationContact,
-                                  organizationAddress: organizationAdress,
-                                  organizationLink: organizationLink,
+                                  organizationNumber:
+                                      _organizationNumberController.text,
+                                  organizationName:
+                                      _organizationNameController.text,
+                                  organizationContact:
+                                      _organizationContactController.text,
+                                  organizationAddress:
+                                      _organizationAdressController.text,
+                                  organizationLink:
+                                      _organizationLinkController.text,
                                   profileImageLink: imageUrl,
                                 )),
                       );
@@ -179,6 +209,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   child: Text(
                     Translation.next.getString(context),
+                    style: const TextStyle(color: Palette.white),
                   ),
                 ),
               ),

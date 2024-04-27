@@ -10,8 +10,10 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
   final bool? showPreviousButton;
   final bool? hideLogout;
+  final Color? appBarcolor;
+  final Color? vertMoreColor;
 
-  const CustomAppBar({Key? key, this.title, this.showPreviousButton, this.hideLogout = false})
+  const CustomAppBar({Key? key, this.title, this.showPreviousButton, this.hideLogout = false, this.appBarcolor = Palette.purpleMain, this.vertMoreColor = Palette.white})
       : super(key: key);
 
   @override
@@ -26,7 +28,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: widget.showPreviousButton ?? true,
-      backgroundColor: Palette.purpleMain,
+      backgroundColor: widget.appBarcolor,
       title: Center(
         child: Text(
           widget.title ?? '',
@@ -36,10 +38,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
       actions: widget.hideLogout == false ? [
         DropdownButtonHideUnderline(
           child: DropdownButton2(
-            customButton: const Icon(
+            customButton: Icon(
               Icons.more_vert,
               size: 28,
-              color: Palette.white,
+              color: widget.vertMoreColor,
             ),
             items: [
               ...MenuItems.firstItems.map(

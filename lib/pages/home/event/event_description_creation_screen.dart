@@ -85,7 +85,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
 
     return Scaffold(
       backgroundColor: Palette.lightGrey,
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -154,7 +154,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                                 eventDescription:
                                     _charityEventDescriptionController.text,
                                 type: "organizer",
-                                photoEventUrl: bannerImageUrl,
+                                photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
                               );
                               eventDetailsFile.updateEventDetails(newEvent);
 
@@ -191,13 +191,16 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                                   eventDescription:
                                       _charityEventDescriptionController.text,
                                   type: "organizer",
-                                  photoEventUrl: bannerImageUrl,
+                                  photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
                                 );
+
+                                await eventDetailsFile.createEventDetails(newEvent);
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        EventGalleryPage(newEvent: newEvent,),
+                                        EventGalleryPage(),
                                   ),
                                 );
                               } else {

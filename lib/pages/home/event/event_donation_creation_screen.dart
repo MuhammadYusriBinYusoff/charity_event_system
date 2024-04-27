@@ -98,7 +98,7 @@ class _EventDonationManagementPageState
 
     return Scaffold(
       backgroundColor: Palette.lightGrey,
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -231,7 +231,7 @@ class _EventDonationManagementPageState
                           photoEventUrl: qrImageUrl,
                         );
             
-                        eventDonation.createDonationDetails(newDonation);
+                        await eventDonation.createDonationDetails(newDonation);
             
                         Navigator.push(
                           context,

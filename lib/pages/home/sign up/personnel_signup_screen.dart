@@ -205,6 +205,7 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
                   ),
                   child: Text(
                     Translation.signupTitle.getString(context),
+                    style: const TextStyle(color: Palette.white),
                   ),
                 ),
               ),
