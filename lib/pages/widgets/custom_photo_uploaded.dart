@@ -24,7 +24,6 @@ class SinglePhotoAddingButton extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
           border: Border.all(color: Palette.grey),
-          borderRadius: BorderRadius.circular(Dimens.space8),
         ),
         child: Center(
           child: bannerImageUrl == null || bannerImageUrl == ''

@@ -8,11 +8,13 @@ class OrganizerModel{
   String? picAdress;
   String? picEmail;
   String? picPassword;
+  String? organizationNumber;
   String? organizationName;
   String? organizationContact;
   String? organizationAdress;
   String? organizationLink;
   String? profileImageLink;
+  String? verify;
 
   OrganizerModel({
     this.id,
@@ -22,11 +24,13 @@ class OrganizerModel{
     this.picAdress,
     this.picEmail,
     this.picPassword,
+    this.organizationNumber,
     this.organizationName,
     this.organizationContact,
     this.organizationAdress,
     this.organizationLink,
     this.profileImageLink,
+    this.verify,
   });
 
   static OrganizerModel fromSnapshot(DocumentSnapshot<Map<String,dynamic>> snapshot){
@@ -38,11 +42,13 @@ class OrganizerModel{
       picAdress: snapshot['picAdress'], 
       picEmail: snapshot['picEmail'], 
       picPassword: snapshot['picPassword'],
+      organizationNumber: snapshot['organizationNumber'],
       organizationName: snapshot['organizationName'],
       organizationContact: snapshot['organizationContact'],  
       organizationAdress: snapshot['organizationAdress'],
       organizationLink: snapshot['organizationLink'],
       profileImageLink: snapshot['profileImageLink'],
+      verify: snapshot['verify'],
     );
   }
 
@@ -55,11 +61,13 @@ class OrganizerModel{
     "picAdress": picAdress,
     "picEmail": picEmail,
     "picPassword": picPassword,
+    "organizationNumber": organizationNumber,
     "organizationName": organizationName,
     "organizationContact": organizationContact,
     "organizationAdress": organizationAdress,
     "organizationLink": organizationLink,
     "profileImageLink": profileImageLink,
+    "verify": verify,
   };
 }
 

@@ -3,7 +3,6 @@ import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -90,42 +89,7 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
 
     return Scaffold(
       backgroundColor: Palette.lightGrey,
-      appBar: AppBar(
-        backgroundColor: Palette.purpleMain,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Palette.white),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(Translation.logOutTitle.getString(context)),
-                  content: Text(Translation.logOutMsg.getString(context)),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(Translation.cancel.getString(context)),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
-                        );
-                      },
-                      child: Text(Translation.logout.getString(context)),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -229,12 +193,13 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
                           id: userUID,
                           imageGalleryUrls: bannerImageUrlList,
                         );
-            
+
                         eventGalleryFile.createEventGallery(newGallery);
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const EventItemAddPage(session: 'none'),
+                            builder: (context) => EventItemAddPage(session: 'none',),
                           ),
                         );
                       },

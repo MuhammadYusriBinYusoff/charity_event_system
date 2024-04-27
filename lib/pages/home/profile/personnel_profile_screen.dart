@@ -1,34 +1,50 @@
 import 'dart:io';
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/pages.dart';
+import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class PersonnelProfilePage extends StatefulWidget {
+  String? personnelName;
+  String? personnelContact;
+  String? personnelAdress;
+  String? personnelEmail;
+  String? personnelPassword;
+  String? profileImageLink;
+
+  PersonnelProfilePage({
+    Key? key,
+    this.personnelName,
+    this.personnelContact,
+    this.personnelAdress,
+    this.personnelEmail,
+    this.personnelPassword,
+    this.profileImageLink,
+  }) : super(key: key);
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<PersonnelProfilePage> createState() => _PersonnelProfilePageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _organizationNumberController =
+class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
+  final TextEditingController _personnelNameController =
       TextEditingController();
-  final TextEditingController _organizationNameController =
+  final TextEditingController _personnelContactController =
       TextEditingController();
-  final TextEditingController _organizationContactController =
+  final TextEditingController _personnelAdressController =
       TextEditingController();
-  final TextEditingController _organizationAdressController =
+  final TextEditingController _personnelEmailController =
       TextEditingController();
-  final TextEditingController _organizationLinkController =
+  final TextEditingController _personnelPasswordController =
       TextEditingController();
 
   String? imageUrl;
   bool isLoading = false;
-
-  bool isChecked = false;
 
   Future<XFile?> pickImage() async {
     ImagePicker imagePicker = ImagePicker();
@@ -38,10 +54,11 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   // Function to upload image to Firebase Storage
-  Future<void> uploadImage(XFile file) async {
+  Future<void> uploadImage(XFile file, String? userId) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
-    Reference referenceDirImages = referenceRoot.child('profileImage');
-    Reference referenceImageToUpload = referenceDirImages.child('${file.name}');
+    Reference referenceDirImages =
+        referenceRoot.child('profileImage').child(userId ?? '');
+    Reference referenceImageToUpload = referenceDirImages.child(file.name);
 
     try {
       setState(() {
@@ -62,10 +79,25 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _personnelNameController.text = widget.personnelName ?? "";
+    _personnelContactController.text = widget.personnelContact ?? "";
+    _personnelAdressController.text = widget.personnelAdress ?? "";
+    _personnelEmailController.text = widget.personnelEmail ?? "";
+    _personnelPasswordController.text = widget.personnelPassword ?? "";
+    imageUrl = widget.profileImageLink;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    OrganizerProvider organizationUser =
+        Provider.of<OrganizerProvider>(context);
+    PersonnelProvider personnelUser = Provider.of<PersonnelProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(Translation.signupTitle.getString(context)),
+        title: const Text("Profile"),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -101,7 +133,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         XFile? file = await pickImage(); // Step 1: pick image
 
                         if (file != null) {
-                          await uploadImage(file); // Step 2: upload image
+                          await uploadImage(
+                              file,
+                              organizationUser
+                                  .organizers.id); // Step 2: upload image
                         }
                       },
                       icon: const Icon(Icons.add_a_photo),
@@ -113,82 +148,67 @@ class _SignUpPageState extends State<SignUpPage> {
                 value: Dimens.space64,
               ),
               CustomTextField(
-                controller: _organizationNumberController,
-                labelText: Translation.organizationNumber.getString(context),
-                compulsory: true,
-              ),
-              SpacerV(
-                value: Dimens.space16,
-              ),
-              CustomTextField(
-                controller: _organizationNameController,
-                labelText: Translation.organizationName.getString(context),
-                compulsory: true,
+                controller: _personnelNameController,
+                labelText: Translation.personnelName.getString(context),
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
-                controller: _organizationContactController,
-                labelText: Translation.organizationContact.getString(context),
-                compulsory: true,
+                controller: _personnelContactController,
+                labelText: Translation.personnelContact.getString(context),
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
-                controller: _organizationAdressController,
-                labelText: Translation.organizationAdress.getString(context),
-                compulsory: true,
+                controller: _personnelAdressController,
+                labelText: Translation.personnelAdress.getString(context),
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
-                controller: _organizationLinkController,
-                labelText: Translation.organizationLink.getString(context),
-                compulsory: true,
+                controller: _personnelEmailController,
+                labelText: Translation.personnelEmail.getString(context),
               ),
               SpacerV(value: Dimens.space16),
-              CheckboxListTile(
-                contentPadding: EdgeInsets.zero,
-                controlAffinity: ListTileControlAffinity.leading,
-                activeColor: Colors.green,
-                checkColor: Colors.white,
-                title: Text(
-                    Translation.organizationRosCheck.getString(context),
-                    style: TextStyle(fontSize: 12),),
-                value: isChecked,
-                selected: isChecked,
-                onChanged: (value) {
-                  setState(() {
-                    isChecked = value!;
-                  });
-                },
+              CustomTextField(
+                controller: _personnelPasswordController,
+                labelText: Translation.personnelPassword.getString(context),
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(
                 width: double.infinity,
                 height: Dimens.space40,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_organizationNumberController.text.isNotEmpty &&
-                        _organizationNameController.text.isNotEmpty &&
-                        _organizationContactController.text.isNotEmpty &&
-                        _organizationAdressController.text.isNotEmpty &&
-                        _organizationLinkController.text.isNotEmpty &&
-                        isChecked == true) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PICSignUpPage(
-                                  organizationNumber:
-                                      _organizationNumberController.text,
-                                  organizationName:
-                                      _organizationNameController.text,
-                                  organizationContact:
-                                      _organizationContactController.text,
-                                  organizationAddress:
-                                      _organizationAdressController.text,
-                                  organizationLink:
-                                      _organizationLinkController.text,
-                                  profileImageLink: imageUrl,
-                                )),
-                      );
+                  onPressed: () async {
+                    if (_personnelEmailController.text.isNotEmpty &&
+                        _personnelPasswordController.text.isNotEmpty &&
+                        _personnelNameController.text.isNotEmpty &&
+                        _personnelContactController.text.isNotEmpty &&
+                        _personnelAdressController.text.isNotEmpty) {
+                      try {
+                        String? userId = personnelUser.personnels.id;
+
+                        Map<String, dynamic> dataToUpdate = {
+                          'personnelName': _personnelNameController.text,
+                          'personnelContact': _personnelContactController.text,
+                          'personnelAdress': _personnelAdressController.text,
+                          'personnelEmail': _personnelEmailController.text,
+                          'personnelPassword':
+                              _personnelPasswordController.text,
+                          'profileImageLink': imageUrl,
+                        };
+
+                        await personnelUser.updatePersonnelData(
+                            userId, dataToUpdate);
+
+                        // ignore: use_build_context_synchronously
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyHomePage(
+                                    title: '',
+                                  )),
+                        );
+                      } catch (error) {
+                        print("Error: $error");
+                      }
                     } else {
                       showDialog(
                         context: context,
@@ -208,8 +228,9 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   child: Text(
-                    Translation.next.getString(context),
-                    style: const TextStyle(color: Palette.white),
+                    Translation.save.getString(context),
+                    style: const TextStyle(
+                        color: Palette.white, fontFamily: 'Roborto'),
                   ),
                 ),
               ),

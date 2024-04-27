@@ -1,6 +1,4 @@
-
 import 'dart:io';
-
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
@@ -29,7 +27,7 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
       TextEditingController();
   final TextEditingController _personnelPasswordController =
       TextEditingController();
-  
+
   String? imageUrl;
   bool isLoading = false;
 
@@ -58,7 +56,7 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
       });
     } catch (error) {
       setState(() {
-        isLoading = false; 
+        isLoading = false;
       });
       print(error);
     }
@@ -76,67 +74,74 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SpacerV(value: Dimens.space32,),
-                Stack(
-                  children: [
-                    Center(
-                      child: isLoading
-                          ? const CircularProgressIndicator()
-                          : imageUrl != null
-                              ? CircleAvatar(
-                                  radius: Dimens.space64,
-                                  backgroundImage: NetworkImage(imageUrl ??
-                                      'https://firebasestorage.googleapis.com/v0/b/charity-event-cems.appspot.com/o/images%2Fyusss.jpg?alt=media&token=fa38b153-50cc-474c-8774-6c5943fee4c2'),
-                                )
-                              : CircleAvatar(
-                                  radius: Dimens.space64,
-                                  backgroundImage: const NetworkImage(
-                                      'https://cdn-icons-png.flaticon.com/512/7915/7915522.png'),
-                                ),
+              SpacerV(
+                value: Dimens.space32,
+              ),
+              Stack(
+                children: [
+                  Center(
+                    child: isLoading
+                        ? const CircularProgressIndicator()
+                        : imageUrl != null
+                            ? CircleAvatar(
+                                radius: Dimens.space64,
+                                backgroundImage: NetworkImage(imageUrl ??
+                                    'https://firebasestorage.googleapis.com/v0/b/charity-event-cems.appspot.com/o/images%2Fyusss.jpg?alt=media&token=fa38b153-50cc-474c-8774-6c5943fee4c2'),
+                              )
+                            : CircleAvatar(
+                                radius: Dimens.space64,
+                                backgroundImage: const NetworkImage(
+                                    'https://cdn-icons-png.flaticon.com/512/7915/7915522.png'),
+                              ),
+                  ),
+                  Positioned(
+                    bottom: -10,
+                    right: Dimens.space100,
+                    child: IconButton(
+                      onPressed: () async {
+                        XFile? file = await pickImage(); // Step 1: pick image
+
+                        if (file != null) {
+                          await uploadImage(file); // Step 2: upload image
+                        }
+                      },
+                      icon: const Icon(Icons.add_a_photo),
                     ),
-                    Positioned(
-                      bottom: -10,
-                      right: Dimens.space100,
-                      child: IconButton(
-                        onPressed: () async {
-                          XFile? file = await pickImage(); // Step 1: pick image
-          
-                          if (file != null) {
-                            await uploadImage(file); // Step 2: upload image
-                          }
-                        },
-                        icon: const Icon(Icons.add_a_photo),
-                      ),
-                    ),
-                  ],
-                ),
-                SpacerV(
-                  value: Dimens.space32,
-                ),
-              buildTextField(
+                  ),
+                ],
+              ),
+              SpacerV(
+                value: Dimens.space32,
+              ),
+              CustomTextField(
                 controller: _personnelNameController,
                 labelText: Translation.personnelName.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _personnelContactController,
                 labelText: Translation.personnelContact.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _personnelAdressController,
                 labelText: Translation.personnelAdress.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _personnelEmailController,
                 labelText: Translation.personnelEmail.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _personnelPasswordController,
                 labelText: Translation.personnelPassword.getString(context),
                 obscureText: true,
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(
@@ -144,14 +149,19 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    try {
+                    if (_personnelEmailController.text.isNotEmpty &&
+                        _personnelPasswordController.text.isNotEmpty &&
+                        _personnelNameController.text.isNotEmpty &&
+                        _personnelContactController.text.isNotEmpty &&
+                        _personnelAdressController.text.isNotEmpty) {
+                      try {
                         final userCredential = await FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
                           email: _personnelEmailController.text,
                           password: _personnelPasswordController.text,
                         );
                         final String? userUID = userCredential.user?.uid;
-          
+
                         final newUser = PersonnelModel(
                           id: userUID,
                           personnelName: _personnelNameController.text,
@@ -161,12 +171,12 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
                           personnelPassword: _personnelPasswordController.text,
                           profileImageLink: imageUrl,
                         ).toJson();
-          
+
                         await FirebaseFirestore.instance
                             .collection("personnelAccount")
                             .doc(userUID)
                             .set(newUser);
-          
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -175,6 +185,16 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
                       } catch (error) {
                         print("Error: $error");
                       }
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorAlertDialog(
+                          title: Translation.errorTitle.getString(context),
+                          content: Translation.errorFieldNotFilled
+                              .getString(context),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Palette.purpleMain,
@@ -184,9 +204,8 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
                     ),
                   ),
                   child: Text(
-                    Translation.next.getString(context),
-                    style: const TextStyle(
-                        color: Palette.white, fontFamily: 'Roborto'),
+                    Translation.signupTitle.getString(context),
+                    style: const TextStyle(color: Palette.white),
                   ),
                 ),
               ),

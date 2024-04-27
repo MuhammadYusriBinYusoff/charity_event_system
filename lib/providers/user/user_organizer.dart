@@ -90,4 +90,22 @@ class OrganizerProvider extends ChangeNotifier {
       print('Error fetching organizers: $error');
     }
   }
+
+  Future<void> updateOrganizerStatus(String? organizerId, String status) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection("organizationAccount")
+          .doc(organizerId)
+          .update({'verify': status});
+      
+      await fetchAllOrganizers();
+    } catch (error) {
+      print('Error updating organizer status: $error');
+    }
+  }
+
+  void resetOrganizersDetails() async{
+    _organizers = OrganizerModel();
+    notifyListeners();
+  }
 }

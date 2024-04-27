@@ -3,7 +3,6 @@ import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -86,43 +85,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
 
     return Scaffold(
       backgroundColor: Palette.lightGrey,
-      appBar: AppBar(
-        backgroundColor: Palette.purpleMain,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Palette.white),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(Translation.logOutTitle.getString(context)),
-                  content: Text(Translation.logOutMsg.getString(context)),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        // Close the dialog
-                        Navigator.pop(context);
-                      },
-                      child: Text(Translation.cancel.getString(context)),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
-                        );
-                      },
-                      child: Text(Translation.logout.getString(context)),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+      appBar: const CustomAppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -191,7 +154,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                                 eventDescription:
                                     _charityEventDescriptionController.text,
                                 type: "organizer",
-                                photoEventUrl: bannerImageUrl,
+                                photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
                               );
                               eventDetailsFile.updateEventDetails(newEvent);
 
@@ -212,29 +175,45 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                             ),
                             child: Text(
                               Translation.save.getString(context),
-                              style: const TextStyle(
-                                  color: Palette.white),
+                              style: const TextStyle(color: Palette.white),
                             ),
                           )
                         : ElevatedButton(
                             onPressed: () async {
-                              final userUID = organizationUser.organizers.id;
-                              final newEvent = EventDetailsModel(
-                                id: userUID,
-                                eventName: _charityEventTitleController.text,
-                                eventDescription:
-                                    _charityEventDescriptionController.text,
-                                type: "organizer",
-                                photoEventUrl: bannerImageUrl,
-                              );
-                              eventDetailsFile.createEventDetails(newEvent);
+                              if (_charityEventTitleController
+                                      .text.isNotEmpty &&
+                                  _charityEventDescriptionController
+                                      .text.isNotEmpty) {
+                                final userUID = organizationUser.organizers.id;
+                                final newEvent = EventDetailsModel(
+                                  id: userUID,
+                                  eventName: _charityEventTitleController.text,
+                                  eventDescription:
+                                      _charityEventDescriptionController.text,
+                                  type: "organizer",
+                                  photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
+                                );
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const EventGalleryPage(),
-                                ),
-                              );
+                                await eventDetailsFile.createEventDetails(newEvent);
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EventGalleryPage(),
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => ErrorAlertDialog(
+                                    title: Translation.errorTitle
+                                        .getString(context),
+                                    content: Translation.errorFieldNotFilled
+                                        .getString(context),
+                                  ),
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Palette.purpleMain,
@@ -246,8 +225,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                             ),
                             child: Text(
                               Translation.next.getString(context),
-                              style: const TextStyle(
-                                  color: Palette.white),
+                              style: const TextStyle(color: Palette.white),
                             ),
                           ),
                   ),

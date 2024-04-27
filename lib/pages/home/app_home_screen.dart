@@ -1,7 +1,6 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
+    PersonnelProvider personnelUser = Provider.of<PersonnelProvider>(context);
     EventDetailsProvider eventDetailsFile =
         Provider.of<EventDetailsProvider>(context);
     EventDonationProvider eventDonationsFile =
@@ -29,45 +29,20 @@ class _MyHomePageState extends State<MyHomePage> {
     EventVolunteerProvider eventVolunteerFile =
         Provider.of<EventVolunteerProvider>(context);
 
+    String getProfileImageLink(String? organizerLink, String? personnelLink) {
+      if (organizerLink != null && organizerLink.isNotEmpty) {
+        return organizerLink;
+      } else if (personnelLink != null && personnelLink.isNotEmpty) {
+        return personnelLink;
+      } else {
+        return 'https://cdn-icons-png.flaticon.com/512/7915/7915522.png';
+      }
+    }
+
     return Scaffold(
       backgroundColor: Palette.purpleLow,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Palette.purpleMain,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout, color: Palette.white),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(Translation.logOutTitle.getString(context)),
-                  content: Text(Translation.logOutMsg.getString(context)),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(Translation.cancel.getString(context)),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                        eventDetailsFile.resetEventDetails();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
-                        );
-                      },
-                      child: Text(Translation.logout.getString(context)),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
+      appBar: const CustomAppBar(
+        showPreviousButton: false,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -86,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         value: Dimens.space24,
                       ),
                       Text(
-                        "Hello ${organizationUser.organizers.picName}",
+                        "Hello ${organizationUser.organizers.picName ?? personnelUser.personnels.personnelName}",
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -94,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       Text(
-                        "${organizationUser.organizers.organizationName}",
+                        "${organizationUser.organizers.organizationName ?? 'Donor/Volunteer'}",
                         style: const TextStyle(
                           fontSize: 18,
                           color: Palette.white,
@@ -104,37 +79,53 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OrganizationProfilePage(
-                                  organizationName: organizationUser
-                                      .organizers.organizationName,
-                                  organizationContact: organizationUser
-                                      .organizers.organizationContact,
-                                  organizationAdress: organizationUser
-                                      .organizers.organizationAdress,
-                                  organizationLink: organizationUser
-                                      .organizers.organizationLink,
-                                  profileImageLink: organizationUser
-                                      .organizers.profileImageLink,
-                                )),
-                      );
+                      if (organizationUser.organizers.id != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OrganizationProfilePage(
+                                    organizationName: organizationUser
+                                        .organizers.organizationName,
+                                    organizationContact: organizationUser
+                                        .organizers.organizationContact,
+                                    organizationAdress: organizationUser
+                                        .organizers.organizationAdress,
+                                    organizationLink: organizationUser
+                                        .organizers.organizationLink,
+                                    profileImageLink: organizationUser
+                                        .organizers.profileImageLink,
+                                  )),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PersonnelProfilePage(
+                                    personnelName:
+                                        personnelUser.personnels.personnelName,
+                                    personnelContact: personnelUser
+                                        .personnels.personnelContact,
+                                    personnelAdress: personnelUser
+                                        .personnels.personnelAdress,
+                                    personnelEmail:
+                                        personnelUser.personnels.personnelEmail,
+                                    personnelPassword: personnelUser
+                                        .personnels.personnelPassword,
+                                    profileImageLink: personnelUser
+                                        .personnels.profileImageLink,
+                                  )),
+                        );
+                      }
                     },
-                    child: organizationUser.organizers.profileImageLink !=
-                                null &&
-                            organizationUser.organizers.profileImageLink != ''
-                        ? CircleAvatar(
-                            radius: Dimens.space32,
-                            backgroundImage: NetworkImage(organizationUser
-                                    .organizers.profileImageLink ??
-                                'https://firebasestorage.googleapis.com/v0/b/charity-event-cems.appspot.com/o/images%2Fyusss.jpg?alt=media&token=fa38b153-50cc-474c-8774-6c5943fee4c2'),
-                          )
-                        : CircleAvatar(
-                            radius: Dimens.space32,
-                            backgroundImage: const NetworkImage(
-                                'https://cdn-icons-png.flaticon.com/512/7915/7915522.png'),
-                          ),
+                    child: CircleAvatar(
+                      radius: Dimens.space32,
+                      backgroundImage: NetworkImage(
+                        getProfileImageLink(
+                          organizationUser.organizers.profileImageLink ?? '',
+                          personnelUser.personnels.profileImageLink ?? '',
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -203,62 +194,64 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-                  SpacerV(
-                    value: Dimens.space32,
-                  ),
-                  Text(
-                    Translation.myEventTitle.getString(context),
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                  if (organizationUser.organizers.id != null) ...[
+                    SpacerV(
+                      value: Dimens.space32,
                     ),
-                  ),
-                  Text(
-                    Translation.myEventSubtitle.getString(context),
-                    style: const TextStyle(
-                      fontSize: 14,
+                    Text(
+                      Translation.myEventTitle.getString(context),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SpacerV(
-                    value: Dimens.space16,
-                  ),
-                  if (eventDetailsFile.eventDetails.id == null)
-                    FileAddingCard(
-                      title: Translation.createEventTitle.getString(context),
-                      description:
-                          Translation.createEventSubtitle.getString(context),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const EventDescriptionPage(),
-                          ),
-                        );
-                      },
-                    )
-                  else
-                    ProductCard(
-                      imageUrl: eventDetailsFile.eventDetails.photoEventUrl ??
-                          'https://images.contentstack.io/v3/assets/blt8f1303966e806bd4/bltcf5dadc6004e8499/63e5185213c67c1128b58bab/DURRAT_AL_EIMAN_2.jpg',
-                      title: eventDetailsFile.eventDetails.eventName,
-                      description:
-                          'RM ${eventDonationsFile.donationDetails.targetMoney?.toStringAsFixed(2)}',
-                      valueIndicatorProgress: ((eventDonationsFile
-                                  .donationDetails.currentCollected ??
-                              0) /
-                          (eventDonationsFile.donationDetails.targetMoney ??
-                              1)),
-                      type: eventDetailsFile.eventDetails.type,
-                      onTap: () {
-                        //@YUSRI: Save for later (this is used to edit event descreiptyion)
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CategoryPage(),
-                          ),
-                        );
-                      },
+                    Text(
+                      Translation.myEventSubtitle.getString(context),
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
                     ),
+                    SpacerV(
+                      value: Dimens.space16,
+                    ),
+                    if (eventDetailsFile.eventDetails.id == null)
+                      FileAddingCard(
+                        title: Translation.createEventTitle.getString(context),
+                        description:
+                            Translation.createEventSubtitle.getString(context),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const EventDescriptionPage(),
+                            ),
+                          );
+                        },
+                      )
+                    else
+                      ProductCard(
+                        imageUrl: eventDetailsFile.eventDetails.photoEventUrl ??
+                            'https://cdn-icons-png.flaticon.com/512/6598/6598519.png',
+                        title: eventDetailsFile.eventDetails.eventName,
+                        description:
+                            'RM ${eventDonationsFile.donationDetails.targetMoney?.toStringAsFixed(2)}',
+                        valueIndicatorProgress: ((eventDonationsFile
+                                    .donationDetails.currentCollected ??
+                                0) /
+                            (eventDonationsFile.donationDetails.targetMoney ??
+                                1)),
+                        type: eventDetailsFile.eventDetails.type,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CategoryPage(),
+                            ),
+                          );
+                        },
+                      ),
+                  ],
                 ],
               ),
             ),

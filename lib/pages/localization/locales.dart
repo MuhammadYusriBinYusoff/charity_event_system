@@ -16,18 +16,31 @@ mixin Translation{
   static const String title = 'title';
   static const String body = 'body';
 
+  //Admin
+  static const String adminChooseTaskTitle = 'adminChooseTaskTitle';
+  static const String adminChooseTaskSubTitle = 'adminChooseTaskSubtitle';
+  static const String adminMonitorPerformance = 'adminMonitorPerformance';
+  static const String adminValidateOrganizer = 'adminValidateOrganizer';
+
   //For Loginpage
   static const String loginTitle = 'loginTitle';
   static const String loginEmail = 'loginEmail';
   static const String loginPassword = 'loginPassword';
   static const String loginQuestion = "loginQuestion?";
+  static const String loginForgotPassword = "loginForgotPassword";
+  static const String emailResetPasswordTitle = "emailResetPasswordTitle";
+  static const String resetPassword = "resetPassword";
+  static const String forgetPassword = "forgetPassword";
+  static const String pleaseEnterEmail = "pleaseEnterEmail";
 
   //For Signup
   static const String signupTitle = 'signUpTitle';
+  static const String organizationNumber = 'organizationNumber';
   static const String organizationName = 'organizationName';
   static const String organizationContact = 'organizationContact';
   static const String organizationAdress = 'organizationAdress';
   static const String organizationLink = 'organizationLink';
+  static const String organizationRosCheck = 'organizationRosCheck';
   static const String next = 'next';
   static const String picFullname = 'picFullname';
   static const String picContact = 'picContact';
@@ -52,6 +65,10 @@ mixin Translation{
   static const String credentialErrorMsg = "credentialErrorMsg";
   static const String authenticationErrorMsg = "authenticationErrorMsg";
   static const String ok = "ok";
+  static const String errorFieldNotFilled = 'errorFieldNotFilled';
+  static const String successEmailMsg = 'successEmailMsg';
+  static const String errorEmailMsg = 'errorEmailMsg:';
+  static const String errorOrganizerNotVerfied = 'errorOrganizerNotVerfied';
 
   //General things
   static const String logOutTitle = "logOutTitle";
@@ -65,6 +82,8 @@ mixin Translation{
   static const String action = "action";
   static const String done = "done";
   static const String skip = "skip";
+  static const String home = "home";
+  static const String langugae = "Change Language";
 
   //Homepage
   static const String charity2024Title = 'charity2024';
@@ -131,6 +150,7 @@ mixin Translation{
   static const String manageVolunteer = "manageVolunteer";
   static const String teamPlanning = "teamPlanning";
   static const String manageGallery = "manageGallery";
+  static const String items = "items";
   static const String feedbackCollection = "feedbackCollection";
   static const String deleteTaskTitle = 'deleteTaskTitle';
   static const String deleteTaskQuestion = 'deleteTaskQuestion';
@@ -146,18 +166,31 @@ mixin Translation{
     title: 'Localization',
     body: 'Welcome to this test',
 
+    //Admin
+    adminChooseTaskTitle: 'Choose Task?',
+    adminChooseTaskSubTitle: 'Manage the organizer on your own',
+    adminMonitorPerformance: 'Monitor Performances',
+    adminValidateOrganizer: 'Validate Organizer',
+
     //For Loginpage
     loginTitle: 'Log in',
     loginEmail: 'E-mail',
     loginPassword: 'Password',
     loginQuestion: 'Don’t have an account?',
+    loginForgotPassword: 'Forgot password?',
+    emailResetPasswordTitle: 'Please enter a valid email address',
+    resetPassword: 'Reset Password',
+    forgetPassword: 'Forget Password',
+    pleaseEnterEmail: 'Enter your email to reset password:',
     
     //For Signup page
     signupTitle: 'Sign-Up',
+    organizationNumber: 'Organization Number',
     organizationName: 'Organization Name',
     organizationContact: 'Organization Contact',
     organizationAdress: 'Adress',
     organizationLink: 'Website Link',
+    organizationRosCheck: 'I confirm that my organization is already registered with Jabatan Pertubuhan Malaysia. Otherwise, the registration will be cancelled',
     next: 'Next',
     picFullname: 'PIC Fullname',
     picContact: 'Contact Number',
@@ -182,6 +215,10 @@ mixin Translation{
     credentialErrorMsg: 'Invalid credentials. Please try again.',
     authenticationErrorMsg: 'Authentication failed. Please try again later.',
     ok: 'Ok',
+    errorFieldNotFilled: 'Please fill in all required fields.',
+    successEmailMsg: 'Password reset email sent successfully',
+    errorEmailMsg: 'Error sending password reset email',
+    errorOrganizerNotVerfied: 'The organizer is not being verified yet. Sorry for inconvenience. Any emergency can call our customer support 011-23238869',
 
     //General things
     logOutTitle: 'Log Out',
@@ -196,6 +233,8 @@ mixin Translation{
     action: 'Action',
     done: 'Done',
     skip: 'Skip',
+    home: 'Home',
+    langugae: 'Languages',
 
     //Homepage
     charity2024Title: 'Charity Event 2024',
@@ -258,6 +297,7 @@ mixin Translation{
     manageDesciption: 'My Event',
     manageDonation: 'Donation',
     manageGallery: 'Gallery',
+    items: 'Items',
     feedbackCollection: 'Feedback',
     teamPlanning: 'Collaboration',
     manageVolunteer: 'Volunteer',
@@ -277,18 +317,31 @@ mixin Translation{
     title: 'Localisasi',
     body: 'Selamat datang ke test ini',
 
+    //Admin
+    adminChooseTaskTitle: 'Pilih Tugasan?',
+    adminChooseTaskSubTitle: 'Uruskan hal ehwal organisasi dengan cara sendiri',
+    adminMonitorPerformance: 'Memantau Prestasi',
+    adminValidateOrganizer: 'Mengesahkan Organizer',
+
     //For Loginpage
     loginTitle: 'Log masuk',
     loginEmail: 'E-mel',
     loginPassword: 'Kata laluan',
     loginQuestion: 'Tiada akaun?',
+    loginForgotPassword: 'Lupa kata laluan?',
+    emailResetPasswordTitle: 'Sila masukkan e-mel yang sah',
+    resetPassword: 'Tetapkan Semula Kata Laluan',
+    forgetPassword: 'Lupa Kata Laluan',
+    pleaseEnterEmail: 'Masukkan Emel anda untuk tetapan semula kata laluan:',
 
     //For Signup page
     signupTitle: 'Pendaftaran',
+    organizationNumber: 'No. Pertubuhan',
     organizationName: 'Nama Organisasi',
     organizationContact: 'Hubungi Organisasi',
     organizationAdress: 'Alamat',
     organizationLink: 'Link Website',
+    organizationRosCheck: 'Saya mengesahkan bahawa organisasi saya telah pun berdaftar dengan Jabatan Pertubuhan Malaysia. Jika tidak, pendaftaran akan dibatalkan',
     next: 'Seterusnya',
     picFullname: 'Nama Penuh PIC',
     picContact: 'Nomber Contact',
@@ -313,6 +366,10 @@ mixin Translation{
     credentialErrorMsg: 'Bukti kelayakan tidak sah. Sila cuba lagi.',
     authenticationErrorMsg: 'Pengesahan gagal. Sila cuba sebentar lagi.',
     ok: 'Baik',
+    errorFieldNotFilled: 'Sila isi ruangan merah yang disediakan',
+    successEmailMsg: 'E-mel tetapan semula kata laluan berjaya dihantar',
+    errorEmailMsg: 'Ralat menghantar e-mel tetapan semula kata laluan',
+    errorOrganizerNotVerfied: 'Penganjur belum disahkan lagi. Maaf atas kesulitan. Sebarang kecemasan boleh hubungi sokongan pelanggan kami 011-23238869',
 
     //General things
     logOutTitle: 'Log Keluar',
@@ -327,6 +384,8 @@ mixin Translation{
     action: 'Tindakan',
     done: 'Selesai',
     skip: 'Skip',
+    home: 'Muka Depan',
+    langugae: 'Tukar Bahasa',
 
     //Homepage
     charity2024Title: 'Program Amal 2024',
@@ -389,6 +448,7 @@ mixin Translation{
     manageDesciption: 'Event Saya',
     manageDonation: 'Sumbangan',
     manageGallery: 'Galeri',
+    items: 'Barang',
     feedbackCollection: 'Maklum Balas',
     teamPlanning: 'Kolaborasi',
     manageVolunteer: 'Sukarelawan',

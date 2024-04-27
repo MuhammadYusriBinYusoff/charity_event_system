@@ -75,6 +75,8 @@ class CategoryCard extends StatelessWidget {
         Provider.of<EventDonationProvider>(context);
     EventGalleryProvider eventGalleryFile =
         Provider.of<EventGalleryProvider>(context);
+    EventVolunteerProvider eventVolunteerFile =
+        Provider.of<EventVolunteerProvider>(context);
 
     return Card(
       elevation: 4.0,
@@ -94,6 +96,7 @@ class CategoryCard extends StatelessWidget {
               ),
             );
           } else if (categoryItem.name == Translation.manageVolunteer.getString(context)) {
+            eventVolunteerFile.fetchEventVolunteerData();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -131,7 +134,7 @@ class CategoryCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const EventItemAddPage()),
+                  builder: (context) => EventItemAddPage()),
             );
           } else if (categoryItem.name == Translation.teamPlanning.getString(context)) {
             Navigator.push(

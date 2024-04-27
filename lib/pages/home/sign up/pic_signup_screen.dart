@@ -2,13 +2,13 @@ import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 class PICSignUpPage extends StatefulWidget {
+  final String? organizationNumber;
   final String? organizationName;
   final String? organizationContact;
   final String? organizationAddress;
@@ -17,6 +17,7 @@ class PICSignUpPage extends StatefulWidget {
 
   const PICSignUpPage({
     Key? key,
+    this.organizationNumber,
     this.organizationName,
     this.organizationContact,
     this.organizationAddress,
@@ -38,8 +39,8 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    OrganizerProvider organizationUser = Provider.of<OrganizerProvider>(context);
-
+    OrganizerProvider organizationUser =
+        Provider.of<OrganizerProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -51,34 +52,40 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildTextField(
+              CustomTextField(
                 controller: _picNameController,
                 labelText: Translation.picFullname.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _picContactController,
                 labelText: Translation.picContact.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _picIcController,
                 labelText: Translation.picIcNumber.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _picAdressController,
                 labelText: Translation.picAdress.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _picEmailController,
                 labelText: Translation.picEmail.getString(context),
+                compulsory: true,
               ),
               SpacerV(value: Dimens.space16),
-              buildTextField(
+              CustomTextField(
                 controller: _picPasswordController,
                 labelText: Translation.picPassword.getString(context),
+                compulsory: true,
                 obscureText: true,
               ),
               SpacerV(value: Dimens.space16),
@@ -87,38 +94,56 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    try {
-                      final userCredential = await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                        email: _picEmailController.text,
-                        password: _picPasswordController.text,
-                      );
-                      final String? userUID = userCredential.user?.uid;
+                    if (_picNameController.text.isNotEmpty &&
+                        _picContactController.text.isNotEmpty &&
+                        _picIcController.text.isNotEmpty &&
+                        _picAdressController.text.isNotEmpty &&
+                        _picEmailController.text.isNotEmpty &&
+                        _picPasswordController.text.isNotEmpty) {
+                      try {
+                        final userCredential = await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                          email: _picEmailController.text,
+                          password: _picPasswordController.text,
+                        );
+                        final String? userUID = userCredential.user?.uid;
 
-                      final newUser = OrganizerModel(
-                        id: userUID,
-                        picName: _picNameController.text,
-                        picContact: _picContactController.text,
-                        picIc: _picIcController.text,
-                        picAdress: _picAdressController.text,
-                        picEmail: _picEmailController.text,
-                        picPassword: _picPasswordController.text,
-                        organizationName: widget.organizationName,
-                        organizationContact: widget.organizationContact,
-                        organizationAdress: widget.organizationAddress,
-                        organizationLink: widget.organizationLink,
-                        profileImageLink: widget.profileImageLink,
-                      );
+                        final newUser = OrganizerModel(
+                          id: userUID,
+                          picName: _picNameController.text,
+                          picContact: _picContactController.text,
+                          picIc: _picIcController.text,
+                          picAdress: _picAdressController.text,
+                          picEmail: _picEmailController.text,
+                          picPassword: _picPasswordController.text,
+                          organizationNumber: widget.organizationNumber,
+                          organizationName: widget.organizationName,
+                          organizationContact: widget.organizationContact,
+                          organizationAdress: widget.organizationAddress,
+                          organizationLink: widget.organizationLink,
+                          profileImageLink: widget.profileImageLink,
+                          verify: "Not Verified",
+                        );
 
-                      organizationUser.createOrganizer(newUser);
+                        organizationUser.createOrganizer(newUser);
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
+                      } catch (error) {
+                        print("Error: $error");
+                      }
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ErrorAlertDialog(
+                          title: Translation.errorTitle.getString(context),
+                          content: Translation.errorFieldNotFilled
+                              .getString(context),
+                        ),
                       );
-                    } catch (error) {
-                      print("Error: $error");
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -130,8 +155,7 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                   ),
                   child: Text(
                     Translation.signupTitle.getString(context),
-                    style: const TextStyle(
-                        color: Palette.white, fontFamily: 'Roborto'),
+                    style: const TextStyle(color: Palette.white),
                   ),
                 ),
               ),
