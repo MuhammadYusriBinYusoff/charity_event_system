@@ -142,6 +142,12 @@ class CategoryCard extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => const EventCollaborationPage()),
             );
+          } else if (categoryItem.name == Translation.feedbackCollection.getString(context)) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const EventManageFeedbackPage()),
+            );
           }
         },
         child: Container(

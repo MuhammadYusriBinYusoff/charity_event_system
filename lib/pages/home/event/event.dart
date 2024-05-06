@@ -8,3 +8,4 @@ export 'category_feature_screen.dart';
 export 'event_item_manage_screen.dart';
 export 'event_collaboration_screen.dart';
 export 'event_collaboration_kanban_board_screen.dart';
+export 'event_view_feedback_screen.dart';
