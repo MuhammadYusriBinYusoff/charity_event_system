@@ -163,12 +163,13 @@ class CategoryCard extends StatelessWidget {
             eventFeedback.resetEventFeedback();
             await eventFeedback.fetchAllFeedbackDetails(userId);
             int totalScore = eventFeedback.getTotalCurrentScore();
+            List<String?> comments = eventFeedback.getComments();
 
             // ignore: use_build_context_synchronously
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>  EventManageFeedbackPage(totalScore: totalScore,)),
+                  builder: (context) =>  EventManageFeedbackPage(totalScore: totalScore, comments: comments,)),
             );
           }
         },

@@ -50,6 +50,16 @@ class EventFeedbackProvider extends ChangeNotifier {
     return totalScore;
   }
 
+  List<String> getComments() {
+    List<String> comments = [];
+    for (var feedback in feedbackDetailsList) {
+      if (feedback.comment != null) {
+        comments.add(feedback.comment!);
+      }
+    }
+    return comments;
+  }
+
   void resetEventFeedback() async {
     _feedbackDetails = EventFeedbackModel();
     _feedbackDetailsList = [];

@@ -1,17 +1,18 @@
 import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/pages.dart';
-import 'package:charity_event_system/providers/providers.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 class EventManageFeedbackPage extends StatefulWidget {
   final String? session;
   final int?  totalScore;
+  final List<String?> comments;
 
   const EventManageFeedbackPage({
     Key? key,
     this.session = 'update',
     this.totalScore = 0,
+    this.comments = const ['none'],
   }) : super(key: key);
 
   @override
@@ -37,26 +38,6 @@ class _EventManageFeedbackPageState extends State<EventManageFeedbackPage> {
 
   @override
   Widget build(BuildContext context) {
-    OrganizerProvider organizationUser =
-        Provider.of<OrganizerProvider>(context);
-    EventItemsProvider eventItems = Provider.of<EventItemsProvider>(context);
-
-    List<String> comments = [
-      'Comment 1',
-      'Comment 2',
-      'Comment 3',
-      'Comment 1',
-      'Comment 2',
-      'Comment 3',
-      'Comment 1',
-      'Comment 2',
-      'Comment 3',
-      'Comment 1',
-      'Comment 2',
-      'Comment 3',
-      // Add more comments as needed
-    ];
-
     return Scaffold(
       backgroundColor: Palette.lightGrey,
       appBar: const CustomAppBar(),
@@ -82,7 +63,7 @@ class _EventManageFeedbackPageState extends State<EventManageFeedbackPage> {
                           CustomStatisticCard(
                             valueNotifier: valueNotifier,
                             centerTextStyle: centerTextStyle,
-                            statisticText: 'Overall Score',
+                            statisticText: Translation.overallScore.getString(context),
                           ),
                         ],
                       ),
@@ -94,7 +75,7 @@ class _EventManageFeedbackPageState extends State<EventManageFeedbackPage> {
                           CustomStatisticCard(
                             valueNotifier: valueNotifier2,
                             centerTextStyle: centerTextStyle,
-                            statisticText: 'Current Score',
+                            statisticText: Translation.currentScore.getString(context),
                           ),
                         ],
                       ),
@@ -104,7 +85,7 @@ class _EventManageFeedbackPageState extends State<EventManageFeedbackPage> {
                     value: Dimens.space32,
                   ),
                   CommentCard(
-                    comments: comments,
+                    comments: widget.comments,
                   )
                 ],
               ),

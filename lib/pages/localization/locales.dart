@@ -156,6 +156,8 @@ mixin Translation{
   static const String deleteTaskQuestion = 'deleteTaskQuestion';
   static const String taskTitle = 'taskTitle';
   static const String taskDescription = 'taskDescription';
+  static const String overallScore = 'overallScore';
+  static const String currentScore = 'currentScore';
   
 
   static const Map<String,dynamic> EN = {
@@ -306,6 +308,8 @@ mixin Translation{
     deleteTaskQuestion: 'Are you sure you want to delete this task',
     taskTitle: 'Title of task',
     taskDescription: 'Description of task',
+    overallScore: 'Overall Score',
+    currentScore: 'Current Score',
 
   };
 
@@ -457,6 +461,8 @@ mixin Translation{
     deleteTaskQuestion: 'Adakah awak pasti untuk padam tugasan ini',
     taskTitle: 'Tajuk tugasan',
     taskDescription: 'Ulasan tugasan',
+    overallScore: 'Skor Terkumpul',
+    currentScore: 'Skor Sekarang',
 
   };
 }
