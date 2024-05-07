@@ -17,3 +17,5 @@ export 'custom_fade_scale_animation.dart';
 export 'custom_quote_card.dart';
 export 'custom_error_dialog_1.dart';
 export 'custom_drawer.dart';
+export 'custom_card_statistic.dart';
+export 'custom_comment.dart';

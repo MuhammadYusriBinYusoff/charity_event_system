@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:charity_event_system/common/resources/resources.dart';
 import 'package:charity_event_system/pages/home/splash_screen.dart';
 import 'package:charity_event_system/pages/localization/locales.dart';
 import 'package:charity_event_system/providers/providers.dart';
@@ -85,7 +84,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'SpiraCare',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Palette.purpleMain),
+            //colorScheme: ColorScheme.fromSeed(seedColor: Palette.purpleMain),
             useMaterial3: true,
             fontFamily: 'Roboto',
           ),
