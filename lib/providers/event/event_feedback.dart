@@ -9,7 +9,8 @@ class EventFeedbackProvider extends ChangeNotifier {
   EventFeedbackModel get feedbackDetails => _feedbackDetails;
   List<EventFeedbackModel> get feedbackDetailsList => _feedbackDetailsList;
 
-  Future<void> createFeedbackDetails(EventFeedbackModel newFeedbackDetails) async {
+  Future<void> createFeedbackDetails(
+      EventFeedbackModel newFeedbackDetails) async {
     _feedbackDetails = newFeedbackDetails;
     FirebaseFirestore.instance
         .collection("feedback")
@@ -28,12 +29,30 @@ class EventFeedbackProvider extends ChangeNotifier {
               .doc(id)
               .collection("list feedback")
               .get();
-      _feedbackDetailsList = querySnapshot.docs
-          .map((doc) => EventFeedbackModel.fromSnapshot(doc))
-          .toList();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        _feedbackDetailsList = querySnapshot.docs
+            .map((doc) => EventFeedbackModel.fromSnapshot(doc))
+            .toList();
+      }
     } catch (error) {
       print('Error fetching feedback List: $error');
     }
   }
-  
+
+  int getTotalCurrentScore() {
+    int totalScore = 0;
+    for (var feedback in feedbackDetailsList) {
+      if (feedback.currentScoreCollected != null) {
+        totalScore += feedback.currentScoreCollected!;
+      }
+    }
+    return totalScore;
+  }
+
+  void resetEventFeedback() async {
+    _feedbackDetails = EventFeedbackModel();
+    _feedbackDetailsList = [];
+    notifyListeners();
+  }
 }

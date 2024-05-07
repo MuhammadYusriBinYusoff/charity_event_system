@@ -6,10 +6,12 @@ import 'package:provider/provider.dart';
 
 class EventManageFeedbackPage extends StatefulWidget {
   final String? session;
+  final int?  totalScore;
 
   const EventManageFeedbackPage({
     Key? key,
     this.session = 'update',
+    this.totalScore = 0,
   }) : super(key: key);
 
   @override
@@ -30,7 +32,7 @@ class _EventManageFeedbackPageState extends State<EventManageFeedbackPage> {
   void initState() {
     super.initState();
     valueNotifier = ValueNotifier(40);
-    valueNotifier2 = ValueNotifier(60);
+    valueNotifier2 = ValueNotifier((widget.totalScore ?? 0).toDouble());
   }
 
   @override

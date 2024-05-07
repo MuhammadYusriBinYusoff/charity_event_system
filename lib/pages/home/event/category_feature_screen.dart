@@ -1,6 +1,7 @@
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,21 +13,27 @@ class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<CategoryItem> categories = [
-    CategoryItem(Images.splashIcon, Translation.manageDesciption.getString(context)),
-    CategoryItem(Images.splashIcon, Translation.manageItem.getString(context)),
-    CategoryItem(Images.splashIcon, Translation.manageDonation.getString(context)),
-    CategoryItem(Images.splashIcon, Translation.manageVolunteer.getString(context)),
-    CategoryItem(Images.splashIcon, Translation.teamPlanning.getString(context)),
-    CategoryItem(Images.splashIcon, Translation.manageGallery.getString(context)),
-    CategoryItem(Images.splashIcon, Translation.feedbackCollection.getString(context)),
-  ];
-  
+      CategoryItem(
+          Images.splashIcon, Translation.manageDesciption.getString(context)),
+      CategoryItem(
+          Images.splashIcon, Translation.manageItem.getString(context)),
+      CategoryItem(
+          Images.splashIcon, Translation.manageDonation.getString(context)),
+      CategoryItem(
+          Images.splashIcon, Translation.manageVolunteer.getString(context)),
+      CategoryItem(
+          Images.splashIcon, Translation.teamPlanning.getString(context)),
+      CategoryItem(
+          Images.splashIcon, Translation.manageGallery.getString(context)),
+      CategoryItem(
+          Images.splashIcon, Translation.feedbackCollection.getString(context)),
+    ];
+
     final screenWidth = MediaQuery.of(context).size.width;
     const crossAxisSpacing = 16.0;
     const mainAxisSpacing = 20.0;
     const padding = 20.0;
-    final cardWidth = (screenWidth - crossAxisSpacing - padding * 2) /
-        2;
+    final cardWidth = (screenWidth - crossAxisSpacing - padding * 2) / 2;
 
     return Scaffold(
       appBar: CustomAppBar(title: Translation.myEventTitle.getString(context)),
@@ -77,6 +84,8 @@ class CategoryCard extends StatelessWidget {
         Provider.of<EventGalleryProvider>(context);
     EventVolunteerProvider eventVolunteerFile =
         Provider.of<EventVolunteerProvider>(context);
+    EventFeedbackProvider eventFeedback =
+        Provider.of<EventFeedbackProvider>(context);
 
     return Card(
       elevation: 4.0,
@@ -84,8 +93,9 @@ class CategoryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(6.0),
       ),
       child: InkWell(
-        onTap: () {
-          if (categoryItem.name == Translation.manageGallery.getString(context)) {
+        onTap: () async {
+          if (categoryItem.name ==
+              Translation.manageGallery.getString(context)) {
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -95,14 +105,16 @@ class CategoryCard extends StatelessWidget {
                     session: "update"),
               ),
             );
-          } else if (categoryItem.name == Translation.manageVolunteer.getString(context)) {
+          } else if (categoryItem.name ==
+              Translation.manageVolunteer.getString(context)) {
             eventVolunteerFile.fetchEventVolunteerData();
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => const VolunteerQueryPage()),
             );
-          } else if (categoryItem.name == Translation.manageDesciption.getString(context)) {
+          } else if (categoryItem.name ==
+              Translation.manageDesciption.getString(context)) {
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -113,7 +125,8 @@ class CategoryCard extends StatelessWidget {
                     session: "update"),
               ),
             );
-          } else if (categoryItem.name == Translation.manageDonation.getString(context)) {
+          } else if (categoryItem.name ==
+              Translation.manageDonation.getString(context)) {
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -130,23 +143,32 @@ class CategoryCard extends StatelessWidget {
                 ),
               ),
             );
-          } else if (categoryItem.name == Translation.manageItem.getString(context)) {
+          } else if (categoryItem.name ==
+              Translation.manageItem.getString(context)) {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) => EventItemAddPage()),
+              MaterialPageRoute(builder: (context) => EventItemAddPage()),
             );
-          } else if (categoryItem.name == Translation.teamPlanning.getString(context)) {
+          } else if (categoryItem.name ==
+              Translation.teamPlanning.getString(context)) {
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => const EventCollaborationPage()),
             );
-          } else if (categoryItem.name == Translation.feedbackCollection.getString(context)) {
+          } else if (categoryItem.name ==
+              Translation.feedbackCollection.getString(context)) {
+            User? user = FirebaseAuth.instance.currentUser;
+            String? userId = user?.uid;
+            eventFeedback.resetEventFeedback();
+            await eventFeedback.fetchAllFeedbackDetails(userId);
+            int totalScore = eventFeedback.getTotalCurrentScore();
+
+            // ignore: use_build_context_synchronously
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const EventManageFeedbackPage()),
+                  builder: (context) =>  EventManageFeedbackPage(totalScore: totalScore,)),
             );
           }
         },

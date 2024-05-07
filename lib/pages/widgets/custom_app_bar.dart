@@ -111,6 +111,7 @@ abstract class MenuItems {
   static EventDetailsProvider eventDetailsFile = EventDetailsProvider();
   static OrganizerProvider organizationUser = OrganizerProvider();
   static PersonnelProvider personnelUser = PersonnelProvider();
+  static EventFeedbackProvider eventFeedback = EventFeedbackProvider();
 
   static Widget buildItem(MenuItem item) {
     return Row(
@@ -190,6 +191,7 @@ abstract class MenuItems {
                   eventDetailsFile.resetEventDetails();
                   organizationUser.resetOrganizersDetails();
                   personnelUser.resetPersonnelsDetails();
+                  eventFeedback.resetEventFeedback();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const LoginPage()),

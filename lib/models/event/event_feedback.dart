@@ -25,8 +25,8 @@ class EventFeedbackModel {
       id: snapshot['id'],
       responsibilityScore: snapshot['responsibilityScore'],
       updateGalleryScore: snapshot['updateGalleryScore'],
-      informationUptoDateScore: snapshot['informationUpdateScore'],
-      recommendationScore: snapshot['recommendation'],
+      informationUptoDateScore: snapshot['informationUptoDateScore'],
+      recommendationScore: snapshot['recommendationScore'],
       currentScoreCollected: snapshot['currentScoreCollected'],
       comment: snapshot['comment'],
     );
