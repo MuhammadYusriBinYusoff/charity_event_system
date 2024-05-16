@@ -190,6 +190,7 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
                   subTitle: subscription,
                   lastEditDate:
                       "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}:${DateTime.now().second.toString().padLeft(2, '0')}",
+                  storyPoint: "1",
                 );
                 eventCollaboration.createCollaborationDetails(
                     newCollaboration, userUID);
@@ -232,6 +233,7 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
                   subTitle: subscription,
                   lastEditDate:
                       "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}:${DateTime.now().second.toString().padLeft(2, '0')}",
+                  storyPoint: "1",
                 );
                 eventCollaboration.createCollaborationDetails(
                     newCollaboration, userUID);

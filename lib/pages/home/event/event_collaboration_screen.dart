@@ -19,13 +19,14 @@ class _EventCollaborationPageState extends State<EventCollaborationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(),
+        appBar: const CustomAppBar(),
         body: SingleChildScrollView(
           child: Column(
             children: [
               SpacerV(value: Dimens.space56,),
+              const BacklogItemDetailsScreen(),
+              SpacerV(value: Dimens.space16,),
               Container(padding:EdgeInsets.all(Dimens.space16), color: Palette.lightGrey, child: const MultiBoardListExample()),
-              SpacerV(value: Dimens.space32,),
             ],
           ),
         ),
