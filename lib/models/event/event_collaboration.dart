@@ -7,6 +7,7 @@ class EventCollaborationModel {
   final String? title;
   final String? subTitle;
   final String? lastEditDate;
+  final String? storyPoint;
 
   EventCollaborationModel({
     this.id,
@@ -15,6 +16,7 @@ class EventCollaborationModel {
     this.title,
     this.subTitle,
     this.lastEditDate,
+    this.storyPoint,
   });
 
   static EventCollaborationModel fromSnapshot(DocumentSnapshot snapshot) {
@@ -26,6 +28,7 @@ class EventCollaborationModel {
       title: data['title'],
       subTitle: data['subTitle'],
       lastEditDate: data['lastEditDate'],
+      storyPoint: data['storyPoint'],
     );
   }
 
@@ -37,6 +40,7 @@ class EventCollaborationModel {
       "title": title,
       "subTitle": subTitle,
       "lastEditDate": lastEditDate,
+      "storyPoint": storyPoint,
     };
   }
 }

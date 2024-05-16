@@ -3,6 +3,7 @@ import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 class BacklogItemDetailsScreen extends StatelessWidget {
@@ -63,19 +64,52 @@ class BacklogItemDetailsScreen extends StatelessWidget {
                               ),
                             );
                           },
+                          onLongPress: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text(Translation.deleteTaskTitle
+                                      .getString(context)),
+                                  content: Text(Translation.deleteTaskQuestion
+                                      .getString(context)),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(Translation.cancel
+                                          .getString(context)),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        eventCollaboration
+                                            .deleteEventCollaboration(item.id);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(Translation.delete
+                                          .getString(context)),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
                           child: Container(
-                            margin: EdgeInsets.only(bottom:Dimens.space1),
+                            margin: EdgeInsets.only(bottom: Dimens.space1),
                             padding: EdgeInsets.all(Dimens.space4),
                             decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Palette.purpleMain, width: Dimens.space2),
+                              border: Border.all(
+                                  color: Palette.purpleMain,
+                                  width: Dimens.space2),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   'CEMS ${item.cardId}: ${item.title}',
-                                  style: const TextStyle(fontWeight: FontWeight.w500),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
                                 ),
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
@@ -83,18 +117,17 @@ class BacklogItemDetailsScreen extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text('Priority: ${item.title}'),
+                                      Text('${Translation.taskPriority.getString(context)}: ${item.storyPoint}'),
                                       SpacerH(value: Dimens.space16),
                                       Text(
-                                        'Status: ${item.columnBelong}',
+                                        '${Translation.taskStatus.getString(context)}: ${item.columnBelong}',
                                         style: TextStyle(
                                           color: item.columnBelong == 'Done'
                                               ? Palette.greenIndicator
                                               : item.columnBelong ==
                                                       'In Progress'
                                                   ? Palette.yellowMark
-                                                  : Palette
-                                                      .black,
+                                                  : Palette.black,
                                         ),
                                       ),
                                       SpacerH(value: Dimens.space16),

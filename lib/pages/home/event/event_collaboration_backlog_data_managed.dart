@@ -25,17 +25,20 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
       TextEditingController();
 
   final List<String> columnBelong = ['To Do', 'In Progress', 'Done'];
+  final List<String> storyPointBelong= ['1', '2', '3','4'];
 
   String columnBelongData = '';
+  String storyPointData = '';
 
   @override
   void initState() {
     super.initState();
     _backLogTitleController.text = widget.item.title ?? "";
-    _backLogPriorityController.text = widget.item.title ?? "";
+    _backLogPriorityController.text = widget.item.storyPoint ?? "";
     _backLogStatusController.text = widget.item.columnBelong ?? "";
     _backLogDescriptionController.text = widget.item.subTitle ?? "";
     columnBelongData = widget.item.columnBelong ?? "";
+    storyPointData = widget.item.storyPoint ?? "";
   }
 
   @override
@@ -44,9 +47,7 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
         Provider.of<EventCollaborationProvider>(context);
         
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit'),
-      ),
+      appBar: const CustomAppBar(title: "Edit"),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -54,7 +55,7 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
           children: [
             CustomTextField(
               controller: _backLogTitleController,
-              labelText: 'Title',
+              labelText: Translation.taskTitle.getString(context),
               onChanged: (value){
                 eventCollaboration.updateTitle((widget.item.id ?? ''), value);
               },
@@ -62,15 +63,25 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
             SpacerV(value: Dimens.space16),
             CustomTextField(
               controller: _backLogDescriptionController,
-              labelText: 'Description',
+              multiLine: true,
+              labelText: Translation.taskDescription.getString(context),
               onChanged: (value){
                 eventCollaboration.updateDescription((widget.item.id ?? ''), value);
               },
             ),
-            SpacerV(value: Dimens.space16),
-            CustomTextField(
-              controller: _backLogPriorityController,
-              labelText: 'Priority',
+            CustomDropdownFormField(
+              items: storyPointBelong,
+              hintText: storyPointData,
+              onChanged: (value) {
+                storyPointData = (value ?? storyPointData);
+                eventCollaboration.updateStoryPoint((widget.item.id ?? ''), storyPointData);
+              },
+              validator: (value) {
+                if (value == null) {
+                  return Translation.feedbackCheck.getString(context);
+                }
+                return null;
+              },
             ),
             CustomDropdownFormField(
               items: columnBelong,

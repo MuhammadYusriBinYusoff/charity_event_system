@@ -195,7 +195,25 @@ class EventCollaborationProvider extends ChangeNotifier {
         notifyListeners();
       }
     } catch (error) {
-      print('Error updating title: $error');
+      print('Error updating description: $error');
+    }
+  }
+  
+  void updateStoryPoint(String itemId, String newStoryPoint) {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        FirebaseFirestore.instance
+            .collection("collaboration")
+            .doc(user.uid)
+            .collection("list collaboration")
+            .doc(itemId)
+            .update({'storyPoint': newStoryPoint});
+
+        notifyListeners();
+      }
+    } catch (error) {
+      print('Error updating storyPoint: $error');
     }
   }
 
