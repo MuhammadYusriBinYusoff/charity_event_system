@@ -6,13 +6,15 @@ import 'package:flutter_localization/flutter_localization.dart';
 
 class CustomDropdownFormField extends StatelessWidget {
   final String hint;
+  final String? hintText;
   final List<String> items;
   final void Function(String?)? onChanged;
   final String? Function(String?)? validator;
 
   const CustomDropdownFormField({
     Key? key,
-    required this.hint,
+    this.hint = '',
+    this.hintText,
     required this.items,
     this.onChanged,
     this.validator,
@@ -40,7 +42,7 @@ class CustomDropdownFormField extends StatelessWidget {
             ),
           ),
           hint: Text(
-            Translation.feedbackQuestionHint.getString(context),
+            hintText ?? Translation.feedbackQuestionHint.getString(context),
             style: const TextStyle(fontSize: 12),
           ),
           items: items

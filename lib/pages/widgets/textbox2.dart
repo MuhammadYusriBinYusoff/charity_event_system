@@ -9,7 +9,8 @@ class CustomTextField extends StatefulWidget {
   final String? helpText;
   final bool obscureText;
   final bool multiLine;
-  final bool compulsory; // New property to indicate if filling is compulsory
+  final bool compulsory;
+  final ValueChanged<String>? onChanged; 
 
   const CustomTextField({
     Key? key,
@@ -20,7 +21,9 @@ class CustomTextField extends StatefulWidget {
     this.helpText,
     this.obscureText = false,
     this.multiLine = false,
-    this.compulsory = false, // Default value is false
+    this.compulsory = false,
+    this.onChanged,
+    
   }) : super(key: key);
 
   @override
@@ -29,7 +32,7 @@ class CustomTextField extends StatefulWidget {
 
 class _CustomTextFieldState extends State<CustomTextField> {
   late TextEditingController _textEditingController;
-  bool _isFilled = false; // Track if the field is filled
+  bool _isFilled = false;
 
   @override
   void initState() {
@@ -37,7 +40,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     _textEditingController = widget.controller ?? TextEditingController();
     if (widget.initValue != null) {
       _textEditingController.text = widget.initValue!;
-      _isFilled = true; // Set to true if initial value is provided
+      _isFilled = true;
     }
   }
 
@@ -51,7 +54,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         Container(
           padding: EdgeInsets.only(left: Dimens.space8, right: Dimens.space8),
           decoration: BoxDecoration(
-            border: Border.all(color: borderColor), // Set border color based on filling requirement
+            border: Border.all(color: borderColor),
             borderRadius: BorderRadius.circular(8),
           ),
           child: SizedBox(
@@ -64,6 +67,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 setState(() {
                   _isFilled = value.isNotEmpty;
                 });
+                if (widget.onChanged != null) {
+                  widget.onChanged!(value);
+                }
               },
               decoration: InputDecoration(
                 border: InputBorder.none,

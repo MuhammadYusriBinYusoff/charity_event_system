@@ -27,8 +27,10 @@ class EventCollaborationProvider extends ChangeNotifier {
   }
 
   void _updateCollaborationData(List<EventCollaborationModel> data) {
+    data.sort((a, b) => (int.parse(a.cardId!) ?? 0).compareTo(int.parse(b.cardId!) ?? 0));
     _collaborationDetailsList = data;
     _collaborationDataController.add(data);
+    notifyListeners();
   }
 
   Future<void> createCollaborationDetails(
@@ -136,6 +138,64 @@ class EventCollaborationProvider extends ChangeNotifier {
       }
     } catch (error) {
       print('Error updating title,subtitle: $error');
+    }
+  }
+
+  void updateBackLogDetails(String itemId, String newTitle, String newSubscription, String newColumnBelong) {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        FirebaseFirestore.instance
+            .collection("collaboration")
+            .doc(user.uid)
+            .collection("list collaboration")
+            .doc(itemId)
+            .update({
+              'title': newTitle,
+              'subTitle': newSubscription,
+              'columnBelong' : newColumnBelong,
+              },);
+
+        notifyListeners();
+      }
+    } catch (error) {
+      print('Error updating title,subtitle: $error');
+    }
+  }
+
+  void updateTitle(String itemId, String newTitle) {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        FirebaseFirestore.instance
+            .collection("collaboration")
+            .doc(user.uid)
+            .collection("list collaboration")
+            .doc(itemId)
+            .update({'title': newTitle});
+
+        notifyListeners();
+      }
+    } catch (error) {
+      print('Error updating title: $error');
+    }
+  }
+
+  void updateDescription(String itemId, String newDescription) {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        FirebaseFirestore.instance
+            .collection("collaboration")
+            .doc(user.uid)
+            .collection("list collaboration")
+            .doc(itemId)
+            .update({'subTitle': newDescription});
+
+        notifyListeners();
+      }
+    } catch (error) {
+      print('Error updating title: $error');
     }
   }
 
