@@ -217,6 +217,42 @@ class EventCollaborationProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> updateStartDate(String itemId, String newStartDate) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection("collaboration")
+            .doc(user.uid)
+            .collection("list collaboration")
+            .doc(itemId)
+            .update({'startDate': newStartDate});
+
+        notifyListeners();
+      }
+    } catch (error) {
+      print('Error updating start date: $error');
+    }
+  }
+
+  Future<void> updateEndDate(String itemId, String newEndDate) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection("collaboration")
+            .doc(user.uid)
+            .collection("list collaboration")
+            .doc(itemId)
+            .update({'endDate': newEndDate});
+
+        notifyListeners();
+      }
+    } catch (error) {
+      print('Error updating end date: $error');
+    }
+  }
+
   @override
   void dispose() {
     _collaborationDataController.close();

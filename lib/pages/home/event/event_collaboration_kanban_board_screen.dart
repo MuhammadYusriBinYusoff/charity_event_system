@@ -190,6 +190,10 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
                   subTitle: subscription,
                   lastEditDate:
                       "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}:${DateTime.now().second.toString().padLeft(2, '0')}",
+                  startDate:
+                      "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
+                  endDate:
+                      "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
                   storyPoint: "1",
                 );
                 eventCollaboration.createCollaborationDetails(
@@ -211,7 +215,11 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
               icon: const Icon(Icons.lightbulb_circle),
               title: SizedBox(
                 width: 60,
-                child: Text(columnData.headerData.groupName, style: const TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                child: Text(
+                  columnData.headerData.groupName,
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
               ),
               addIcon: const Icon(Icons.add, size: 20),
               moreIcon: const Icon(Icons.more_horiz, size: 20),
@@ -233,6 +241,10 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
                   subTitle: subscription,
                   lastEditDate:
                       "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}:${DateTime.now().second.toString().padLeft(2, '0')}",
+                  startDate:
+                      "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
+                  endDate:
+                      "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
                   storyPoint: "1",
                 );
                 eventCollaboration.createCollaborationDetails(
@@ -248,7 +260,7 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
                 boardController.scrollToBottom(columnData.id);
               },
               onMoreButtonClick: () {
-                print('qqqqqq');
+                print('test onMoreButton');
               },
             );
           },
@@ -323,7 +335,8 @@ class _RichTextCardState extends State<RichTextCard> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text(Translation.deleteTaskTitle.getString(context)),
-                    content: Text(Translation.deleteTaskQuestion.getString(context)),
+                    content:
+                        Text(Translation.deleteTaskQuestion.getString(context)),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () {
@@ -413,11 +426,10 @@ class _RichTextCardState extends State<RichTextCard> {
             Provider.of<EventCollaborationProvider>(context);
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(14.0),
+            borderRadius: BorderRadius.circular(14.0),
             side: const BorderSide(
               color: Palette.purpleMain,
-              width: 3, 
+              width: 3,
             ),
           ),
           title: Text(

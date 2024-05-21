@@ -8,6 +8,8 @@ class EventCollaborationModel {
   final String? subTitle;
   final String? lastEditDate;
   final String? storyPoint;
+  final String? startDate; // Change to String
+  final String? endDate;
 
   EventCollaborationModel({
     this.id,
@@ -17,6 +19,8 @@ class EventCollaborationModel {
     this.subTitle,
     this.lastEditDate,
     this.storyPoint,
+    this.startDate,
+    this.endDate,
   });
 
   static EventCollaborationModel fromSnapshot(DocumentSnapshot snapshot) {
@@ -29,6 +33,8 @@ class EventCollaborationModel {
       subTitle: data['subTitle'],
       lastEditDate: data['lastEditDate'],
       storyPoint: data['storyPoint'],
+      startDate : data['startDate'],
+      endDate: data['endDate'],
     );
   }
 
@@ -41,6 +47,8 @@ class EventCollaborationModel {
       "subTitle": subTitle,
       "lastEditDate": lastEditDate,
       "storyPoint": storyPoint,
+      "startDate": startDate,
+      "endDate": endDate,
     };
   }
 }
