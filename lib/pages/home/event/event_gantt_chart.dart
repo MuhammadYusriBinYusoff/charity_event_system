@@ -36,15 +36,6 @@ class _GanntChartScreenState extends State<GanntChartScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SwitchListTile.adaptive(
-          value: showStickyArea,
-          title: const Text('Show Sticky Area?'),
-          onChanged: (value) {
-            setState(() {
-              showStickyArea = value;
-            });
-          },
-        ),
         const Text(
           "Gantt Chart",
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -52,40 +43,64 @@ class _GanntChartScreenState extends State<GanntChartScreen> {
         SpacerV(
           value: Dimens.space16,
         ),
-        GanttChartView(
-          maxDuration: null,
-          startDate: DateTime.now(),
-          dayWidth: 30,
-          eventHeight: 30,
-          stickyAreaWidth: MediaQuery.of(context).size.width * 0.38,
-          showStickyArea: showStickyArea,
-          showDays: true,
-          startOfTheWeek: WeekDay.sunday,
-          weekEnds: const {WeekDay.friday, WeekDay.saturday},
-          isExtraHoliday: (context, day) {
-            return DateUtils.isSameDay(DateTime(2025, 1, 2), day);
-          },
-          events: ganttEvents,
-          stickyAreaEventBuilder: (context, eventIndex, event, eventColor) {
-            String cardId = eventCollaboration
-                    .collaborationDetailsList[eventIndex].cardId ??
-                '';
-
-            String title =
-                eventCollaboration.collaborationDetailsList[eventIndex].title ??
-                    'No Title';
-
-            return Container(
-              color: eventColor,
-              child: Center(
+        ganttEvents.isEmpty
+            ? const Center(
                 child: Text(
-                  "CEMS $cardId: $title",
-                  style: const TextStyle(color: Palette.white),
+                  'No tasks in Gantt chart',
+                  style: TextStyle(fontSize: 16),
                 ),
+              )
+            : Column(
+                children: [
+                  SwitchListTile.adaptive(
+                    value: showStickyArea,
+                    title: const Text('Show Sticky Area?'),
+                    onChanged: (value) {
+                      setState(() {
+                        showStickyArea = value;
+                      });
+                    },
+                  ),
+                  SpacerV(
+                    value: Dimens.space16,
+                  ),
+                  GanttChartView(
+                    maxDuration: null,
+                    startDate: DateTime.now(),
+                    dayWidth: 30,
+                    eventHeight: 30,
+                    stickyAreaWidth: MediaQuery.of(context).size.width * 0.38,
+                    showStickyArea: showStickyArea,
+                    showDays: true,
+                    startOfTheWeek: WeekDay.sunday,
+                    weekEnds: const {WeekDay.friday, WeekDay.saturday},
+                    isExtraHoliday: (context, day) {
+                      return DateUtils.isSameDay(DateTime(2025, 1, 2), day);
+                    },
+                    events: ganttEvents,
+                    stickyAreaEventBuilder:
+                        (context, eventIndex, event, eventColor) {
+                      String cardId = eventCollaboration
+                              .collaborationDetailsList[eventIndex].cardId ??
+                          '';
+
+                      String title = eventCollaboration
+                              .collaborationDetailsList[eventIndex].title ??
+                          'No Title';
+
+                      return Container(
+                        color: eventColor,
+                        child: Center(
+                          child: Text(
+                            "CEMS $cardId: $title",
+                            style: const TextStyle(color: Palette.white),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
-            );
-          },
-        ),
       ],
     );
   }
