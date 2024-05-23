@@ -11,3 +11,4 @@ export 'event_collaboration_kanban_board_screen.dart';
 export 'event_view_feedback_screen.dart';
 export 'event_collaboration_backlog_screen.dart';
 export 'event_collaboration_backlog_data_managed.dart';
+export 'event_gantt_chart.dart';

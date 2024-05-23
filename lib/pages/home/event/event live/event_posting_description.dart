@@ -29,6 +29,8 @@ class _EventPostingDescriptionPageState
     EventDonationProvider eventDonationsFile =
         Provider.of<EventDonationProvider>(context);
     EventItemsProvider eventItem = Provider.of<EventItemsProvider>(context);
+    EventCollaborationProvider eventCollaboration =
+        Provider.of<EventCollaborationProvider>(context);
 
     return Scaffold(
       appBar: const CustomAppBar(),
@@ -45,7 +47,7 @@ class _EventPostingDescriptionPageState
                     imageUrl: eventDetailsFile
                             .eventDetailsList[widget.index ?? 0]
                             .photoEventUrl ??
-                        'https://www.caspianpolicy.org/no-image.png', // Replace with your image URL
+                        'https://www.caspianpolicy.org/no-image.png',
                     width: double.infinity,
                     height: Dimens.space200,
                     fit: BoxFit.fill,
@@ -177,7 +179,22 @@ class _EventPostingDescriptionPageState
                             CircleIcon(
                                 icon: Icons.people,
                                 onTap: () {
-                                  print("question icon");
+                                  eventCollaboration
+                                      .resetCollaborationDetails();
+                                  eventCollaboration
+                                      .resetCollaborationDetailsList();
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EventCollaborationPage(
+                                              selectedOrganizerId:
+                                                  eventDetailsFile
+                                                      .eventDetailsList[
+                                                          widget.index ?? 0]
+                                                      .id,
+                                            )),
+                                  );
                                 }),
                             Text(
                               Translation.teamPlanning.getString(context),

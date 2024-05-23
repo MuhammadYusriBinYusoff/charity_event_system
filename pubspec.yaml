@@ -55,6 +55,7 @@ dependencies:
   kanban_board: ^0.1.0
   appflowy_board: ^0.1.1
   simple_circular_progress_bar: ^1.0.2
+  gantt_chart: ^0.3.0
 
 dev_dependencies:
   flutter_test:
