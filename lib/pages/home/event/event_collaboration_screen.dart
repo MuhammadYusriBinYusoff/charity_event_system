@@ -3,7 +3,12 @@ import 'package:charity_event_system/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class EventCollaborationPage extends StatefulWidget {
-  const EventCollaborationPage({Key? key}) : super(key: key);
+final String? selectedOrganizerId;
+
+  const EventCollaborationPage({
+    Key? key,
+    this.selectedOrganizerId,
+  }) : super(key: key);
 
   @override
   State<EventCollaborationPage> createState() => _EventCollaborationPageState();
@@ -31,14 +36,14 @@ class _EventCollaborationPageState extends State<EventCollaborationPage> {
             SpacerV(
               value: Dimens.space32,
             ),
-            const BacklogItemDetailsScreen(),
+            BacklogItemDetailsScreen(selectedOrganizerId: widget.selectedOrganizerId,),
             SpacerV(
               value: Dimens.space16,
             ),
             Container(
                 padding: EdgeInsets.all(Dimens.space16),
                 color: Palette.lightGrey,
-                child: const MultiBoardListExample()),
+                child: MultiBoardListExample(selectedOrganizerId: widget.selectedOrganizerId,)),
           ],
         ),
       ),

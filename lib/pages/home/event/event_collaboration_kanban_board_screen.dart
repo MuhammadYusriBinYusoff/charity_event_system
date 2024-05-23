@@ -9,7 +9,12 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 class MultiBoardListExample extends StatefulWidget {
-  const MultiBoardListExample({Key? key}) : super(key: key);
+  final String? selectedOrganizerId;
+
+  const MultiBoardListExample({
+    Key? key,
+    this.selectedOrganizerId,
+  }) : super(key: key);
 
   @override
   State<MultiBoardListExample> createState() => _MultiBoardListExampleState();
@@ -35,7 +40,8 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       EventCollaborationProvider eventCollaboration =
           Provider.of<EventCollaborationProvider>(context, listen: false);
-      await eventCollaboration.fetchEventCollaborationData();
+      await eventCollaboration
+          .fetchEventCollaborationData(widget.selectedOrganizerId);
     });
     EventCollaborationProvider eventCollaboration =
         Provider.of<EventCollaborationProvider>(context, listen: false);
@@ -56,7 +62,8 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
             controller.getGroupController(toGroupId)!;
         final movedItem = toGroupController.items[toIndex] as RichTextItem;
         final newColumnBelong = toGroupId;
-        eventCollaboration.updateColumnBelong(movedItem.uid, newColumnBelong);
+        eventCollaboration.updateColumnBelong(
+            movedItem.uid, newColumnBelong, widget.selectedOrganizerId);
       },
     );
     final group1 = AppFlowyGroupData(id: "To Do", name: "To Do", items: [
@@ -107,6 +114,7 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
         Provider.of<EventCollaborationProvider>(context);
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
+    PersonnelProvider personnelUser = Provider.of<PersonnelProvider>(context);
 
     const config = AppFlowyBoardConfig(
       groupBackgroundColor: Palette.purpleLow,
@@ -135,6 +143,11 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
             title: collaborationDetail.title ?? "",
             description: collaborationDetail.subTitle ?? "",
             timeCreated: collaborationDetail.lastEditDate ?? "",
+            selectedOrganizerId: widget.selectedOrganizerId,
+            profileImageLink: collaborationDetail.userCardImage,
+            userCardName:  collaborationDetail.userCardName,
+            userCardId: personnelUser.personnels.id ?? organizationUser.organizers.id ?? '', 
+            
           );
 
           if (collaborationDetail.columnBelong == "To Do") {
@@ -181,6 +194,9 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
                 String diffId = const Uuid().v4();
                 String title = 'New Title';
                 String subscription = 'Subscription';
+                String userCardImage = personnelUser.personnels.profileImageLink ?? organizationUser.organizers.profileImageLink ?? '';
+                String userCardName =  personnelUser.personnels.personnelName ?? organizationUser.organizers.picName ?? '';
+                String userCardId = personnelUser.personnels.id ?? organizationUser.organizers.id ?? '' ;
                 final userUID = organizationUser.organizers.id;
                 final newCollaboration = EventCollaborationModel(
                   id: diffId,
@@ -190,19 +206,29 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
                   subTitle: subscription,
                   lastEditDate:
                       "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}:${DateTime.now().second.toString().padLeft(2, '0')}",
-                       startDate: "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
-                  endDate: "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
+                  startDate:
+                      "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
+                  endDate:
+                      "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
                   storyPoint: "1",
+                  userCardImage: userCardImage,
+                  userCardName: userCardName,
+                  userCardId: userCardId,
                 );
                 eventCollaboration.createCollaborationDetails(
-                    newCollaboration, userUID);
+                    newCollaboration, userUID, widget.selectedOrganizerId);
                 final newCard = RichTextItem(
                     uid: diffId,
                     ids: newId,
                     title: title,
                     description: subscription,
                     timeCreated:
-                        "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}:${DateTime.now().second.toString().padLeft(2, '0')}");
+                        "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}:${DateTime.now().second.toString().padLeft(2, '0')}",
+                    profileImageLink: userCardImage,
+                    userCardName: userCardName,
+                    userCardId: userCardId,   
+                    );
+                    
                 groupController.add(newCard);
                 boardController.scrollToBottom(columnData.id);
               },
@@ -230,6 +256,9 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
                 String diffId = const Uuid().v4();
                 String title = 'New Title';
                 String subscription = 'Subscription';
+                String userCardImage = organizationUser.organizers.profileImageLink ?? '';
+                String userCardName = organizationUser.organizers.picName ?? '';
+                String userCardId = personnelUser.personnels.id ?? organizationUser.organizers.id ?? '' ;
                 final userUID = organizationUser.organizers.id;
                 final newCollaboration = EventCollaborationModel(
                   id: diffId,
@@ -239,19 +268,28 @@ class _MultiBoardListExampleState extends State<MultiBoardListExample> {
                   subTitle: subscription,
                   lastEditDate:
                       "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}:${DateTime.now().second.toString().padLeft(2, '0')}",
-                  startDate: "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
-                  endDate: "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
+                  startDate:
+                      "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
+                  endDate:
+                      "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}",
                   storyPoint: "1",
+                  userCardImage: userCardImage,
+                  userCardName: userCardName,
+                  userCardId: userCardId,
                 );
                 eventCollaboration.createCollaborationDetails(
-                    newCollaboration, userUID);
+                    newCollaboration, userUID, widget.selectedOrganizerId);
                 final newCard = RichTextItem(
                     uid: diffId,
                     ids: newId,
                     title: title,
                     description: subscription,
                     timeCreated:
-                        "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}:${DateTime.now().second.toString().padLeft(2, '0')}");
+                        "${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')} ${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}:${DateTime.now().second.toString().padLeft(2, '0')}",
+                    profileImageLink: userCardImage,
+                    userCardName: userCardName,
+                    userCardId: userCardId,  
+                    );
                 groupController.add(newCard);
                 boardController.scrollToBottom(columnData.id);
               },
@@ -297,6 +335,12 @@ class _RichTextCardState extends State<RichTextCard> {
   late String _timeCreated;
   late String _id;
   late String _uid;
+  late String? _selectedOrganizerId;
+  late String? _profileImageLink;
+  late String? _userCardName;
+
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -306,6 +350,11 @@ class _RichTextCardState extends State<RichTextCard> {
     _timeCreated = widget.item.timeCreated;
     _id = widget.item.id;
     _uid = widget.item.uid;
+    _selectedOrganizerId = widget.item.selectedOrganizerId;
+    _profileImageLink = widget.item.profileImageLink;
+    _userCardName = widget.item.userCardName;
+    titleController.text = _title;
+    descriptionController.text = _description;
   }
 
   @override
@@ -313,6 +362,15 @@ class _RichTextCardState extends State<RichTextCard> {
     return Builder(builder: (context) {
       EventCollaborationProvider eventCollaboration =
           Provider.of<EventCollaborationProvider>(context);
+
+      String getProfileImageLink(String? profileImageLink) {
+        if (profileImageLink != null) {
+          return profileImageLink;
+        } else {
+          return 'https://cdn-icons-png.flaticon.com/512/7915/7915522.png';
+        }
+      }
+
       return Align(
         alignment: Alignment.centerLeft,
         child: Container(
@@ -342,7 +400,8 @@ class _RichTextCardState extends State<RichTextCard> {
                       ),
                       TextButton(
                         onPressed: () {
-                          eventCollaboration.deleteEventCollaboration(_uid);
+                          eventCollaboration.deleteEventCollaboration(
+                              _uid, _selectedOrganizerId);
                           Navigator.of(context).pop();
                         },
                         child: Text(Translation.delete.getString(context)),
@@ -386,17 +445,18 @@ class _RichTextCardState extends State<RichTextCard> {
                 ),
                 Row(
                   children: [
-                    const CircleAvatar(
-                      radius: 12,
-                      backgroundColor: Colors.green,
-                      child: Icon(Icons.person, size: 18),
+                    CircleAvatar(
+                      radius: Dimens.space12,
+                      backgroundImage: NetworkImage(
+                        getProfileImageLink(_profileImageLink),
+                      ),
                     ),
                     SpacerH(
                       value: Dimens.space8,
                     ),
-                    const Text(
-                      "John Doe",
-                      style: TextStyle(fontSize: 12, color: Colors.black),
+                    Text(
+                      _userCardName ?? "John doe",
+                      style: const TextStyle(fontSize: 12, color: Colors.black),
                     ),
                   ],
                 ),
@@ -409,12 +469,6 @@ class _RichTextCardState extends State<RichTextCard> {
   }
 
   void _changeTitleAndSubtitle() async {
-    final TextEditingController titleController = TextEditingController();
-    final TextEditingController descriptionController = TextEditingController();
-
-    titleController.text = _title;
-    descriptionController.text = _description;
-
     await showDialog(
       context: context,
       builder: (context) {
@@ -456,13 +510,11 @@ class _RichTextCardState extends State<RichTextCard> {
             ),
             TextButton(
               onPressed: () {
-                setState(() {
-                  _title = titleController.text;
-                  _description = descriptionController.text;
-                });
+                String _title = titleController.text;
+                String _description = descriptionController.text;
                 eventCollaboration.updateTaskDetails(
-                    _uid, _title, _description);
-                Navigator.pop(context);
+                      _uid, _title, _description, _selectedOrganizerId);
+                      Navigator.pop(context);
               },
               child: Text(Translation.save.getString(context)),
             ),
@@ -473,19 +525,28 @@ class _RichTextCardState extends State<RichTextCard> {
   }
 }
 
+
 class RichTextItem extends AppFlowyGroupItem {
   final String uid;
   final int ids;
   final String title;
   final String description;
   final String timeCreated;
+  final String? selectedOrganizerId;
+  final String? profileImageLink;
+  final String? userCardName;
+  final String? userCardId;
 
   RichTextItem(
       {required this.uid,
       required this.ids,
       required this.title,
       required this.timeCreated,
-      required this.description});
+      required this.description,
+      this.selectedOrganizerId,
+      this.profileImageLink,
+      this.userCardName,
+      this.userCardId});
 
   @override
   // TODO: implement id

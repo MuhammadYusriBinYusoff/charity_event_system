@@ -7,7 +7,8 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 class BacklogItemDetailsScreen extends StatelessWidget {
-  const BacklogItemDetailsScreen({Key? key}) : super(key: key);
+  final String? selectedOrganizerId;
+  const BacklogItemDetailsScreen({Key? key,this.selectedOrganizerId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,7 @@ class BacklogItemDetailsScreen extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      AddBacklogItemScreen(item: item),
+                                      AddBacklogItemScreen(item: item, selectedOrganizerId: selectedOrganizerId),
                                 ),
                               );
                             },
@@ -88,7 +89,7 @@ class BacklogItemDetailsScreen extends StatelessWidget {
                                         onPressed: () {
                                           eventCollaboration
                                               .deleteEventCollaboration(
-                                                  item.id);
+                                                  item.id, selectedOrganizerId);
                                           Navigator.of(context).pop();
                                         },
                                         child: Text(Translation.delete

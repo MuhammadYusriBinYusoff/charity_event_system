@@ -8,8 +8,9 @@ import 'package:provider/provider.dart';
 
 class AddBacklogItemScreen extends StatefulWidget {
   final EventCollaborationModel item;
+  final String? selectedOrganizerId;
 
-  const AddBacklogItemScreen({Key? key, required this.item}) : super(key: key);
+  const AddBacklogItemScreen({Key? key, required this.item, this.selectedOrganizerId}) : super(key: key);
 
   @override
   State<AddBacklogItemScreen> createState() => _AddBacklogItemScreenState();
@@ -65,7 +66,7 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
       setState(() {
         selectedDate = pickedDate;
         _dateStartController.text = "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}";
-        eventCollaboration.updateEndDate((widget.item.id ?? ''), _dateStartController.text);
+        eventCollaboration.updateStartDate((widget.item.id ?? ''), _dateStartController.text, widget.selectedOrganizerId);
       });
     }
   }
@@ -81,7 +82,7 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
       setState(() {
         selectedDate = pickedDate;
         _dateEndController.text = "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}";
-        eventCollaboration.updateEndDate((widget.item.id ?? ''), _dateEndController.text);
+        eventCollaboration.updateEndDate((widget.item.id ?? ''), _dateEndController.text, widget.selectedOrganizerId);
       });
     }
   }
@@ -97,7 +98,7 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
               controller: _backLogTitleController,
               labelText: Translation.taskTitle.getString(context),
               onChanged: (value){
-                eventCollaboration.updateTitle((widget.item.id ?? ''), value);
+                eventCollaboration.updateTitle((widget.item.id ?? ''), value, widget.selectedOrganizerId);
               },
             ),
             SpacerV(value: Dimens.space16),
@@ -106,7 +107,7 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
               multiLine: true,
               labelText: Translation.taskDescription.getString(context),
               onChanged: (value){
-                eventCollaboration.updateDescription((widget.item.id ?? ''), value);
+                eventCollaboration.updateDescription((widget.item.id ?? ''), value, widget.selectedOrganizerId);
               },
             ),
             SpacerV(value: Dimens.space16),
@@ -134,7 +135,7 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
               hintText: storyPointData,
               onChanged: (value) {
                 storyPointData = (value ?? storyPointData);
-                eventCollaboration.updateStoryPoint((widget.item.id ?? ''), storyPointData);
+                eventCollaboration.updateStoryPoint((widget.item.id ?? ''), storyPointData, widget.selectedOrganizerId);
               },
               validator: (value) {
                 if (value == null) {
@@ -148,7 +149,7 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
               hintText: columnBelongData,
               onChanged: (value) {
                 columnBelongData = (value ?? columnBelongData);
-                eventCollaboration.updateColumnBelong((widget.item.id ?? ''), columnBelongData);
+                eventCollaboration.updateColumnBelong((widget.item.id ?? ''), columnBelongData, widget.selectedOrganizerId);
               },
               validator: (value) {
                 if (value == null) {

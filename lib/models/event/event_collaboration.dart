@@ -10,6 +10,9 @@ class EventCollaborationModel {
   final String? storyPoint;
   final String? startDate; // Change to String
   final String? endDate;
+  final String? userCardImage;
+  final String? userCardName;
+  final String? userCardId;
 
   EventCollaborationModel({
     this.id,
@@ -21,6 +24,9 @@ class EventCollaborationModel {
     this.storyPoint,
     this.startDate,
     this.endDate,
+    this.userCardImage,
+    this.userCardName,
+    this.userCardId,
   });
 
   static EventCollaborationModel fromSnapshot(DocumentSnapshot snapshot) {
@@ -35,6 +41,9 @@ class EventCollaborationModel {
       storyPoint: data['storyPoint'],
       startDate : data['startDate'],
       endDate: data['endDate'],
+      userCardImage: data['userCardImage'],
+      userCardName: data['userCardName'],
+      userCardId: data['userCardId'],
     );
   }
 
@@ -49,6 +58,9 @@ class EventCollaborationModel {
       "storyPoint": storyPoint,
       "startDate": startDate,
       "endDate": endDate,
+      "userCardImage": userCardImage,
+      "userCardName": userCardName,
+      "userCardId": userCardId,
     };
   }
 }
