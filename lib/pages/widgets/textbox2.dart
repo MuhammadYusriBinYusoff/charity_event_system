@@ -10,7 +10,8 @@ class CustomTextField extends StatefulWidget {
   final bool obscureText;
   final bool multiLine;
   final bool compulsory;
-  final ValueChanged<String>? onChanged; 
+  final bool readOnly; // Add this line
+  final ValueChanged<String>? onChanged;
 
   const CustomTextField({
     Key? key,
@@ -22,8 +23,8 @@ class CustomTextField extends StatefulWidget {
     this.obscureText = false,
     this.multiLine = false,
     this.compulsory = false,
+    this.readOnly = false, // Add this line
     this.onChanged,
-    
   }) : super(key: key);
 
   @override
@@ -47,6 +48,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     final borderColor = widget.compulsory && !_isFilled ? Colors.red : Colors.grey;
+    final backgroundColor = widget.readOnly ? Colors.grey[200] : Colors.white; // Add this line
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,6 +58,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           decoration: BoxDecoration(
             border: Border.all(color: borderColor),
             borderRadius: BorderRadius.circular(8),
+            color: backgroundColor, // Add this line
           ),
           child: SizedBox(
             height: widget.multiLine ? null : Dimens.space54,
@@ -63,6 +66,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               controller: _textEditingController,
               obscureText: widget.obscureText,
               maxLines: widget.multiLine ? null : 1,
+              readOnly: widget.readOnly, // Add this line
               onChanged: (value) {
                 setState(() {
                   _isFilled = value.isNotEmpty;
@@ -93,6 +97,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     );
   }
 }
+
 
 
 
