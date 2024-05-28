@@ -27,8 +27,8 @@ class _ValidateOrganizerState extends State<ValidateOrganizer> {
         ValueNotifier<List<OrganizerModel>>(notVerifiedOrganizers);
 
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: "Validate Organizer",
+      appBar: CustomAppBar(
+        title: Translation.adminValidateOrganizer.getString(context),
       ),
       body: ValueListenableBuilder<List<OrganizerModel>>(
         valueListenable: notVerifiedOrganizersNotifier,

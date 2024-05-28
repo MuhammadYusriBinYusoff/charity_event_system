@@ -28,11 +28,13 @@ class AdminChosen extends StatelessWidget {
               children: [
                 CustomChosenButton(
                   text: Translation.adminMonitorPerformance.getString(context),
-                  onPressed: () {
+                  onPressed: () async {
+                    organizationUser.resetOrganizersDetails();
+                    await organizationUser.fetchAllOrganizers();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const PersonnelSignUpPage(),
+                        builder: (context) => const MonitorOrganizer(),
                       ),
                     );
                   },

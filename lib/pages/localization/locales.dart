@@ -21,6 +21,9 @@ mixin Translation{
   static const String adminChooseTaskSubTitle = 'adminChooseTaskSubtitle';
   static const String adminMonitorPerformance = 'adminMonitorPerformance';
   static const String adminValidateOrganizer = 'adminValidateOrganizer';
+  static const String adminSearchOrganizer = 'adminSearchOrganizer';
+  static const String adminBlockOrganizer = 'adminBlockOrganizer';
+  static const String adminOrganizationNamelist = ' adminOrganizationNamelist';
 
   //For Loginpage
   static const String loginTitle = 'loginTitle';
@@ -175,6 +178,9 @@ mixin Translation{
     adminChooseTaskSubTitle: 'Manage the organizer on your own',
     adminMonitorPerformance: 'Monitor Performances',
     adminValidateOrganizer: 'Validate Organizer',
+    adminSearchOrganizer: 'Search Organization',
+    adminBlockOrganizer: 'Want to block/change organization status?',
+    adminOrganizationNamelist: 'Organization Namelist',
 
     //For Loginpage
     loginTitle: 'Log in',
@@ -330,6 +336,9 @@ mixin Translation{
     adminChooseTaskSubTitle: 'Uruskan hal ehwal organisasi dengan cara sendiri',
     adminMonitorPerformance: 'Memantau Prestasi',
     adminValidateOrganizer: 'Mengesahkan Organizer',
+    adminSearchOrganizer: 'Cari Organisasi',
+    adminBlockOrganizer: 'Mahu sekat/ubah status organisasi?',
+    adminOrganizationNamelist: 'Senarai Organisasi',
 
     //For Loginpage
     loginTitle: 'Log masuk',
