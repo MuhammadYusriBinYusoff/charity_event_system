@@ -186,12 +186,13 @@ abstract class MenuItems {
                 ),
               ),
               TextButton(
-                onPressed: () {
+                onPressed: () async {
                   FirebaseAuth.instance.signOut();
                   eventDetailsFile.resetEventDetails();
                   organizationUser.resetOrganizersDetails();
                   personnelUser.resetPersonnelsDetails();
                   eventFeedback.resetEventFeedback();
+                  await eventFeedback.resetScoreEventFeedback();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const LoginPage()),

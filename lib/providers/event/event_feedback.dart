@@ -5,9 +5,11 @@ import 'package:flutter/foundation.dart';
 class EventFeedbackProvider extends ChangeNotifier {
   EventFeedbackModel _feedbackDetails = EventFeedbackModel();
   List<EventFeedbackModel> _feedbackDetailsList = [];
+  final List<int> _totalScoresList = [];
 
   EventFeedbackModel get feedbackDetails => _feedbackDetails;
   List<EventFeedbackModel> get feedbackDetailsList => _feedbackDetailsList;
+  List<int> get totalScoresList => _totalScoresList;
 
   Future<void> createFeedbackDetails(
       EventFeedbackModel newFeedbackDetails) async {
@@ -40,13 +42,29 @@ class EventFeedbackProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> fetchAndStoreScores(int score) async {
+    _totalScoresList.add(score);
+    //print("Current Score Length");
+    // print(_totalScoresList.length);
+    notifyListeners();
+  }
+
   int getTotalCurrentScore() {
     int totalScore = 0;
+    int turns = 0;
     for (var feedback in feedbackDetailsList) {
       if (feedback.currentScoreCollected != null) {
         totalScore += feedback.currentScoreCollected!;
+        turns++;
       }
     }
+    // print("total score before");
+    // print(totalScore);
+    // print(turns);
+    totalScore = ((totalScore / (20 * turns)) * 100).toInt();
+    // print("total score after");
+    // print(totalScore);
+    // print(turns);
     return totalScore;
   }
 
@@ -63,6 +81,14 @@ class EventFeedbackProvider extends ChangeNotifier {
   void resetEventFeedback() async {
     _feedbackDetails = EventFeedbackModel();
     _feedbackDetailsList = [];
+    notifyListeners();
+  }
+
+  Future<void> resetScoreEventFeedback() async {
+    _totalScoresList.clear();
+    // print("test reset score");
+    // print(_totalScoresList.length);
+    // print("======");
     notifyListeners();
   }
 }

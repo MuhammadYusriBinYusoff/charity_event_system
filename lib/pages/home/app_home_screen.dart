@@ -28,6 +28,8 @@ class _MyHomePageState extends State<MyHomePage> {
         Provider.of<EventGalleryProvider>(context);
     EventVolunteerProvider eventVolunteerFile =
         Provider.of<EventVolunteerProvider>(context);
+    EventFeedbackProvider eventFeedback =
+        Provider.of<EventFeedbackProvider>(context);
 
     String getProfileImageLink(String? organizerLink, String? personnelLink) {
       if (organizerLink != null && organizerLink.isNotEmpty) {
@@ -40,98 +42,132 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Scaffold(
-      backgroundColor: Palette.purpleLow,
+      backgroundColor: Palette.white,
       appBar: const CustomAppBar(
         showPreviousButton: false,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              height: Dimens.space150,
-              color: Palette.purpleMain,
-              padding: EdgeInsets.all(Dimens.space8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.26,
+              child: Stack(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SpacerV(
-                        value: Dimens.space24,
-                      ),
-                      Text(
-                        "Hello ${organizationUser.organizers.picName ?? personnelUser.personnels.personnelName}",
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Palette.white,
+                  Container(
+                    height: Dimens.space150,
+                    color: Palette.purpleMain,
+                    padding: EdgeInsets.all(Dimens.space12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SpacerV(
+                              value: Dimens.space24,
+                            ),
+                            Text(
+                              "Hello ${organizationUser.organizers.picName ?? personnelUser.personnels.personnelName}",
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Palette.white,
+                              ),
+                            ),
+                            Text(
+                              organizationUser.organizers.organizationName ?? 'Donor/Volunteer',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Palette.white,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Text(
-                        "${organizationUser.organizers.organizationName ?? 'Donor/Volunteer'}",
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Palette.white,
+                        GestureDetector(
+                          onTap: () {
+                            if (organizationUser.organizers.id != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        OrganizationProfilePage(
+                                          organizationName: organizationUser
+                                              .organizers.organizationName,
+                                          organizationContact: organizationUser
+                                              .organizers.organizationContact,
+                                          organizationAdress: organizationUser
+                                              .organizers.organizationAdress,
+                                          organizationLink: organizationUser
+                                              .organizers.organizationLink,
+                                          profileImageLink: organizationUser
+                                              .organizers.profileImageLink,
+                                        )),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PersonnelProfilePage(
+                                          personnelName: personnelUser
+                                              .personnels.personnelName,
+                                          personnelContact: personnelUser
+                                              .personnels.personnelContact,
+                                          personnelAdress: personnelUser
+                                              .personnels.personnelAdress,
+                                          personnelEmail: personnelUser
+                                              .personnels.personnelEmail,
+                                          personnelPassword: personnelUser
+                                              .personnels.personnelPassword,
+                                          profileImageLink: personnelUser
+                                              .personnels.profileImageLink,
+                                        )),
+                              );
+                            }
+                          },
+                          child: CircleAvatar(
+                            radius: Dimens.space40,
+                            backgroundImage: NetworkImage(
+                              getProfileImageLink(
+                                organizationUser.organizers.profileImageLink ??
+                                    '',
+                                personnelUser.personnels.profileImageLink ?? '',
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      if (organizationUser.organizers.id != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => OrganizationProfilePage(
-                                    organizationName: organizationUser
-                                        .organizers.organizationName,
-                                    organizationContact: organizationUser
-                                        .organizers.organizationContact,
-                                    organizationAdress: organizationUser
-                                        .organizers.organizationAdress,
-                                    organizationLink: organizationUser
-                                        .organizers.organizationLink,
-                                    profileImageLink: organizationUser
-                                        .organizers.profileImageLink,
-                                  )),
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PersonnelProfilePage(
-                                    personnelName:
-                                        personnelUser.personnels.personnelName,
-                                    personnelContact: personnelUser
-                                        .personnels.personnelContact,
-                                    personnelAdress: personnelUser
-                                        .personnels.personnelAdress,
-                                    personnelEmail:
-                                        personnelUser.personnels.personnelEmail,
-                                    personnelPassword: personnelUser
-                                        .personnels.personnelPassword,
-                                    profileImageLink: personnelUser
-                                        .personnels.profileImageLink,
-                                  )),
-                        );
-                      }
-                    },
-                    child: CircleAvatar(
-                      radius: Dimens.space32,
-                      backgroundImage: NetworkImage(
-                        getProfileImageLink(
-                          organizationUser.organizers.profileImageLink ?? '',
-                          personnelUser.personnels.profileImageLink ?? '',
+                  Positioned(
+                    left: MediaQuery.of(context).size.width *
+                        0.23, // Centers the container horizontally
+                    top: (MediaQuery.of(context).size.height * 0.15 ), // Centers the container vertically based on a height of 100
+                    child: Container(
+                      padding: EdgeInsets.all(Dimens.space8),
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      height: 72,
+                      decoration: BoxDecoration(
+                        color: Palette.grey,
+                        border: Border.all(
+                          color: Palette.purpleMain,
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            SpacerV(value: Dimens.space6,),
+                            Text(Translation.currentCollect.getString(context), style: TextStyle(fontWeight: FontWeight.bold),),
+                            Text("RM ${eventDonationsFile.donationDetails.currentCollected?.toStringAsFixed(2) ?? 0}", style: TextStyle(color: Palette.redButton, fontWeight: FontWeight.bold),),
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
-            SpacerV(
-              value: Dimens.space16,
             ),
             Container(
               padding: EdgeInsets.all(Dimens.space16),
@@ -160,10 +196,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         for (int i = 0;
                             i < eventDetailsFile.eventDetailsList.length;
-                            i++)
+                            i++)...[
                           ProductCard(
                             isEventListClicked: true,
                             indexCard: i,
+                            totalScore: eventFeedback.totalScoresList[i], //To DO: Yusri Need to check back later
                             imageUrl: eventDetailsFile
                                     .eventDetailsList[i].photoEventUrl ??
                                 'https://www.caspianpolicy.org/no-image.png',
@@ -191,6 +228,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               );
                             },
                           ),
+                          SpacerH(value:Dimens.space8),
+                        ],
                       ],
                     ),
                   ),
@@ -231,6 +270,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       )
                     else
                       ProductCard(
+                        displayPercentageScore: false,
                         imageUrl: eventDetailsFile.eventDetails.photoEventUrl ??
                             'https://cdn-icons-png.flaticon.com/512/6598/6598519.png',
                         title: eventDetailsFile.eventDetails.eventName,

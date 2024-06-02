@@ -39,245 +39,280 @@ class _EventPostingDescriptionPageState
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Column(
+              children: [
+                CachedNetworkImage(
+                  imageUrl: eventDetailsFile
+                          .eventDetailsList[widget.index ?? 0].photoEventUrl ??
+                      'https://www.caspianpolicy.org/no-image.png',
+                  width: double.infinity,
+                  height: Dimens.space200,
+                  fit: BoxFit.fill,
+                ),
+              ],
+            ),
             Container(
-              color: Palette.purpleMain,
-              child: Column(
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: eventDetailsFile
-                            .eventDetailsList[widget.index ?? 0]
-                            .photoEventUrl ??
-                        'https://www.caspianpolicy.org/no-image.png',
-                    width: double.infinity,
-                    height: Dimens.space200,
-                    fit: BoxFit.fill,
+                height: Dimens.space80,
+                decoration: BoxDecoration(
+                  color: Palette.purpleLow,
+                  border: Border.all(
+                    color: Palette.black,
+                    width: 0.5,
                   ),
-                  SpacerV(value: Dimens.space16),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                child: Center(
+                  child: Container(
+                    padding: EdgeInsets.all(Dimens.space8),
+                    width: MediaQuery.of(context).size.width * 0.55,
+                    decoration: const BoxDecoration(
+                      color: Colors.yellow,
+                      border: Border(
+                        left: BorderSide(
+                          color: Palette.black,
+                          width: 0.5,
+                        ),
+                        right: BorderSide(
+                          color: Palette.black,
+                          width: 0.5,
+                        ),
+                      ),
+                    ),
+                    child: Column(
                       children: [
-                        Column(
-                          children: [
-                            CircleIcon(
-                                icon: Icons.menu_book_outlined,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => UserFeedbackPage(
-                                              id: eventDetailsFile
-                                                  .eventDetailsList[
-                                                      widget.index ?? 0]
-                                                  .id,
-                                              index: widget.index,
-                                            )),
-                                  );
-                                }),
-                            Text(
-                              Translation.feedbackCollection.getString(context),
-                              style: const TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  color: Palette.white),
-                            ),
-                          ],
+                        SpacerV(
+                          value: Dimens.space8,
                         ),
-                        SpacerH(
-                          value: Dimens.space5,
+                        Text(
+                          Translation.donationCurrent.getString(context),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        Column(
-                          children: [
-                            CircleIcon(
-                                icon: Icons.food_bank_outlined,
-                                onTap: () async {
-                                  await eventItem.fetchAllItemDetails(
-                                    eventDetailsFile
-                                        .eventDetailsList[widget.index ?? 0].id,
-                                  );
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ItemQueryPage(
-                                              id: eventDetailsFile
-                                                  .eventDetailsList[
-                                                      widget.index ?? 0]
-                                                  .id,
-                                            )),
-                                  );
-                                }),
-                            Text(
-                              Translation.items.getString(context),
-                              style: const TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  color: Palette.white),
-                            ),
-                          ],
-                        ),
-                        SpacerH(
-                          value: Dimens.space5,
-                        ),
-                        Column(
-                          children: [
-                            CircleIcon(
-                                icon: Icons.emoji_people_outlined,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            RegisterVolunteerFormPage(
-                                              id: eventDetailsFile
-                                                  .eventDetailsList[
-                                                      widget.index ?? 0]
-                                                  .id,
-                                              index: widget.index,
-                                            )),
-                                  );
-                                }),
-                            Text(
-                              Translation.manageVolunteer.getString(context),
-                              style: const TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  color: Palette.white),
-                            ),
-                          ],
-                        ),
-                        SpacerH(
-                          value: Dimens.space5,
-                        ),
-                        Column(
-                          children: [
-                            CircleIcon(
-                                icon: Icons.photo_outlined,
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => GalleryPage(
-                                              index: widget.index,
-                                            )),
-                                  );
-                                }),
-                            Text(
-                              Translation.manageGallery.getString(context),
-                              style: const TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  color: Palette.white),
-                            ),
-                          ],
-                        ),
-                        SpacerH(
-                          value: Dimens.space5,
-                        ),
-                        Column(
-                          children: [
-                            CircleIcon(
-                                icon: Icons.people,
-                                onTap: () {
-                                  eventCollaboration
-                                      .resetCollaborationDetails();
-                                  eventCollaboration
-                                      .resetCollaborationDetailsList();
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            EventCollaborationPage(
-                                              selectedOrganizerId:
-                                                  eventDetailsFile
-                                                      .eventDetailsList[
-                                                          widget.index ?? 0]
-                                                      .id,
-                                            )),
-                                  );
-                                }),
-                            Text(
-                              Translation.teamPlanning.getString(context),
-                              style: const TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.bold,
-                                  color: Palette.white),
-                            ),
-                          ],
+                        Text(
+                          "RM ${eventDonationsFile.donationDetailsList[widget.index ?? 0].currentCollected?.toStringAsFixed(2) ?? ''}",
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Palette.redWarning,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  SpacerV(
-                    value: Dimens.space16,
+                )),
+            SpacerV(
+              value: Dimens.space16,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SpacerH(
+                    value: Dimens.space8,
+                  ),
+                  Column(
+                    children: [
+                      CircleIcon(
+                          icon: Icons.menu_book_outlined,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserFeedbackPage(
+                                        id: eventDetailsFile
+                                            .eventDetailsList[widget.index ?? 0]
+                                            .id,
+                                        index: widget.index,
+                                      )),
+                            );
+                          }),
+                      Text(
+                        Translation.feedbackCollection.getString(context),
+                        style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Palette.black),
+                      ),
+                    ],
+                  ),
+                  SpacerH(
+                    value: Dimens.space5,
+                  ),
+                  Column(
+                    children: [
+                      CircleIcon(
+                          icon: Icons.food_bank_outlined,
+                          onTap: () async {
+                            await eventItem.fetchAllItemDetails(
+                              eventDetailsFile
+                                  .eventDetailsList[widget.index ?? 0].id,
+                            );
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ItemQueryPage(
+                                        id: eventDetailsFile
+                                            .eventDetailsList[widget.index ?? 0]
+                                            .id,
+                                      )),
+                            );
+                          }),
+                      Text(
+                        Translation.items.getString(context),
+                        style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Palette.black),
+                      ),
+                    ],
+                  ),
+                  SpacerH(
+                    value: Dimens.space5,
+                  ),
+                  Column(
+                    children: [
+                      CircleIcon(
+                          icon: Icons.emoji_people_outlined,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      RegisterVolunteerFormPage(
+                                        id: eventDetailsFile
+                                            .eventDetailsList[widget.index ?? 0]
+                                            .id,
+                                        index: widget.index,
+                                      )),
+                            );
+                          }),
+                      Text(
+                        Translation.manageVolunteer.getString(context),
+                        style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Palette.black),
+                      ),
+                    ],
+                  ),
+                  SpacerH(
+                    value: Dimens.space5,
+                  ),
+                  Column(
+                    children: [
+                      CircleIcon(
+                          icon: Icons.photo_outlined,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GalleryPage(
+                                        index: widget.index,
+                                      )),
+                            );
+                          }),
+                      Text(
+                        Translation.manageGallery.getString(context),
+                        style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Palette.black),
+                      ),
+                    ],
+                  ),
+                  SpacerH(
+                    value: Dimens.space5,
+                  ),
+                  Column(
+                    children: [
+                      CircleIcon(
+                          icon: Icons.people,
+                          onTap: () {
+                            eventCollaboration.resetCollaborationDetails();
+                            eventCollaboration.resetCollaborationDetailsList();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => EventCollaborationPage(
+                                        selectedOrganizerId: eventDetailsFile
+                                            .eventDetailsList[widget.index ?? 0]
+                                            .id,
+                                      )),
+                            );
+                          }),
+                      Text(
+                        Translation.teamPlanning.getString(context),
+                        style: const TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Palette.black),
+                      ),
+                    ],
+                  ),
+                  SpacerH(
+                    value: Dimens.space5,
+                  ),
+                  Column(
+                    children: [
+                      CircleIcon(
+                          icon: Icons.add_location,
+                          onTap: () async {
+                            //Later untuk company profile use
+                          }),
+                      const Text(
+                        "Profile",
+                        style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                            color: Palette.black),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            Container(
-                height: Dimens.space80,
-                color: Palette.purpleLow,
-                child: Center(
-                  child: Column(
-                    children: [
-                      SpacerV(
-                        value: Dimens.space16,
-                      ),
-                      Text(
-                        Translation.donationCurrent.getString(context),
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Roberto'),
-                      ),
-                      Text(
-                        "RM ${eventDonationsFile.donationDetailsList[widget.index ?? 0].currentCollected?.toStringAsFixed(2) ?? ''}",
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Roberto'),
-                      ),
-                    ],
-                  ),
-                )),
+            SpacerV(
+              value: Dimens.space8,
+            ),
             Container(
                 padding: EdgeInsets.all(Dimens.space16),
                 color: Palette.white,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SpacerV(value: Dimens.space16),
                     Text(
                       eventDetailsFile
                               .eventDetailsList[widget.index ?? 0].eventName ??
                           '',
                       style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Roberto'),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    SpacerV(value: Dimens.space16),
+                    SpacerV(value: Dimens.space8),
                     Text(
                       eventDetailsFile.eventDetailsList[widget.index ?? 0]
                               .eventDescription ??
                           '',
-                      style:
-                          const TextStyle(fontSize: 14, fontFamily: 'Roberto'),
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
                     ),
                     SpacerV(value: Dimens.space16),
                     Text(
                       Translation.spiralCareDisclaimer.getString(context),
                       style: const TextStyle(
-                          fontSize: 12,
-                          fontFamily: 'Roberto',
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: Palette.grey),
+                          color: Palette.greyDark),
                     ),
                     SpacerV(value: Dimens.space16),
                     Text(
                       'RM ${eventDonationsFile.donationDetailsList[widget.index ?? 0].targetMoney?.toStringAsFixed(2) ?? ''}',
-                      style:
-                          const TextStyle(fontSize: 14, fontFamily: 'Roberto'),
+                      style: const TextStyle(fontSize: 14),
                     ),
                     SpacerV(value: Dimens.space4),
                     ProgressBarIndicator(
@@ -295,8 +330,6 @@ class _EventPostingDescriptionPageState
                     SpacerV(value: Dimens.space4),
                     Text(
                       "${Translation.donationBankAccount.getString(context)}: ${eventDonationsFile.donationDetailsList[widget.index ?? 0].bankAccount}",
-                      style:
-                          const TextStyle(fontSize: 14, fontFamily: 'Roberto'),
                     ),
                     SpacerV(value: Dimens.space24),
                     CachedNetworkImage(

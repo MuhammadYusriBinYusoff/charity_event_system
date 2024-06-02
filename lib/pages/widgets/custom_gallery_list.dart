@@ -89,12 +89,12 @@ class _ImageListWidgetState extends State<ImageListWidget> {
             height: widget.imageSize,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Dimens.space8),
-              color: Colors.grey[300],
+              color: Palette.grey,
             ),
             child: const Center(
               child: Text(
                 'No Images',
-                style: TextStyle(color: Palette.grey),
+                style: TextStyle(color: Palette.black),
               ),
             ),
           );

@@ -94,6 +94,7 @@ mixin Translation{
   static const String myEventTitle = "myEventTitle";
   static const String myEventSubtitle = "myEventSubtitle";
   static const String pleaseHintText = "pleaseHintText";
+  static const String currentCollect = "currentCollect";
 
   //Onboarding
   static const String onBoardingTitle1 = "onBoardingTitle1";
@@ -147,6 +148,12 @@ mixin Translation{
   static const String feedbackQuestion5 = "feedbackQuestion5";
   static const String feedbackQuestionHint = "feedbackQuestionHint";
   static const String feedbackCheck = "feedbackCheck";
+  static const String feedbackStatiscticTitle1 = "feedbackStatiscticTitle1";
+  static const String feedbackStatiscticDescription1 = "feedbackStatiscticDescription1";
+  static const String feedbackStatiscticTitle2 = "feedbackStatiscticTitle2";
+  static const String feedbackStatiscticDescription2 = "feedbackStatiscticDescription2";
+  static const String feedbackStatiscticTitle3 = "feedbackStatiscticTitle3";
+  static const String feedbackStatiscticDescription3 = "feedbackStatiscticDescription3";
   static const String manageDesciption = "manageDesciption";
   static const String manageItem = "manageItem";
   static const String manageDonation = "manageDonation";
@@ -251,6 +258,7 @@ mixin Translation{
     charity2024Subtitle: 'Collection of activity from organizer',
     myEventTitle: 'My Event',
     myEventSubtitle: 'Organizer can create their event here',
+    currentCollect: 'Current Collected',
 
     //Onboarding
     onBoardingTitle1: 'Tech for Good: Levitating Society through Innovative Charity Initiatives',
@@ -304,6 +312,12 @@ mixin Translation{
     feedbackQuestion5: 'Your Comment?',
     feedbackQuestionHint: 'Rating: 1-5 (Very Bad - Very Good)',
     feedbackCheck: 'Please give your rating',
+    feedbackStatiscticTitle1: 'Excellent!',
+    feedbackStatiscticDescription1: 'The organizer has a strong track record in conducting charity events, consistently earning the trust of the community through their past and current events.',
+    feedbackStatiscticTitle2: 'Moderate!',
+    feedbackStatiscticDescription2: 'The organizer has a moderate track record in our app. They have earned the trust of several users. Overall, the achievement is satisfactory but has room for improvement.',
+    feedbackStatiscticTitle3: 'Attention!',
+    feedbackStatiscticDescription3: "The organizer's track record in our app is below expectations. There may be issues with activity levels and user engagement",
     manageDesciption: 'My Event',
     manageDonation: 'Donation',
     manageGallery: 'Gallery',
@@ -409,6 +423,7 @@ mixin Translation{
     charity2024Subtitle: 'Koleksi aktviti daripada organizer',
     myEventTitle: 'Event Saya',
     myEventSubtitle: 'Organizer boleh buat program amal di sini',
+    currentCollect: 'Jumlah Sekarang',
 
     //OnBoarding
     onBoardingTitle1: 'Teknologi untuk Kebaikan: Memanfaatkan Masyarakat melalui Inisiatif Amal Inovatif',
@@ -462,6 +477,12 @@ mixin Translation{
     feedbackQuestion5: 'Komen Anda?',
     feedbackQuestionHint: 'Penilaian: 1-5 (Sangat Buruk - Sangat Baik)',
     feedbackCheck: 'Sila berikan penilaian anda',
+    feedbackStatiscticTitle1: 'Cemerlang!',
+    feedbackStatiscticDescription1: 'Penganjur mempunyai rekod prestasi yang kukuh dalam mengendalikan acara amal, secara konsisten mendapat kepercayaan masyarakat melalui acara masa lalu dan semasa mereka.',
+    feedbackStatiscticTitle2: 'Sederhana!',
+    feedbackStatiscticDescription2: 'Penganjur mempunyai rekod prestasi sederhana dalam app kami. Mereka telah mendapat kepercayaan beberapa pengguna. Pencapaian memuaskan tetapi perlu penambahbaikan.',
+    feedbackStatiscticTitle3: 'Perhatian!',
+    feedbackStatiscticDescription3: "Rekod prestasi penganjur dalam aplikasi kami adalah di bawah jangkaan. Mungkin terdapat masalah dengan tahap aktiviti dan penglibatan pengguna",
     manageDesciption: 'Event Saya',
     manageDonation: 'Sumbangan',
     manageGallery: 'Galeri',

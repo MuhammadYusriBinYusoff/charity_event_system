@@ -37,6 +37,8 @@ class _LoginPageState extends State<LoginPage> {
     EventItemsProvider eventItems = Provider.of<EventItemsProvider>(context);
     EventCollaborationProvider eventCollaboration =
         Provider.of<EventCollaborationProvider>(context);
+    EventFeedbackProvider eventFeedback =
+        Provider.of<EventFeedbackProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -112,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                         } else {
                           eventDetailsFile.resetEventDetails();
                           organizationUser.resetOrganizersDetails();
-                          personnelUser.resetPersonnelsDetails();
+                          personnelUser.resetPersonnelsDetails();                          
                           await organizationUser.fetchOrganizerData();
 
                           if (organizationUser.organizers.verify ==
@@ -134,6 +136,15 @@ class _LoginPageState extends State<LoginPage> {
                             await eventDetailsFile.fetchAllEventDetails();
                             await eventDonationsFile.fetchAllDonationDetails();
                             await eventGalleryFile.fetchAllEventGallery();
+
+                            //TO DO: Yusri Later need to check back
+                            for (int i = 0;
+                                i < eventDetailsFile.eventDetailsList.length;
+                                i++) {
+                              await eventFeedback.fetchAllFeedbackDetails(
+                                  eventDetailsFile.eventDetailsList[i].id);
+                              await eventFeedback.fetchAndStoreScores(eventFeedback.getTotalCurrentScore());
+                            }
                             Navigator.push(
                               context,
                               MaterialPageRoute(

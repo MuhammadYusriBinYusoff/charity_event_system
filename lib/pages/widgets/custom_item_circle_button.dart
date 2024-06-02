@@ -18,13 +18,16 @@ class CircleIcon extends StatelessWidget {
           padding: EdgeInsets.all(Dimens.space8),
           width: Dimens.space45,
           height: Dimens.space45,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Palette.white,
+            color: Palette.purpleMain,
+            border: Border.all(
+              width: 0.5
+            )
           ),
           child: Icon(
             icon,
-            color: Palette.purpleMain,
+            color: Palette.white,
             size: Dimens.space22,
           ),
         ),

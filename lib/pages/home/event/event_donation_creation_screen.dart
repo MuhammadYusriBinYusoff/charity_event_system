@@ -95,6 +95,7 @@ class _EventDonationManagementPageState
         Provider.of<OrganizerProvider>(context);
     EventDonationProvider eventDonation =
         Provider.of<EventDonationProvider>(context);
+    EventFeedbackProvider eventFeedback = Provider.of<EventFeedbackProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.lightGrey,
@@ -230,8 +231,20 @@ class _EventDonationManagementPageState
                           bankAccount: _bankAccountController.text,
                           photoEventUrl: qrImageUrl,
                         );
+
+                        //Just to initiliazr value for feedback
+                        final newFeedback = EventFeedbackModel(
+                          id: userUID,
+                          responsibilityScore: 0,
+                          updateGalleryScore: 0,
+                          informationUptoDateScore: 0,
+                          recommendationScore: 0,
+                          currentScoreCollected: 0,
+                          comment: "",
+                        );
             
                         await eventDonation.createDonationDetails(newDonation);
+                        await eventFeedback.createFeedbackDetails(newFeedback);
             
                         Navigator.push(
                           context,
