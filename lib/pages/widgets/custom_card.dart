@@ -117,6 +117,8 @@ class _ProductCardState extends State<ProductCard> {
                   MaterialPageRoute(builder: (context) => UserFeedbackScore(totalScore: widget.totalScore,)),
                 ),
                 child: CustomStatisticCard(
+                  backStrock: 10,
+                  progressStrock: 10,
                   removeBackground: true,
                   adjustBackgroundCircle: true,
                   size: 40,

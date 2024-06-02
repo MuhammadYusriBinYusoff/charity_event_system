@@ -10,6 +10,8 @@ class CustomStatisticCard extends StatelessWidget {
   final double? size;
   final bool? removeBackground;
   final bool? adjustBackgroundCircle;
+  final double? backStrock;
+  final double? progressStrock;
 
   const CustomStatisticCard({
     Key? key,
@@ -19,6 +21,8 @@ class CustomStatisticCard extends StatelessWidget {
     this.size = 100,
     this.removeBackground = false,
     this.adjustBackgroundCircle = false,
+    this.backStrock = 25,
+    this.progressStrock = 25,
   }) : super(key: key);
 
   @override
@@ -39,6 +43,8 @@ class CustomStatisticCard extends StatelessWidget {
           ),
           child: SimpleCircularProgressBar(
             size: size ?? 100,
+            backStrokeWidth: backStrock ?? 0,
+            progressStrokeWidth: backStrock ?? 0,
             valueNotifier: valueNotifier,
             animationDuration: 4,
             mergeMode: true,
@@ -49,7 +55,8 @@ class CustomStatisticCard extends StatelessWidget {
               );
             },
             progressColors: const [
-              Palette.redIndicator,
+              Palette.redWarning,
+              Palette.yellowMark,
               Palette.greenIndicator
             ],
             backColor: Palette.greyIndicator,
@@ -78,7 +85,7 @@ class CustomStatisticCard extends StatelessWidget {
                   );
                 },
                 progressColors: const [
-                  Palette.redIndicator,
+                  Palette.redWarning,
                   Palette.yellowMark,
                   Palette.greenIndicator
                 ],

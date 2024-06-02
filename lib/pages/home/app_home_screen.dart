@@ -148,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: MediaQuery.of(context).size.width * 0.5,
                       height: 72,
                       decoration: BoxDecoration(
-                        color: Palette.grey,
+                        color: Palette.lightGrey,
                         border: Border.all(
                           color: Palette.purpleMain,
                           width: 2,

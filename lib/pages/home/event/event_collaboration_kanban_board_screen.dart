@@ -430,7 +430,7 @@ class _RichTextCardState extends State<RichTextCard> {
                 ),
                 Text(
                   _description,
-                  style: const TextStyle(fontSize: 12, color: Palette.grey),
+                  style: const TextStyle(fontSize: 12, color: Palette.greyDark),
                   textAlign: TextAlign.left,
                 ),
                 SpacerV(
