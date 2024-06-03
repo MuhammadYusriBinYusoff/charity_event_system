@@ -27,6 +27,8 @@ class CategoryPage extends StatelessWidget {
           Images.splashIcon, Translation.manageGallery.getString(context)),
       CategoryItem(
           Images.splashIcon, Translation.feedbackCollection.getString(context)),
+      CategoryItem(
+          Images.splashIcon, Translation.deleteCollection.getString(context)),
     ];
 
     final screenWidth = MediaQuery.of(context).size.width;
@@ -86,6 +88,8 @@ class CategoryCard extends StatelessWidget {
         Provider.of<EventVolunteerProvider>(context);
     EventFeedbackProvider eventFeedback =
         Provider.of<EventFeedbackProvider>(context);
+    EventHistoryProvider eventHistory =
+        Provider.of<EventHistoryProvider>(context);
 
     return Card(
       elevation: 4.0,
@@ -161,7 +165,12 @@ class CategoryCard extends StatelessWidget {
             User? user = FirebaseAuth.instance.currentUser;
             String? userId = user?.uid;
             eventFeedback.resetEventFeedback();
+            eventHistory.resetEventHistory();
             await eventFeedback.fetchAllFeedbackDetails(userId);
+            int overalTotalScore = 0;
+            if(await eventHistory.fetchAllHistoryDetails(userId)){
+              overalTotalScore = eventHistory.getTotalCurrentScore();
+            }
             int totalScore = eventFeedback.getTotalCurrentScore();
             List<String?> comments = eventFeedback.getComments();
 
@@ -169,7 +178,20 @@ class CategoryCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>  EventManageFeedbackPage(totalScore: totalScore, comments: comments,)),
+                  builder: (context) =>  EventManageFeedbackPage(totalScore: totalScore, comments: comments, overalTotalScore: overalTotalScore,)),
+            );
+          } else if (categoryItem.name ==
+              Translation.deleteCollection.getString(context)) {
+            User? user = FirebaseAuth.instance.currentUser;
+            String? userId = user?.uid;
+            await eventDetailsFile.deleteEventDetails(userId);
+            await eventDonationsFile.deleteDonationDetails(userId);
+            await eventFeedback.deleteFeedbackDetails(userId);
+            //ignore: use_build_context_synchronously
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>  const MyHomePage()),
             );
           }
         },

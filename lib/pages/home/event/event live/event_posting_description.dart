@@ -3,6 +3,7 @@ import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/home/event/event%20live/event_feedback_form_screen.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
@@ -117,16 +118,32 @@ class _EventPostingDescriptionPageState
                       CircleIcon(
                           icon: Icons.menu_book_outlined,
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => UserFeedbackPage(
-                                        id: eventDetailsFile
-                                            .eventDetailsList[widget.index ?? 0]
-                                            .id,
-                                        index: widget.index,
-                                      )),
-                            );
+                            User? user = FirebaseAuth.instance.currentUser;
+                            String? userId = user?.uid;
+                            if (eventDetailsFile
+                                    .eventDetailsList[widget.index ?? 0].id ==
+                                userId) {
+                              showDialog(
+                                context: context,
+                                builder: (context) => ErrorAlertDialog(
+                                  title:
+                                      Translation.errorTitle.getString(context),
+                                  content: Translation.errorOrganizerEnterOwnEvent.getString(context),
+                                ),
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserFeedbackPage(
+                                          id: eventDetailsFile
+                                              .eventDetailsList[
+                                                  widget.index ?? 0]
+                                              .id,
+                                          index: widget.index,
+                                        )),
+                              );
+                            }
                           }),
                       Text(
                         Translation.feedbackCollection.getString(context),

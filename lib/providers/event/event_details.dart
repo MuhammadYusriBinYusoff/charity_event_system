@@ -66,6 +66,24 @@ class EventDetailsProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteEventDetails(String? eventDetailsId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('eventDetails')
+          .doc(eventDetailsId)
+          .delete();
+
+      _eventDetailsList.removeWhere((event) => event.id == eventDetailsId);
+      if (_eventDetails.id == eventDetailsId) {
+        _eventDetails = EventDetailsModel(); 
+      }
+
+      notifyListeners();
+    } catch (error) {
+      print('Error deleting event details: $error');
+    }
+  }
+
   void resetEventDetails() async{
     _eventDetails = EventDetailsModel();
     notifyListeners();

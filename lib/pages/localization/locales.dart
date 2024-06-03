@@ -72,6 +72,7 @@ mixin Translation{
   static const String successEmailMsg = 'successEmailMsg';
   static const String errorEmailMsg = 'errorEmailMsg:';
   static const String errorOrganizerNotVerfied = 'errorOrganizerNotVerfied';
+  static const String errorOrganizerEnterOwnEvent = 'errorOrganizerEnterOwnEvent';
 
   //General things
   static const String logOutTitle = "logOutTitle";
@@ -162,6 +163,7 @@ mixin Translation{
   static const String manageGallery = "manageGallery";
   static const String items = "items";
   static const String feedbackCollection = "feedbackCollection";
+  static const String deleteCollection = "deleteCollection";
   static const String deleteTaskTitle = 'deleteTaskTitle';
   static const String deleteTaskQuestion = 'deleteTaskQuestion';
   static const String taskTitle = 'taskTitle';
@@ -236,6 +238,7 @@ mixin Translation{
     successEmailMsg: 'Password reset email sent successfully',
     errorEmailMsg: 'Error sending password reset email',
     errorOrganizerNotVerfied: 'The organizer is not being verified yet. Sorry for inconvenience. Any emergency can call our customer support 011-23238869',
+    errorOrganizerEnterOwnEvent: 'As the owner, you are not permitted to fill this form',
 
     //General things
     logOutTitle: 'Log Out',
@@ -323,6 +326,7 @@ mixin Translation{
     manageGallery: 'Gallery',
     items: 'Items',
     feedbackCollection: 'Feedback',
+    deleteCollection: 'Delete',
     teamPlanning: 'Collaboration',
     manageVolunteer: 'Volunteer',
     manageItem: 'Item List',
@@ -401,6 +405,7 @@ mixin Translation{
     successEmailMsg: 'E-mel tetapan semula kata laluan berjaya dihantar',
     errorEmailMsg: 'Ralat menghantar e-mel tetapan semula kata laluan',
     errorOrganizerNotVerfied: 'Penganjur belum disahkan lagi. Maaf atas kesulitan. Sebarang kecemasan boleh hubungi sokongan pelanggan kami 011-23238869',
+    errorOrganizerEnterOwnEvent: 'Sebagai pemilik aktiviti ini, tuan/puan tidak dibenarkan mengisi ruang ini',
 
     //General things
     logOutTitle: 'Log Keluar',
@@ -488,6 +493,7 @@ mixin Translation{
     manageGallery: 'Galeri',
     items: 'Barang',
     feedbackCollection: 'Maklum Balas',
+    deleteCollection: 'Padam',
     teamPlanning: 'Kolaborasi',
     manageVolunteer: 'Sukarelawan',
     manageItem: 'Senarai Barang',

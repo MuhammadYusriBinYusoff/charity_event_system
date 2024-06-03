@@ -65,6 +65,24 @@ class EventDonationProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteDonationDetails(String? donationDetailsId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('moneyDonation')
+          .doc(donationDetailsId)
+          .delete();
+
+      _donationDetailsList.removeWhere((donation) => donation.id == donationDetailsId);
+      if (_donationDetails.id == donationDetailsId) {
+        _donationDetails = EventDonationModel(); 
+      }
+
+      notifyListeners();
+    } catch (error) {
+      print('Error deleting donation details: $error');
+    }
+  }
+
   void resetEventDonation() async {
     _donationDetails = EventDonationModel();
     notifyListeners();
