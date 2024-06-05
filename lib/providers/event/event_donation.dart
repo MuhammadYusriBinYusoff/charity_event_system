@@ -26,6 +26,14 @@ class EventDonationProvider extends ChangeNotifier {
         .collection("moneyDonation")
         .doc(newDonationDetails.id)
         .update(_donationDetails.toJson());
+
+    int index = _donationDetailsList.indexWhere((donation) => donation.id == newDonationDetails.id);
+    if (index != -1) {
+      _donationDetailsList[index] = newDonationDetails;
+    } else {
+      _donationDetailsList.add(newDonationDetails);
+    }
+
     notifyListeners();
   }
 

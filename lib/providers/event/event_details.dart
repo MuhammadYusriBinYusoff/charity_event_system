@@ -48,6 +48,14 @@ class EventDetailsProvider extends ChangeNotifier {
         .collection("eventDetails")
         .doc(newEventDetails.id)
         .update(_eventDetails.toJson());
+
+    int index = _eventDetailsList.indexWhere((event) => event.id == newEventDetails.id);
+    if (index != -1) {
+      _eventDetailsList[index] = newEventDetails;
+    } else {
+      _eventDetailsList.add(newEventDetails);
+    }
+
     notifyListeners();
   }
 

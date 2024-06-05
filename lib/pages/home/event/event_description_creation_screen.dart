@@ -161,7 +161,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const MyHomePage(),
+                                  builder: (context) => const CategoryPage(),
                                 ),
                               );
                             },

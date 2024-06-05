@@ -205,10 +205,7 @@ class _EventDonationManagementPageState
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => MyHomePage(
-                                          title: Translation.splashTitle
-                                              .getString(context),
-                                        )),
+                                    builder: (context) => const CategoryPage()),
                               );
                             },
                             style: ElevatedButton.styleFrom(

@@ -9,11 +9,13 @@ import 'package:flutter_localization/flutter_localization.dart';
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
   final bool? showPreviousButton;
+  final bool? showCustomPreviousButton;
   final bool? hideLogout;
   final Color? appBarcolor;
   final Color? vertMoreColor;
+  final Widget? targetPage;
 
-  const CustomAppBar({Key? key, this.title, this.showPreviousButton, this.hideLogout = false, this.appBarcolor = Palette.purpleMain, this.vertMoreColor = Palette.white})
+  const CustomAppBar({Key? key, this.title, this.showPreviousButton, this.showCustomPreviousButton = false, this.hideLogout = false, this.appBarcolor = Palette.purpleMain, this.vertMoreColor = Palette.white, this.targetPage})
       : super(key: key);
 
   @override
@@ -28,6 +30,17 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: widget.showPreviousButton ?? true,
+      leading: widget.showCustomPreviousButton == true
+      ? IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => widget.targetPage!),
+            );
+          },
+        )
+      : null,
       backgroundColor: widget.appBarcolor,
       title: Center(
         child: Text(

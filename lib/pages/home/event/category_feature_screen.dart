@@ -39,7 +39,7 @@ class CategoryPage extends StatelessWidget {
     final cardWidth = (screenWidth - crossAxisSpacing - padding * 2) / 2;
 
     return Scaffold(
-      appBar: CustomAppBar(title: Translation.myEventTitle.getString(context)),
+      appBar: CustomAppBar(title: Translation.myEventTitle.getString(context), showPreviousButton: false, targetPage: const MyHomePage(), showCustomPreviousButton: true,),
       body: Container(
         padding: EdgeInsets.only(top: Dimens.space16),
         child: GridView.count(
@@ -214,11 +214,10 @@ class CategoryCard extends StatelessWidget {
         child: Container(
           width: cardWidth,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(Dimens.space6),
-              topRight: Radius.circular(Dimens.space6),
-            ),
-            color: Palette.purpleMain.withOpacity(0.3),
+            border: Border.all(
+              width: 2,
+              color: Palette.purpleMain,
+            )
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

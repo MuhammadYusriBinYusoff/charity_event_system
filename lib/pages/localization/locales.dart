@@ -173,6 +173,7 @@ mixin Translation{
   static const String taskStatus = 'taskStatus';
   static const String overallScore = 'overallScore';
   static const String currentScore = 'currentScore';
+  static const String feedbackComment = 'feedbackComment';
   static const String background = 'background';
   static const String backgroundSubtitle = 'backgroundSubtitle';
   static const String backgroundDescription = 'backgroundDescription';
@@ -343,6 +344,7 @@ mixin Translation{
     taskStatus: 'Status',
     overallScore: 'Overall Score',
     currentScore: 'Current Score',
+    feedbackComment: 'Comments',
     background: 'Backgrounds',
     backgroundSubtitle: 'Organization can tell the their background for user to know more about organizer. This is strategy could help organizer to get user engagement better',
     backgroundDescription: 'Background Description',
@@ -514,6 +516,7 @@ mixin Translation{
     taskStatus: 'Status',
     overallScore: 'Skor Terkumpul',
     currentScore: 'Skor Sekarang',
+    feedbackComment: 'Komen',
     background: 'Latar Belakang',
     backgroundSubtitle: 'Penganjur boleh memberitahu latar belakang mereka untuk pengguna mengetahui lebih lanjut tentang penganjur. Strategi ini boleh membantu penganjur untuk mendapatkan penglibatan pengguna dengan lebih baik',
     backgroundDescription: 'Deskripsi Latar Belakang'

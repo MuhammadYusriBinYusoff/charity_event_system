@@ -43,8 +43,10 @@ class _MonitorOrganizerState extends State<MonitorOrganizer> {
   Widget build(BuildContext context) {
     OrganizerProvider organizationUser =
         Provider.of<OrganizerProvider>(context);
-    EventFeedbackProvider eventFeedback =
-        Provider.of<EventFeedbackProvider>(context);
+    // EventFeedbackProvider eventFeedback =
+    //     Provider.of<EventFeedbackProvider>(context);
+    EventHistoryProvider eventHistory =
+        Provider.of<EventHistoryProvider>(context);
 
     final List<String> statusVerified = ['Verified', 'Not Verified'];
 
@@ -63,10 +65,13 @@ class _MonitorOrganizerState extends State<MonitorOrganizer> {
           selectedOrganizer.organizationName ?? '';
 
       // Fetch feedback details and update the state afterwards
-      eventFeedback.resetEventFeedback();
-      await eventFeedback.fetchAllFeedbackDetails(selectedOrganizer.id);
+      // eventFeedback.resetEventFeedback();
+      // await eventFeedback.fetchAllFeedbackDetails(selectedOrganizer.id);
+      eventHistory.resetEventHistory();
+      await eventHistory.fetchAllHistoryDetails(selectedOrganizer.id);
+
       _picCurrentScoreController.text =
-          eventFeedback.getTotalCurrentScore().toString();
+          eventHistory.getTotalCurrentScore().toString();
 
       setState(() {
         _picVerifiedController.text = selectedOrganizer.verify ?? '';
@@ -135,7 +140,7 @@ class _MonitorOrganizerState extends State<MonitorOrganizer> {
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picCurrentScoreController,
-                labelText: "Current Score",
+                labelText: Translation.overallScore.getString(context),
                 readOnly: true,
               ),
               SpacerV(value: Dimens.space16),

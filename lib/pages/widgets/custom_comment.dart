@@ -1,5 +1,7 @@
 import 'package:charity_event_system/common/common.dart';
+import 'package:charity_event_system/pages/pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 class CommentCard extends StatelessWidget {
   final List<String?> comments;
@@ -21,9 +23,9 @@ class CommentCard extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.all(Dimens.space16),
-              child: const Text(
-                'Comments',
-                style: TextStyle(
+              child: Text(
+                Translation.feedbackComment.getString(context),
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),

@@ -48,6 +48,14 @@ class EventOrganizationBackgroundProvider extends ChangeNotifier {
         .collection("eventOrganizationBackground")
         .doc(newEventOrganizationBackground.id)
         .update(_eventOrganizationBackground.toJson());
+
+    int index = _eventOrganizationBackgroundList.indexWhere((background) => background.id == newEventOrganizationBackground.id);
+    if (index != -1) {
+      _eventOrganizationBackgroundList[index] = newEventOrganizationBackground;
+    } else {
+      _eventOrganizationBackgroundList.add(newEventOrganizationBackground);
+    }
+
     notifyListeners();
   }
 

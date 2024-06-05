@@ -33,7 +33,7 @@ class _EventPostingDescriptionPageState
         Provider.of<EventCollaborationProvider>(context);
 
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(showPreviousButton: false, showCustomPreviousButton: true, targetPage: MyHomePage(),),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

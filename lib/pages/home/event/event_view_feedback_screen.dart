@@ -81,7 +81,7 @@ class _EventManageFeedbackPageState extends State<EventManageFeedbackPage> {
                         ],
                       ),
                       SpacerH(
-                        value: Dimens.space32,
+                        value: Dimens.space24,
                       ),
                       Column(
                         children: [

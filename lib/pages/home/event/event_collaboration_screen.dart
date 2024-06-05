@@ -38,7 +38,7 @@ class _EventCollaborationPageState extends State<EventCollaborationPage> {
             ),
             BacklogItemDetailsScreen(selectedOrganizerId: widget.selectedOrganizerId,),
             SpacerV(
-              value: Dimens.space16,
+              value: Dimens.space32,
             ),
             Container(
                 padding: EdgeInsets.all(Dimens.space16),
