@@ -112,6 +112,7 @@ abstract class MenuItems {
   static OrganizerProvider organizationUser = OrganizerProvider();
   static PersonnelProvider personnelUser = PersonnelProvider();
   static EventFeedbackProvider eventFeedback = EventFeedbackProvider();
+  static EventOrganizationBackgroundProvider eventOrganizationBackground = EventOrganizationBackgroundProvider();
 
   static Widget buildItem(MenuItem item) {
     return Row(
@@ -189,6 +190,7 @@ abstract class MenuItems {
                 onPressed: () async {
                   FirebaseAuth.instance.signOut();
                   eventDetailsFile.resetEventDetails();
+                  eventOrganizationBackground.resetEventOrganizationBackground();
                   organizationUser.resetOrganizersDetails();
                   personnelUser.resetPersonnelsDetails();
                   eventFeedback.resetEventFeedback();

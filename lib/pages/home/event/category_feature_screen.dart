@@ -27,6 +27,7 @@ class CategoryPage extends StatelessWidget {
           Images.splashIcon, Translation.manageGallery.getString(context)),
       CategoryItem(
           Images.splashIcon, Translation.feedbackCollection.getString(context)),
+      CategoryItem(Images.splashIcon, Translation.manageLiveProfile.getString(context)),
       CategoryItem(
           Images.splashIcon, Translation.deleteCollection.getString(context)),
     ];
@@ -90,6 +91,8 @@ class CategoryCard extends StatelessWidget {
         Provider.of<EventFeedbackProvider>(context);
     EventHistoryProvider eventHistory =
         Provider.of<EventHistoryProvider>(context);
+    EventOrganizationBackgroundProvider eventOrganizationBackground =
+        Provider.of<EventOrganizationBackgroundProvider>(context);
 
     return Card(
       elevation: 4.0,
@@ -168,7 +171,7 @@ class CategoryCard extends StatelessWidget {
             eventHistory.resetEventHistory();
             await eventFeedback.fetchAllFeedbackDetails(userId);
             int overalTotalScore = 0;
-            if(await eventHistory.fetchAllHistoryDetails(userId)){
+            if (await eventHistory.fetchAllHistoryDetails(userId)) {
               overalTotalScore = eventHistory.getTotalCurrentScore();
             }
             int totalScore = eventFeedback.getTotalCurrentScore();
@@ -178,7 +181,21 @@ class CategoryCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>  EventManageFeedbackPage(totalScore: totalScore, comments: comments, overalTotalScore: overalTotalScore,)),
+                  builder: (context) => EventManageFeedbackPage(
+                        totalScore: totalScore,
+                        comments: comments,
+                        overalTotalScore: overalTotalScore,
+                      )),
+            );
+          } else if (categoryItem.name == Translation.manageLiveProfile.getString(context)) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EventOrganizationBackgroundPage(
+                    imageUrl: eventOrganizationBackground.eventOrganizationBackground.photoEventUrl,
+                    description: eventOrganizationBackground.eventOrganizationBackground.backgroundDescription,
+                    session: "update"),
+              ),
             );
           } else if (categoryItem.name ==
               Translation.deleteCollection.getString(context)) {
@@ -190,8 +207,7 @@ class CategoryCard extends StatelessWidget {
             //ignore: use_build_context_synchronously
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>  const MyHomePage()),
+              MaterialPageRoute(builder: (context) => const MyHomePage()),
             );
           }
         },

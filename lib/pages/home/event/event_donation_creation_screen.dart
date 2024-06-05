@@ -27,7 +27,7 @@ class EventDonationManagementPage extends StatefulWidget {
     this.bankAccount,
     this.photoEventUrl,
     this.session,
-    }) : super(key: key);
+  }) : super(key: key);
 
   @override
   _EventDonationManagementPageState createState() =>
@@ -95,7 +95,10 @@ class _EventDonationManagementPageState
         Provider.of<OrganizerProvider>(context);
     EventDonationProvider eventDonation =
         Provider.of<EventDonationProvider>(context);
-    EventFeedbackProvider eventFeedback = Provider.of<EventFeedbackProvider>(context);
+    EventFeedbackProvider eventFeedback =
+        Provider.of<EventFeedbackProvider>(context);
+    EventOrganizationBackgroundProvider eventOrganizationBackground =
+        Provider.of<EventOrganizationBackgroundProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.lightGrey,
@@ -151,7 +154,8 @@ class _EventDonationManagementPageState
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
                     controller: _bankAccountController,
-                    labelText: Translation.donationBankAccount.getString(context),
+                    labelText:
+                        Translation.donationBankAccount.getString(context),
                   ),
                   SpacerV(value: Dimens.space24),
                   Text(
@@ -170,7 +174,7 @@ class _EventDonationManagementPageState
                     bannerImageUrl: qrImageUrl,
                     onPressed: () async {
                       XFile? file = await pickImage();
-            
+
                       if (file != null) {
                         await uploadImage(file, organizationUser.organizers.id);
                       }
@@ -180,95 +184,108 @@ class _EventDonationManagementPageState
                   SizedBox(
                     width: double.infinity,
                     height: Dimens.space40,
-                    child: widget.session == "update" 
-                    ?ElevatedButton(
-                      onPressed: () async {
-                        final userUID = organizationUser.organizers.id;
-                        final newDonation = EventDonationModel(
-                          id: userUID,
-                          targetMoney: double.parse(_targetMoneyController.text),
-                          currentCollected: double.parse(_currentCollectedController.text),
-                          startDate: _startDateController.text,
-                          endDate: _endDateController.text,
-                          bankAccount: _bankAccountController.text,
-                          photoEventUrl: qrImageUrl,
-                        );
-            
-                        eventDonation.updateDonationDetails(newDonation);
-            
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MyHomePage(
-                              title:
-                                Translation.splashTitle.getString(context),
-                            )
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Palette.purpleMain,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Dimens.space8),
-                        ),
-                      ),
-                      child: Text(
-                        Translation.save.getString(context),
-                        style: const TextStyle(
-                            color: Palette.white),
-                      ),
-                    )
-                    :ElevatedButton(
-                      onPressed: () async {
-                        final userUID = organizationUser.organizers.id;
-                        final newDonation = EventDonationModel(
-                          id: userUID,
-                          targetMoney: double.parse(_targetMoneyController.text),
-                          currentCollected: double.parse(_currentCollectedController.text),
-                          startDate: _startDateController.text,
-                          endDate: _endDateController.text,
-                          bankAccount: _bankAccountController.text,
-                          photoEventUrl: qrImageUrl,
-                        );
+                    child: widget.session == "update"
+                        ? ElevatedButton(
+                            onPressed: () async {
+                              final userUID = organizationUser.organizers.id;
+                              final newDonation = EventDonationModel(
+                                id: userUID,
+                                targetMoney:
+                                    double.parse(_targetMoneyController.text),
+                                currentCollected: double.parse(
+                                    _currentCollectedController.text),
+                                startDate: _startDateController.text,
+                                endDate: _endDateController.text,
+                                bankAccount: _bankAccountController.text,
+                                photoEventUrl: qrImageUrl,
+                              );
 
-                        //Just to initiliazr value for feedback
-                        final newFeedback = EventFeedbackModel(
-                          id: userUID,
-                          responsibilityScore: 0,
-                          updateGalleryScore: 0,
-                          informationUptoDateScore: 0,
-                          recommendationScore: 0,
-                          currentScoreCollected: 0,
-                          comment: "",
-                        );
-            
-                        await eventDonation.createDonationDetails(newDonation);
-                        await eventFeedback.createFeedbackDetails(newFeedback);
-            
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MyHomePage(
-                              title:
-                                Translation.splashTitle.getString(context),
-                            )
+                              eventDonation.updateDonationDetails(newDonation);
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyHomePage(
+                                          title: Translation.splashTitle
+                                              .getString(context),
+                                        )),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Palette.purpleMain,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.space8),
+                              ),
+                            ),
+                            child: Text(
+                              Translation.save.getString(context),
+                              style: const TextStyle(color: Palette.white),
+                            ),
+                          )
+                        : ElevatedButton(   
+                            onPressed: () async {
+                              final userUID = organizationUser.organizers.id;
+                              final newDonation = EventDonationModel(
+                                id: userUID,
+                                targetMoney:
+                                    double.parse(_targetMoneyController.text),
+                                currentCollected: double.parse(
+                                    _currentCollectedController.text),
+                                startDate: _startDateController.text,
+                                endDate: _endDateController.text,
+                                bankAccount: _bankAccountController.text,
+                                photoEventUrl: qrImageUrl,
+                              );
+
+                              //Just to initiliazr value for feedback
+                              final newFeedback = EventFeedbackModel(
+                                id: userUID,
+                                responsibilityScore: 0,
+                                updateGalleryScore: 0,
+                                informationUptoDateScore: 0,
+                                recommendationScore: 0,
+                                currentScoreCollected: 0,
+                                comment: "",
+                              );
+
+                              final newEventBackground = EventOrganizationBackgroundModel(
+                                id: userUID,
+                                backgroundDescription:
+                                    "No contents",
+                                photoEventUrl: 'https://www.caspianpolicy.org/no-image.png',
+                              );
+
+                              await eventDonation
+                                  .createDonationDetails(newDonation);
+                              await eventFeedback
+                                  .createFeedbackDetails(newFeedback);
+                              await eventOrganizationBackground
+                                  .createEventOrganizationBackground(newEventBackground);
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyHomePage(
+                                          title: Translation.splashTitle
+                                              .getString(context),
+                                        )),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Palette.purpleMain,
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.space8),
+                              ),
+                            ),
+                            child: Text(
+                              Translation.next.getString(context),
+                              style: const TextStyle(color: Palette.white),
+                            ),
                           ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Palette.purpleMain,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(Dimens.space8),
-                        ),
-                      ),
-                      child: Text(
-                        Translation.next.getString(context),
-                        style: const TextStyle(
-                            color: Palette.white),
-                      ),
-                    ),
                   ),
                 ],
               ),

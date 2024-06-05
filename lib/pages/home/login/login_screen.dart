@@ -39,6 +39,8 @@ class _LoginPageState extends State<LoginPage> {
         Provider.of<EventCollaborationProvider>(context);
     EventFeedbackProvider eventFeedback =
         Provider.of<EventFeedbackProvider>(context);
+    EventOrganizationBackgroundProvider eventOrganizationBackground =
+        Provider.of<EventOrganizationBackgroundProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -113,6 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         } else {
                           eventDetailsFile.resetEventDetails();
+                          eventOrganizationBackground.resetEventOrganizationBackground();
                           organizationUser.resetOrganizersDetails();
                           personnelUser.resetPersonnelsDetails();                          
                           await organizationUser.fetchOrganizerData();
@@ -127,6 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                             await organizationUser.fetchAllOrganizers();
                             await personnelUser.fetchPersonnelData();
                             await eventDetailsFile.fetchEventDetailsData();
+                            await eventOrganizationBackground.fetchEventOrganizationBackgroundData();
                             await eventDonationsFile.fetchEventDonationData();
                             await eventGalleryFile.fetchEventGalleryData();
                             await eventVolunteerFile.fetchEventVolunteerData();
@@ -134,6 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                             await eventCollaboration
                                 .fetchEventCollaborationData(null);
                             await eventDetailsFile.fetchAllEventDetails();
+                            await eventOrganizationBackground.fetchAllEventOrganizationBackground();
                             await eventDonationsFile.fetchAllDonationDetails();
                             await eventGalleryFile.fetchAllEventGallery();
 

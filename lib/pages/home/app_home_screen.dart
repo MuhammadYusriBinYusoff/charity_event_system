@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   Positioned(
                     left: MediaQuery.of(context).size.width *
-                        0.23, // Centers the container horizontally
+                        0.21, // Centers the container horizontally
                     top: (MediaQuery.of(context).size.height * 0.15 ), // Centers the container vertically based on a height of 100
                     child: Container(
                       padding: EdgeInsets.all(Dimens.space8),

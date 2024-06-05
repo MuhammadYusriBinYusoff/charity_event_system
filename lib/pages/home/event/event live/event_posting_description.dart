@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:charity_event_system/common/common.dart';
-import 'package:charity_event_system/pages/home/event/event%20live/event_feedback_form_screen.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -84,7 +83,7 @@ class _EventPostingDescriptionPageState
                           value: Dimens.space8,
                         ),
                         Text(
-                          Translation.donationCurrent.getString(context),
+                          Translation.currentCollect.getString(context),
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -128,7 +127,9 @@ class _EventPostingDescriptionPageState
                                 builder: (context) => ErrorAlertDialog(
                                   title:
                                       Translation.errorTitle.getString(context),
-                                  content: Translation.errorOrganizerEnterOwnEvent.getString(context),
+                                  content: Translation
+                                      .errorOrganizerEnterOwnEvent
+                                      .getString(context),
                                 ),
                               );
                             } else {
@@ -277,10 +278,17 @@ class _EventPostingDescriptionPageState
                       CircleIcon(
                           icon: Icons.add_location,
                           onTap: () async {
-                            //Later untuk company profile use
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EventLiveBackgroundPage(
+                                  index: widget.index,
+                                ),
+                              ),
+                            );
                           }),
-                      const Text(
-                        "Profile",
+                      Text(
+                        Translation.manageLiveProfile.getString(context),
                         style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.bold,

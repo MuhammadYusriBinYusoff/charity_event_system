@@ -88,7 +88,7 @@ class _UserFeedbackScoreState extends State<UserFeedbackScore> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SpacerV(
-                  value: Dimens.space150,
+                  value: Dimens.space200,
                 ),
                 CustomStatisticCard(
                   removeBackground: true,
@@ -97,6 +97,17 @@ class _UserFeedbackScoreState extends State<UserFeedbackScore> {
                   centerTextStyle: centerTextStyle,
                   statisticText: Translation.overallScore.getString(context),
                 ),
+                SpacerV(
+                  value: Dimens.space20,
+                ),
+                Text(
+                  ceoComment,
+                  style: const TextStyle(
+                      fontSize: 12,
+                      color: Palette.greyDark,
+                      fontStyle: FontStyle.italic),
+                  textAlign: TextAlign.center,
+                )
               ],
             ),
           ),
@@ -119,12 +130,6 @@ class _UserFeedbackScoreState extends State<UserFeedbackScore> {
                     Text(
                       subtitle,
                       style: const TextStyle(fontSize: 16),
-                      textAlign: TextAlign.center,
-                    ),
-                    if(widget.isOrganizer != true)
-                    Text(
-                      ceoComment,
-                      style: const TextStyle(fontSize: 12, color: Palette.greyDark, fontStyle: FontStyle.italic),
                       textAlign: TextAlign.center,
                     ),
                   ],

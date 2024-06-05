@@ -161,6 +161,7 @@ mixin Translation{
   static const String manageVolunteer = "manageVolunteer";
   static const String teamPlanning = "teamPlanning";
   static const String manageGallery = "manageGallery";
+  static const String manageLiveProfile = "manageLiveProfile";
   static const String items = "items";
   static const String feedbackCollection = "feedbackCollection";
   static const String deleteCollection = "deleteCollection";
@@ -172,6 +173,9 @@ mixin Translation{
   static const String taskStatus = 'taskStatus';
   static const String overallScore = 'overallScore';
   static const String currentScore = 'currentScore';
+  static const String background = 'background';
+  static const String backgroundSubtitle = 'backgroundSubtitle';
+  static const String backgroundDescription = 'backgroundDescription';
   
 
   static const Map<String,dynamic> EN = {
@@ -324,6 +328,7 @@ mixin Translation{
     manageDesciption: 'My Event',
     manageDonation: 'Donation',
     manageGallery: 'Gallery',
+    manageLiveProfile: 'Profile',
     items: 'Items',
     feedbackCollection: 'Feedback',
     deleteCollection: 'Delete',
@@ -338,6 +343,9 @@ mixin Translation{
     taskStatus: 'Status',
     overallScore: 'Overall Score',
     currentScore: 'Current Score',
+    background: 'Backgrounds',
+    backgroundSubtitle: 'Organization can tell the their background for user to know more about organizer. This is strategy could help organizer to get user engagement better',
+    backgroundDescription: 'Background Description',
 
   };
 
@@ -491,6 +499,7 @@ mixin Translation{
     manageDesciption: 'Event Saya',
     manageDonation: 'Sumbangan',
     manageGallery: 'Galeri',
+    manageLiveProfile: 'Profil',
     items: 'Barang',
     feedbackCollection: 'Maklum Balas',
     deleteCollection: 'Padam',
@@ -505,6 +514,9 @@ mixin Translation{
     taskStatus: 'Status',
     overallScore: 'Skor Terkumpul',
     currentScore: 'Skor Sekarang',
+    background: 'Latar Belakang',
+    backgroundSubtitle: 'Penganjur boleh memberitahu latar belakang mereka untuk pengguna mengetahui lebih lanjut tentang penganjur. Strategi ini boleh membantu penganjur untuk mendapatkan penglibatan pengguna dengan lebih baik',
+    backgroundDescription: 'Deskripsi Latar Belakang'
 
   };
 }
