@@ -139,6 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
+                  if (organizationUser.organizers.id != null) 
                   Positioned(
                     left: MediaQuery.of(context).size.width *
                         0.21, // Centers the container horizontally
