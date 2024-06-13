@@ -14,6 +14,7 @@ class EventDescriptionPage extends StatefulWidget {
   final String? title;
   final String? description;
   final String? session;
+  final String? groupLink;
 
   const EventDescriptionPage({
     Key? key,
@@ -21,6 +22,7 @@ class EventDescriptionPage extends StatefulWidget {
     this.title,
     this.description,
     this.session,
+    this.groupLink,
   }) : super(key: key);
 
   @override
@@ -32,6 +34,8 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
       TextEditingController();
   final TextEditingController _charityEventDescriptionController =
       TextEditingController();
+  final TextEditingController _charityEventGroupLinkController =
+      TextEditingController();
 
   String? bannerImageUrl;
   bool isLoading = false;
@@ -42,6 +46,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
     _charityEventTitleController.text = widget.title ?? "";
     _charityEventDescriptionController.text = widget.description ?? "";
     bannerImageUrl = widget.imageUrl ?? "";
+    _charityEventGroupLinkController.text = widget.groupLink ?? "";
   }
 
   Future<XFile?> pickImage() async {
@@ -141,6 +146,12 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                     multiLine: true,
                   ),
                   SpacerV(value: Dimens.space24),
+                  CustomTextField(
+                    controller: _charityEventGroupLinkController,
+                    labelText: "Group Link",
+                    multiLine: true,
+                  ),
+                  SpacerV(value: Dimens.space24),
                   SizedBox(
                     width: double.infinity,
                     height: Dimens.space40,
@@ -155,6 +166,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                                     _charityEventDescriptionController.text,
                                 type: "organizer",
                                 photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
+                                groupLinkUrl: _charityEventGroupLinkController.text,
                               );
                               eventDetailsFile.updateEventDetails(newEvent);
 
@@ -192,6 +204,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                                       _charityEventDescriptionController.text,
                                   type: "organizer",
                                   photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
+                                  groupLinkUrl: _charityEventGroupLinkController.text,
                                 );
 
                                 await eventDetailsFile.createEventDetails(newEvent);

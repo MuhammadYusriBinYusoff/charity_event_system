@@ -14,8 +14,18 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Color? appBarcolor;
   final Color? vertMoreColor;
   final Widget? targetPage;
+  final Color? colorCustomPreviousButton;
 
-  const CustomAppBar({Key? key, this.title, this.showPreviousButton, this.showCustomPreviousButton = false, this.hideLogout = false, this.appBarcolor = Palette.purpleMain, this.vertMoreColor = Palette.white, this.targetPage})
+  const CustomAppBar(
+      {Key? key,
+      this.title,
+      this.showPreviousButton,
+      this.showCustomPreviousButton = false,
+      this.hideLogout = false,
+      this.appBarcolor = Palette.purpleMain,
+      this.vertMoreColor = Palette.white,
+      this.targetPage,
+      this.colorCustomPreviousButton = Palette.white})
       : super(key: key);
 
   @override
@@ -31,16 +41,17 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return AppBar(
       automaticallyImplyLeading: widget.showPreviousButton ?? true,
       leading: widget.showCustomPreviousButton == true
-      ? IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => widget.targetPage!),
-            );
-          },
-        )
-      : null,
+          ? IconButton(
+              icon: Icon(Icons.arrow_back,
+                  color: widget.colorCustomPreviousButton),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => widget.targetPage!),
+                );
+              },
+            )
+          : null,
       backgroundColor: widget.appBarcolor,
       title: Center(
         child: Text(
@@ -48,59 +59,61 @@ class _CustomAppBarState extends State<CustomAppBar> {
           style: const TextStyle(color: Palette.white, fontSize: 18),
         ),
       ),
-      actions: widget.hideLogout == false ? [
-        DropdownButtonHideUnderline(
-          child: DropdownButton2(
-            customButton: Icon(
-              Icons.more_vert,
-              size: 28,
-              color: widget.vertMoreColor,
-            ),
-            items: [
-              ...MenuItems.firstItems.map(
-                (item) => DropdownMenuItem<MenuItem>(
-                  value: item,
-                  child: MenuItems.buildItem(item),
+      actions: widget.hideLogout == false
+          ? [
+              DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  customButton: Icon(
+                    Icons.more_vert,
+                    size: 28,
+                    color: widget.vertMoreColor,
+                  ),
+                  items: [
+                    ...MenuItems.firstItems.map(
+                      (item) => DropdownMenuItem<MenuItem>(
+                        value: item,
+                        child: MenuItems.buildItem(item),
+                      ),
+                    ),
+                    const DropdownMenuItem<Divider>(
+                        enabled: false, child: Divider()),
+                    ...MenuItems.secondItems.map(
+                      (item) => DropdownMenuItem<MenuItem>(
+                        value: item,
+                        child: MenuItems.buildItem(item),
+                      ),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    MenuItems.onChanged(context, value! as MenuItem);
+                  },
+                  dropdownStyleData: DropdownStyleData(
+                    width: 135,
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      color: Palette.purpleMain,
+                    ),
+                    offset: const Offset(0, 8),
+                  ),
+                  menuItemStyleData: MenuItemStyleData(
+                    customHeights: [
+                      ...List<double>.filled(MenuItems.firstItems.length, 30),
+                      8,
+                      ...List<double>.filled(MenuItems.secondItems.length, 30),
+                    ],
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                  ),
                 ),
               ),
-              const DropdownMenuItem<Divider>(enabled: false, child: Divider()),
-              ...MenuItems.secondItems.map(
-                (item) => DropdownMenuItem<MenuItem>(
-                  value: item,
-                  child: MenuItems.buildItem(item),
-                ),
+              SpacerH(
+                value: Dimens.space10,
               ),
-            ],
-            onChanged: (value) {
-              MenuItems.onChanged(context, value! as MenuItem);
-            },
-            dropdownStyleData: DropdownStyleData(
-              width: 135,
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: Palette.purpleMain,
-              ),
-              offset: const Offset(0, 8),
-            ),
-            menuItemStyleData: MenuItemStyleData(
-              customHeights: [
-                ...List<double>.filled(MenuItems.firstItems.length, 30),
-                8,
-                ...List<double>.filled(MenuItems.secondItems.length, 30),
-              ],
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-            ),
-          ),
-        ),
-        SpacerH(
-          value: Dimens.space10,
-        ),
-      ] : null,
+            ]
+          : null,
     );
   }
 }
-
 
 class MenuItem {
   const MenuItem({
@@ -125,7 +138,8 @@ abstract class MenuItems {
   static OrganizerProvider organizationUser = OrganizerProvider();
   static PersonnelProvider personnelUser = PersonnelProvider();
   static EventFeedbackProvider eventFeedback = EventFeedbackProvider();
-  static EventOrganizationBackgroundProvider eventOrganizationBackground = EventOrganizationBackgroundProvider();
+  static EventOrganizationBackgroundProvider eventOrganizationBackground =
+      EventOrganizationBackgroundProvider();
 
   static Widget buildItem(MenuItem item) {
     return Row(
@@ -203,7 +217,8 @@ abstract class MenuItems {
                 onPressed: () async {
                   FirebaseAuth.instance.signOut();
                   eventDetailsFile.resetEventDetails();
-                  eventOrganizationBackground.resetEventOrganizationBackground();
+                  eventOrganizationBackground
+                      .resetEventOrganizationBackground();
                   organizationUser.resetOrganizersDetails();
                   personnelUser.resetPersonnelsDetails();
                   eventFeedback.resetEventFeedback();

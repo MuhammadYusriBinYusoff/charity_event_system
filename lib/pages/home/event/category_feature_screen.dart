@@ -129,6 +129,7 @@ class CategoryCard extends StatelessWidget {
                     imageUrl: eventDetailsFile.eventDetails.photoEventUrl,
                     title: eventDetailsFile.eventDetails.eventName,
                     description: eventDetailsFile.eventDetails.eventDescription,
+                    groupLink: eventDetailsFile.eventDetails.groupLinkUrl,
                     session: "update"),
               ),
             );

@@ -6,6 +6,7 @@ class EventDetailsModel {
   final String? eventDescription;
   final String? type;
   final String? photoEventUrl;
+  final String? groupLinkUrl;
 
   EventDetailsModel({
     this.id,
@@ -13,6 +14,7 @@ class EventDetailsModel {
     this.eventDescription,
     this.type,
     this.photoEventUrl,
+    this.groupLinkUrl,
   });
 
   static EventDetailsModel fromSnapshot(
@@ -23,6 +25,7 @@ class EventDetailsModel {
       eventDescription: snapshot['eventDescription'],
       type: snapshot['type'],
       photoEventUrl: snapshot['photoEventUrl'],
+      groupLinkUrl: snapshot['groupLinkUrl'],
     );
   }
 
@@ -33,6 +36,7 @@ class EventDetailsModel {
       "eventDescription": eventDescription,
       "type": type,
       "photoEventUrl": photoEventUrl,
+      "groupLinkUrl": groupLinkUrl,
     };
   }
 }
