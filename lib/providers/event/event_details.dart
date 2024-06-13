@@ -48,6 +48,14 @@ class EventDetailsProvider extends ChangeNotifier {
         .collection("eventDetails")
         .doc(newEventDetails.id)
         .update(_eventDetails.toJson());
+
+    int index = _eventDetailsList.indexWhere((event) => event.id == newEventDetails.id);
+    if (index != -1) {
+      _eventDetailsList[index] = newEventDetails;
+    } else {
+      _eventDetailsList.add(newEventDetails);
+    }
+
     notifyListeners();
   }
 
@@ -63,6 +71,24 @@ class EventDetailsProvider extends ChangeNotifier {
 
     } catch (error) {
       print('Error fetching event details List: $error');
+    }
+  }
+
+  Future<void> deleteEventDetails(String? eventDetailsId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('eventDetails')
+          .doc(eventDetailsId)
+          .delete();
+
+      _eventDetailsList.removeWhere((event) => event.id == eventDetailsId);
+      if (_eventDetails.id == eventDetailsId) {
+        _eventDetails = EventDetailsModel(); 
+      }
+
+      notifyListeners();
+    } catch (error) {
+      print('Error deleting event details: $error');
     }
   }
 

@@ -5,3 +5,5 @@ export 'event_gallery.dart';
 export 'event_volunteer.dart';
 export 'event_feedback.dart';
 export 'event_collaboration.dart';
+export 'event_history.dart';
+export 'event_organization_backgrounds.dart';

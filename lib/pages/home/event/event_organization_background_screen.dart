@@ -9,28 +9,24 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class EventDescriptionPage extends StatefulWidget {
+class EventOrganizationBackgroundPage extends StatefulWidget {
   final String? imageUrl;
-  final String? title;
   final String? description;
   final String? session;
 
-  const EventDescriptionPage({
+  const EventOrganizationBackgroundPage({
     Key? key,
     this.imageUrl,
-    this.title,
     this.description,
     this.session,
   }) : super(key: key);
 
   @override
-  _EventDescriptionPageState createState() => _EventDescriptionPageState();
+  _EventOrganizationBackgroundPageState createState() => _EventOrganizationBackgroundPageState();
 }
 
-class _EventDescriptionPageState extends State<EventDescriptionPage> {
-  final TextEditingController _charityEventTitleController =
-      TextEditingController();
-  final TextEditingController _charityEventDescriptionController =
+class _EventOrganizationBackgroundPageState extends State<EventOrganizationBackgroundPage> {
+  final TextEditingController _organizationBackgroundDescriptionController =
       TextEditingController();
 
   String? bannerImageUrl;
@@ -39,8 +35,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
   @override
   void initState() {
     super.initState();
-    _charityEventTitleController.text = widget.title ?? "";
-    _charityEventDescriptionController.text = widget.description ?? "";
+   _organizationBackgroundDescriptionController.text = widget.description ?? "";
     bannerImageUrl = widget.imageUrl ?? "";
   }
 
@@ -55,7 +50,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
   Future<void> uploadImage(XFile file, String? userId) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages =
-        referenceRoot.child('eventMainBanner').child(userId ?? '');
+        referenceRoot.child('eventOrganizationBackground').child(userId ?? '');
     Reference referenceImageToUpload = referenceDirImages.child(file.name);
 
     try {
@@ -82,6 +77,8 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
         Provider.of<OrganizerProvider>(context);
     EventDetailsProvider eventDetailsFile =
         Provider.of<EventDetailsProvider>(context);
+    EventOrganizationBackgroundProvider eventOrganizationBackground =
+        Provider.of<EventOrganizationBackgroundProvider>(context);
 
     return Scaffold(
       backgroundColor: Palette.lightGrey,
@@ -102,14 +99,14 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    Translation.eventInfoTitle.getString(context),
-                    style: const TextStyle(
+                    Translation.background.getString(context),
+                    style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    Translation.eventInfoSub.getString(context),
+                    Translation.backgroundSubtitle.getString(context),
                     style: const TextStyle(
                       fontSize: 14,
                     ),
@@ -131,14 +128,9 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
-                    controller: _charityEventTitleController,
-                    labelText: Translation.eventTitle.getString(context),
-                  ),
-                  SpacerV(value: Dimens.space24),
-                  CustomTextField(
-                    controller: _charityEventDescriptionController,
-                    labelText: Translation.eventDescription.getString(context),
                     multiLine: true,
+                    controller: _organizationBackgroundDescriptionController,
+                    labelText: Translation.backgroundDescription.getString(context),
                   ),
                   SpacerV(value: Dimens.space24),
                   SizedBox(
@@ -148,15 +140,12 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                         ? ElevatedButton(
                             onPressed: () async {
                               final userUID = organizationUser.organizers.id;
-                              final newEvent = EventDetailsModel(
+                              final newEvent = EventOrganizationBackgroundModel(
                                 id: userUID,
-                                eventName: _charityEventTitleController.text,
-                                eventDescription:
-                                    _charityEventDescriptionController.text,
-                                type: "organizer",
+                                backgroundDescription: _organizationBackgroundDescriptionController.text,
                                 photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
                               );
-                              eventDetailsFile.updateEventDetails(newEvent);
+                              eventOrganizationBackground.updateEventOrganizationBackground(newEvent);
 
                               Navigator.push(
                                 context,
@@ -180,21 +169,16 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                           )
                         : ElevatedButton(
                             onPressed: () async {
-                              if (_charityEventTitleController
-                                      .text.isNotEmpty &&
-                                  _charityEventDescriptionController
+                              if (_organizationBackgroundDescriptionController
                                       .text.isNotEmpty) {
                                 final userUID = organizationUser.organizers.id;
-                                final newEvent = EventDetailsModel(
+                                final newEvent = EventOrganizationBackgroundModel(
                                   id: userUID,
-                                  eventName: _charityEventTitleController.text,
-                                  eventDescription:
-                                      _charityEventDescriptionController.text,
-                                  type: "organizer",
+                                  backgroundDescription: _organizationBackgroundDescriptionController.text,
                                   photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
                                 );
 
-                                await eventDetailsFile.createEventDetails(newEvent);
+                                await eventOrganizationBackground.createEventOrganizationBackground(newEvent);
 
                                 Navigator.push(
                                   context,
@@ -240,8 +224,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
 
   @override
   void dispose() {
-    _charityEventTitleController.dispose();
-    _charityEventDescriptionController.dispose();
+    _organizationBackgroundDescriptionController.dispose();
     super.dispose();
   }
 }

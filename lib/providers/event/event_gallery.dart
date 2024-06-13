@@ -25,6 +25,14 @@ class EventGalleryProvider extends ChangeNotifier {
         .collection("eventGallery")
         .doc(newEventGallery.id)
         .update(_eventGallery.toJson());
+
+    int index = _eventGalleryList.indexWhere((gallery) => gallery.id == newEventGallery.id);
+    if (index != -1) {
+      _eventGalleryList[index] = newEventGallery;
+    } else {
+      _eventGalleryList.add(newEventGallery);
+    }
+
     notifyListeners();
   }
 

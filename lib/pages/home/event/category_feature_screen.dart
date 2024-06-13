@@ -27,6 +27,9 @@ class CategoryPage extends StatelessWidget {
           Images.splashIcon, Translation.manageGallery.getString(context)),
       CategoryItem(
           Images.splashIcon, Translation.feedbackCollection.getString(context)),
+      CategoryItem(Images.splashIcon, Translation.manageLiveProfile.getString(context)),
+      CategoryItem(
+          Images.splashIcon, Translation.deleteCollection.getString(context)),
     ];
 
     final screenWidth = MediaQuery.of(context).size.width;
@@ -36,7 +39,7 @@ class CategoryPage extends StatelessWidget {
     final cardWidth = (screenWidth - crossAxisSpacing - padding * 2) / 2;
 
     return Scaffold(
-      appBar: CustomAppBar(title: Translation.myEventTitle.getString(context)),
+      appBar: CustomAppBar(title: Translation.myEventTitle.getString(context), showPreviousButton: false, targetPage: const MyHomePage(), showCustomPreviousButton: true,),
       body: Container(
         padding: EdgeInsets.only(top: Dimens.space16),
         child: GridView.count(
@@ -86,6 +89,10 @@ class CategoryCard extends StatelessWidget {
         Provider.of<EventVolunteerProvider>(context);
     EventFeedbackProvider eventFeedback =
         Provider.of<EventFeedbackProvider>(context);
+    EventHistoryProvider eventHistory =
+        Provider.of<EventHistoryProvider>(context);
+    EventOrganizationBackgroundProvider eventOrganizationBackground =
+        Provider.of<EventOrganizationBackgroundProvider>(context);
 
     return Card(
       elevation: 4.0,
@@ -161,7 +168,12 @@ class CategoryCard extends StatelessWidget {
             User? user = FirebaseAuth.instance.currentUser;
             String? userId = user?.uid;
             eventFeedback.resetEventFeedback();
+            eventHistory.resetEventHistory();
             await eventFeedback.fetchAllFeedbackDetails(userId);
+            int overalTotalScore = 0;
+            if (await eventHistory.fetchAllHistoryDetails(userId)) {
+              overalTotalScore = eventHistory.getTotalCurrentScore();
+            }
             int totalScore = eventFeedback.getTotalCurrentScore();
             List<String?> comments = eventFeedback.getComments();
 
@@ -169,18 +181,43 @@ class CategoryCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>  EventManageFeedbackPage(totalScore: totalScore, comments: comments,)),
+                  builder: (context) => EventManageFeedbackPage(
+                        totalScore: totalScore,
+                        comments: comments,
+                        overalTotalScore: overalTotalScore,
+                      )),
+            );
+          } else if (categoryItem.name == Translation.manageLiveProfile.getString(context)) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EventOrganizationBackgroundPage(
+                    imageUrl: eventOrganizationBackground.eventOrganizationBackground.photoEventUrl,
+                    description: eventOrganizationBackground.eventOrganizationBackground.backgroundDescription,
+                    session: "update"),
+              ),
+            );
+          } else if (categoryItem.name ==
+              Translation.deleteCollection.getString(context)) {
+            User? user = FirebaseAuth.instance.currentUser;
+            String? userId = user?.uid;
+            await eventDetailsFile.deleteEventDetails(userId);
+            await eventDonationsFile.deleteDonationDetails(userId);
+            await eventFeedback.deleteFeedbackDetails(userId);
+            //ignore: use_build_context_synchronously
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const MyHomePage()),
             );
           }
         },
         child: Container(
           width: cardWidth,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(Dimens.space6),
-              topRight: Radius.circular(Dimens.space6),
-            ),
-            color: Palette.purpleMain.withOpacity(0.3),
+            border: Border.all(
+              width: 2,
+              color: Palette.purpleMain,
+            )
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

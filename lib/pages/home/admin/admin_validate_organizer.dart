@@ -57,7 +57,15 @@ class _ValidateOrganizerState extends State<ValidateOrganizer> {
                     );
                   },
                   child: Card(
-                    elevation: 3,
+                    elevation: 1,
+                    color: Palette.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: const BorderSide(
+                        color: Palette.black,
+                        width: 0.5,
+                      ),
+                    ),
                     child: ListTile(
                       leading: CircleAvatar(
                         radius: Dimens.space32,
@@ -118,13 +126,28 @@ Widget _buildDetailText(BuildContext context, String label, String value) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text(
-        '$label: $value',
-        style: const TextStyle(
-          fontSize: 13,
+      Text.rich(
+        TextSpan(
+          children: [
+            TextSpan(
+              text: '$label: ',
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            TextSpan(
+              text: value,
+              style: const TextStyle(
+                fontSize: 12,
+                color: Palette.black,
+              ),
+            ),
+          ],
         ),
       ),
-      SpacerV(value: Dimens.space4),
+      //const SizedBox(height: 4),
     ],
   );
 }
+

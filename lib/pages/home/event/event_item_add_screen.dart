@@ -127,7 +127,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                       children: [
                         const Expanded(
                           child: Divider(
-                            color: Palette.grey,
+                            color: Palette.greyDark,
                             thickness: 1.5,
                           ),
                         ),
@@ -143,7 +143,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                         ),
                         const Expanded(
                           child: Divider(
-                            color: Palette.grey,
+                            color: Palette.greyDark,
                             thickness: 1.5,
                           ),
                         ),
@@ -184,7 +184,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                       children: [
                         const Expanded(
                           child: Divider(
-                            color: Palette.grey,
+                            color: Palette.greyDark,
                             thickness: 1.5,
                           ),
                         ),
@@ -201,7 +201,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                         ),
                         const Expanded(
                           child: Divider(
-                            color: Palette.grey,
+                            color: Palette.greyDark,
                             thickness: 1.5,
                           ),
                         ),

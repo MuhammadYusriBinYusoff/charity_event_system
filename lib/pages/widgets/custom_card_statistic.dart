@@ -7,51 +7,101 @@ class CustomStatisticCard extends StatelessWidget {
   final ValueNotifier<double> valueNotifier;
   final TextStyle centerTextStyle;
   final String statisticText;
+  final double? size;
+  final bool? removeBackground;
+  final bool? adjustBackgroundCircle;
+  final double? backStrock;
+  final double? progressStrock;
 
   const CustomStatisticCard({
     Key? key,
     required this.valueNotifier,
     required this.centerTextStyle,
     required this.statisticText,
+    this.size = 100,
+    this.removeBackground = false,
+    this.adjustBackgroundCircle = false,
+    this.backStrock = 25,
+    this.progressStrock = 25,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Dimens.space10),
-      ),
-      child: Padding(
+    if (removeBackground ?? true) {
+      return Padding(
         padding: EdgeInsets.all(Dimens.space16),
-        child: Column(
-          children: [
-            SimpleCircularProgressBar(
-              valueNotifier: valueNotifier,
-              animationDuration: 4,
-              mergeMode: true,
-              onGetText: (value) {
-                return Text(
-                  '${value.toInt()}%',
-                  style: centerTextStyle,
-                );
-              },
-              progressColors: const [
-                Palette.redIndicator,
-                Palette.greenIndicator
-              ],
-              backColor: Colors.black.withOpacity(0.4),
+        child: Container(
+          height: adjustBackgroundCircle == true ? 60 : null,
+          width: adjustBackgroundCircle == true ? 60 : null,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Palette.white,
+            border: Border.all(
+              color: Palette.purpleMain,
+              width: 3,
             ),
-            SpacerV(
-              value: Dimens.space16,
-            ),
-            Text(
-              statisticText,
-              style: const TextStyle(fontSize: 14),
-            ),
-          ],
+          ),
+          child: SimpleCircularProgressBar(
+            size: size ?? 100,
+            backStrokeWidth: backStrock ?? 0,
+            progressStrokeWidth: backStrock ?? 0,
+            valueNotifier: valueNotifier,
+            animationDuration: 4,
+            mergeMode: true,
+            onGetText: (value) {
+              return Text(
+                '${value.toInt()}%',
+                style: centerTextStyle,
+              );
+            },
+            progressColors: const [
+              Palette.redWarning,
+              Palette.yellowMark,
+              Palette.greenIndicator
+            ],
+            backColor: Palette.greyIndicator,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(Dimens.space10),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(Dimens.space16),
+          child: Column(
+            children: [
+              SimpleCircularProgressBar(
+                size: size ?? 100,
+                valueNotifier: valueNotifier,
+                animationDuration: 4,
+                mergeMode: true,
+                onGetText: (value) {
+                  return Text(
+                    '${value.toInt()}%',
+                    style: centerTextStyle,
+                  );
+                },
+                progressColors: const [
+                  Palette.redWarning,
+                  Palette.yellowMark,
+                  Palette.greenIndicator
+                ],
+                backColor: Colors.black.withOpacity(0.4),
+              ),
+              SpacerV(
+                value: Dimens.space16,
+              ),
+              Text(
+                statisticText,
+                style: const TextStyle(fontSize: 14),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
   }
 }

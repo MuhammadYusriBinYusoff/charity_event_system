@@ -37,6 +37,10 @@ class _LoginPageState extends State<LoginPage> {
     EventItemsProvider eventItems = Provider.of<EventItemsProvider>(context);
     EventCollaborationProvider eventCollaboration =
         Provider.of<EventCollaborationProvider>(context);
+    EventFeedbackProvider eventFeedback =
+        Provider.of<EventFeedbackProvider>(context);
+    EventOrganizationBackgroundProvider eventOrganizationBackground =
+        Provider.of<EventOrganizationBackgroundProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -111,8 +115,9 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         } else {
                           eventDetailsFile.resetEventDetails();
+                          eventOrganizationBackground.resetEventOrganizationBackground();
                           organizationUser.resetOrganizersDetails();
-                          personnelUser.resetPersonnelsDetails();
+                          personnelUser.resetPersonnelsDetails();                          
                           await organizationUser.fetchOrganizerData();
 
                           if (organizationUser.organizers.verify ==
@@ -125,6 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                             await organizationUser.fetchAllOrganizers();
                             await personnelUser.fetchPersonnelData();
                             await eventDetailsFile.fetchEventDetailsData();
+                            await eventOrganizationBackground.fetchEventOrganizationBackgroundData();
                             await eventDonationsFile.fetchEventDonationData();
                             await eventGalleryFile.fetchEventGalleryData();
                             await eventVolunteerFile.fetchEventVolunteerData();
@@ -132,8 +138,18 @@ class _LoginPageState extends State<LoginPage> {
                             await eventCollaboration
                                 .fetchEventCollaborationData(null);
                             await eventDetailsFile.fetchAllEventDetails();
+                            await eventOrganizationBackground.fetchAllEventOrganizationBackground();
                             await eventDonationsFile.fetchAllDonationDetails();
                             await eventGalleryFile.fetchAllEventGallery();
+
+                            //TO DO: Yusri Later need to check back
+                            for (int i = 0;
+                                i < eventDetailsFile.eventDetailsList.length;
+                                i++) {
+                              await eventFeedback.fetchAllFeedbackDetails(
+                                  eventDetailsFile.eventDetailsList[i].id);
+                              await eventFeedback.fetchAndStoreScores(eventFeedback.getTotalCurrentScore());
+                            }
                             Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -23,13 +23,13 @@ class SinglePhotoAddingButton extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          border: Border.all(color: Palette.grey),
+          border: Border.all(color: Palette.black),
         ),
         child: Center(
           child: bannerImageUrl == null || bannerImageUrl == ''
               ? Icon(
                   Icons.cloud_upload,
-                  color: Palette.grey,
+                  color: Palette.black,
                   size: height * 0.5,
                 )
               : Image.network(

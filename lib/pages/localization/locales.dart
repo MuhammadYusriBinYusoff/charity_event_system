@@ -72,6 +72,7 @@ mixin Translation{
   static const String successEmailMsg = 'successEmailMsg';
   static const String errorEmailMsg = 'errorEmailMsg:';
   static const String errorOrganizerNotVerfied = 'errorOrganizerNotVerfied';
+  static const String errorOrganizerEnterOwnEvent = 'errorOrganizerEnterOwnEvent';
 
   //General things
   static const String logOutTitle = "logOutTitle";
@@ -94,6 +95,7 @@ mixin Translation{
   static const String myEventTitle = "myEventTitle";
   static const String myEventSubtitle = "myEventSubtitle";
   static const String pleaseHintText = "pleaseHintText";
+  static const String currentCollect = "currentCollect";
 
   //Onboarding
   static const String onBoardingTitle1 = "onBoardingTitle1";
@@ -147,14 +149,22 @@ mixin Translation{
   static const String feedbackQuestion5 = "feedbackQuestion5";
   static const String feedbackQuestionHint = "feedbackQuestionHint";
   static const String feedbackCheck = "feedbackCheck";
+  static const String feedbackStatiscticTitle1 = "feedbackStatiscticTitle1";
+  static const String feedbackStatiscticDescription1 = "feedbackStatiscticDescription1";
+  static const String feedbackStatiscticTitle2 = "feedbackStatiscticTitle2";
+  static const String feedbackStatiscticDescription2 = "feedbackStatiscticDescription2";
+  static const String feedbackStatiscticTitle3 = "feedbackStatiscticTitle3";
+  static const String feedbackStatiscticDescription3 = "feedbackStatiscticDescription3";
   static const String manageDesciption = "manageDesciption";
   static const String manageItem = "manageItem";
   static const String manageDonation = "manageDonation";
   static const String manageVolunteer = "manageVolunteer";
   static const String teamPlanning = "teamPlanning";
   static const String manageGallery = "manageGallery";
+  static const String manageLiveProfile = "manageLiveProfile";
   static const String items = "items";
   static const String feedbackCollection = "feedbackCollection";
+  static const String deleteCollection = "deleteCollection";
   static const String deleteTaskTitle = 'deleteTaskTitle';
   static const String deleteTaskQuestion = 'deleteTaskQuestion';
   static const String taskTitle = 'taskTitle';
@@ -163,6 +173,10 @@ mixin Translation{
   static const String taskStatus = 'taskStatus';
   static const String overallScore = 'overallScore';
   static const String currentScore = 'currentScore';
+  static const String feedbackComment = 'feedbackComment';
+  static const String background = 'background';
+  static const String backgroundSubtitle = 'backgroundSubtitle';
+  static const String backgroundDescription = 'backgroundDescription';
   
 
   static const Map<String,dynamic> EN = {
@@ -229,6 +243,7 @@ mixin Translation{
     successEmailMsg: 'Password reset email sent successfully',
     errorEmailMsg: 'Error sending password reset email',
     errorOrganizerNotVerfied: 'The organizer is not being verified yet. Sorry for inconvenience. Any emergency can call our customer support 011-23238869',
+    errorOrganizerEnterOwnEvent: 'As the owner, you are not permitted to fill this form',
 
     //General things
     logOutTitle: 'Log Out',
@@ -251,6 +266,7 @@ mixin Translation{
     charity2024Subtitle: 'Collection of activity from organizer',
     myEventTitle: 'My Event',
     myEventSubtitle: 'Organizer can create their event here',
+    currentCollect: 'Current Collected',
 
     //Onboarding
     onBoardingTitle1: 'Tech for Good: Levitating Society through Innovative Charity Initiatives',
@@ -304,11 +320,19 @@ mixin Translation{
     feedbackQuestion5: 'Your Comment?',
     feedbackQuestionHint: 'Rating: 1-5 (Very Bad - Very Good)',
     feedbackCheck: 'Please give your rating',
+    feedbackStatiscticTitle1: 'Excellent!',
+    feedbackStatiscticDescription1: 'The organizer has a strong track record in conducting charity events, consistently earning the trust of the community through their past and current events.',
+    feedbackStatiscticTitle2: 'Moderate!',
+    feedbackStatiscticDescription2: 'The organizer has a moderate track record in our app. They have earned the trust of several users. Overall, the achievement is satisfactory but has room for improvement.',
+    feedbackStatiscticTitle3: 'Attention!',
+    feedbackStatiscticDescription3: "The organizer's track record in our app is below expectations. There may be issues with activity levels and user engagement",
     manageDesciption: 'My Event',
     manageDonation: 'Donation',
     manageGallery: 'Gallery',
+    manageLiveProfile: 'Profile',
     items: 'Items',
     feedbackCollection: 'Feedback',
+    deleteCollection: 'Delete',
     teamPlanning: 'Collaboration',
     manageVolunteer: 'Volunteer',
     manageItem: 'Item List',
@@ -320,6 +344,10 @@ mixin Translation{
     taskStatus: 'Status',
     overallScore: 'Overall Score',
     currentScore: 'Current Score',
+    feedbackComment: 'Comments',
+    background: 'Backgrounds',
+    backgroundSubtitle: 'Organization can tell the their background for user to know more about organizer. This is strategy could help organizer to get user engagement better',
+    backgroundDescription: 'Background Description',
 
   };
 
@@ -387,6 +415,7 @@ mixin Translation{
     successEmailMsg: 'E-mel tetapan semula kata laluan berjaya dihantar',
     errorEmailMsg: 'Ralat menghantar e-mel tetapan semula kata laluan',
     errorOrganizerNotVerfied: 'Penganjur belum disahkan lagi. Maaf atas kesulitan. Sebarang kecemasan boleh hubungi sokongan pelanggan kami 011-23238869',
+    errorOrganizerEnterOwnEvent: 'Sebagai pemilik aktiviti ini, tuan/puan tidak dibenarkan mengisi ruang ini',
 
     //General things
     logOutTitle: 'Log Keluar',
@@ -409,6 +438,7 @@ mixin Translation{
     charity2024Subtitle: 'Koleksi aktviti daripada organizer',
     myEventTitle: 'Event Saya',
     myEventSubtitle: 'Organizer boleh buat program amal di sini',
+    currentCollect: 'Jumlah Sekarang',
 
     //OnBoarding
     onBoardingTitle1: 'Teknologi untuk Kebaikan: Memanfaatkan Masyarakat melalui Inisiatif Amal Inovatif',
@@ -462,11 +492,19 @@ mixin Translation{
     feedbackQuestion5: 'Komen Anda?',
     feedbackQuestionHint: 'Penilaian: 1-5 (Sangat Buruk - Sangat Baik)',
     feedbackCheck: 'Sila berikan penilaian anda',
+    feedbackStatiscticTitle1: 'Cemerlang!',
+    feedbackStatiscticDescription1: 'Penganjur mempunyai rekod prestasi yang kukuh dalam mengendalikan acara amal, secara konsisten mendapat kepercayaan masyarakat melalui acara masa lalu dan semasa mereka.',
+    feedbackStatiscticTitle2: 'Sederhana!',
+    feedbackStatiscticDescription2: 'Penganjur mempunyai rekod prestasi sederhana dalam app kami. Mereka telah mendapat kepercayaan beberapa pengguna. Pencapaian memuaskan tetapi perlu penambahbaikan.',
+    feedbackStatiscticTitle3: 'Perhatian!',
+    feedbackStatiscticDescription3: "Rekod prestasi penganjur dalam aplikasi kami adalah di bawah jangkaan. Mungkin terdapat masalah dengan tahap aktiviti dan penglibatan pengguna",
     manageDesciption: 'Event Saya',
     manageDonation: 'Sumbangan',
     manageGallery: 'Galeri',
+    manageLiveProfile: 'Profil',
     items: 'Barang',
     feedbackCollection: 'Maklum Balas',
+    deleteCollection: 'Padam',
     teamPlanning: 'Kolaborasi',
     manageVolunteer: 'Sukarelawan',
     manageItem: 'Senarai Barang',
@@ -478,6 +516,10 @@ mixin Translation{
     taskStatus: 'Status',
     overallScore: 'Skor Terkumpul',
     currentScore: 'Skor Sekarang',
+    feedbackComment: 'Komen',
+    background: 'Latar Belakang',
+    backgroundSubtitle: 'Penganjur boleh memberitahu latar belakang mereka untuk pengguna mengetahui lebih lanjut tentang penganjur. Strategi ini boleh membantu penganjur untuk mendapatkan penglibatan pengguna dengan lebih baik',
+    backgroundDescription: 'Deskripsi Latar Belakang'
 
   };
 }

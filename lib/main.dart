@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/home/splash_screen.dart';
 import 'package:charity_event_system/pages/localization/locales.dart';
 import 'package:charity_event_system/providers/providers.dart';
@@ -51,6 +52,8 @@ Future main() async {
         ChangeNotifierProvider(create: (context) => EventVolunteerProvider()),
         ChangeNotifierProvider(create: (context) => EventFeedbackProvider()),
         ChangeNotifierProvider(create: (context) => EventCollaborationProvider()),
+        ChangeNotifierProvider(create: (context) => EventHistoryProvider()),
+        ChangeNotifierProvider(create: (context) => EventOrganizationBackgroundProvider()),
       ],
       child: const MyApp(),
     ),
@@ -84,7 +87,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'SpiraCare',
           theme: ThemeData(
-            //colorScheme: ColorScheme.fromSeed(seedColor: Palette.purpleMain),
+            //colorScheme: ColorScheme.fromSeed(seedColor: Palette.white),
             useMaterial3: true,
             fontFamily: 'Roboto',
           ),

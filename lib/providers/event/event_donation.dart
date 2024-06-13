@@ -26,6 +26,14 @@ class EventDonationProvider extends ChangeNotifier {
         .collection("moneyDonation")
         .doc(newDonationDetails.id)
         .update(_donationDetails.toJson());
+
+    int index = _donationDetailsList.indexWhere((donation) => donation.id == newDonationDetails.id);
+    if (index != -1) {
+      _donationDetailsList[index] = newDonationDetails;
+    } else {
+      _donationDetailsList.add(newDonationDetails);
+    }
+
     notifyListeners();
   }
 
@@ -62,6 +70,24 @@ class EventDonationProvider extends ChangeNotifier {
           .toList();
     } catch (error) {
       print('Error fetching donation List: $error');
+    }
+  }
+
+  Future<void> deleteDonationDetails(String? donationDetailsId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('moneyDonation')
+          .doc(donationDetailsId)
+          .delete();
+
+      _donationDetailsList.removeWhere((donation) => donation.id == donationDetailsId);
+      if (_donationDetails.id == donationDetailsId) {
+        _donationDetails = EventDonationModel(); 
+      }
+
+      notifyListeners();
+    } catch (error) {
+      print('Error deleting donation details: $error');
     }
   }
 

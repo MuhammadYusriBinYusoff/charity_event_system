@@ -5,13 +5,15 @@ import 'package:flutter_localization/flutter_localization.dart';
 
 class EventManageFeedbackPage extends StatefulWidget {
   final String? session;
-  final int?  totalScore;
+  final int? totalScore;
+  final int? overalTotalScore;
   final List<String?> comments;
 
   const EventManageFeedbackPage({
     Key? key,
     this.session = 'update',
     this.totalScore = 0,
+    this.overalTotalScore = 0,
     this.comments = const ['none'],
   }) : super(key: key);
 
@@ -32,7 +34,7 @@ class _EventManageFeedbackPageState extends State<EventManageFeedbackPage> {
   @override
   void initState() {
     super.initState();
-    valueNotifier = ValueNotifier(40);
+    valueNotifier = ValueNotifier((widget.overalTotalScore ?? 0).toDouble());
     valueNotifier2 = ValueNotifier((widget.totalScore ?? 0).toDouble());
   }
 
@@ -60,22 +62,44 @@ class _EventManageFeedbackPageState extends State<EventManageFeedbackPage> {
                     children: [
                       Column(
                         children: [
-                          CustomStatisticCard(
-                            valueNotifier: valueNotifier,
-                            centerTextStyle: centerTextStyle,
-                            statisticText: Translation.overallScore.getString(context),
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserFeedbackScore(
+                                        totalScore: widget.overalTotalScore,
+                                        isOrganizer: true,
+                                      )),
+                            ),
+                            child: CustomStatisticCard(
+                              valueNotifier: valueNotifier,
+                              centerTextStyle: centerTextStyle,
+                              statisticText:
+                                  Translation.overallScore.getString(context),
+                            ),
                           ),
                         ],
                       ),
                       SpacerH(
-                        value: Dimens.space32,
+                        value: Dimens.space24,
                       ),
                       Column(
                         children: [
-                          CustomStatisticCard(
-                            valueNotifier: valueNotifier2,
-                            centerTextStyle: centerTextStyle,
-                            statisticText: Translation.currentScore.getString(context),
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserFeedbackScore(
+                                        totalScore: widget.totalScore,
+                                        isOrganizer: true,
+                                      )),
+                            ),
+                            child: CustomStatisticCard(
+                              valueNotifier: valueNotifier2,
+                              centerTextStyle: centerTextStyle,
+                              statisticText:
+                                  Translation.currentScore.getString(context),
+                            ),
                           ),
                         ],
                       ),

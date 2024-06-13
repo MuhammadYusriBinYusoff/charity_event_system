@@ -5,9 +5,11 @@ import 'package:flutter/foundation.dart';
 class EventFeedbackProvider extends ChangeNotifier {
   EventFeedbackModel _feedbackDetails = EventFeedbackModel();
   List<EventFeedbackModel> _feedbackDetailsList = [];
+  final List<int> _totalScoresList = [];
 
   EventFeedbackModel get feedbackDetails => _feedbackDetails;
   List<EventFeedbackModel> get feedbackDetailsList => _feedbackDetailsList;
+  List<int> get totalScoresList => _totalScoresList;
 
   Future<void> createFeedbackDetails(
       EventFeedbackModel newFeedbackDetails) async {
@@ -40,13 +42,81 @@ class EventFeedbackProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> moveFeedbackToHistory(String? feedbackId, String docId) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection("feedback")
+          .doc(feedbackId)
+          .collection("list feedback")
+          .doc(docId)
+          .get();
+
+      if (snapshot.exists) {
+        await FirebaseFirestore.instance
+            .collection("history")
+            .doc(feedbackId)
+            .collection("list history")
+            .doc(docId)
+            .set(snapshot.data()!);
+      }
+    } catch (error) {
+      print('Error moving feedback to history: $error');
+    }
+  }
+
+  Future<void> deleteFeedbackDetails(String? feedbackId) async {
+    try {
+      // Fetch all documents in the subcollection
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection("feedback")
+          .doc(feedbackId)
+          .collection("list feedback")
+          .get();
+
+      // Move each document to the history subcollection and delete it from the list feedback subcollection
+      for (var doc in snapshot.docs) {
+        await moveFeedbackToHistory(feedbackId, doc.id);
+        await FirebaseFirestore.instance
+            .collection("feedback")
+            .doc(feedbackId)
+            .collection("list feedback")
+            .doc(doc.id)
+            .delete();
+      }
+
+      // Remove the feedback details from the local list
+      _feedbackDetailsList.removeWhere((feedback) => feedback.id == feedbackId);
+      notifyListeners();
+    } catch (error) {
+      print('Error deleting feedback: $error');
+    }
+  }
+
+  Future<void> fetchAndStoreScores(int score) async {
+    _totalScoresList.add(score);
+    //print("Current Score Length");
+    // print(_totalScoresList.length);
+    notifyListeners();
+  }
+
   int getTotalCurrentScore() {
     int totalScore = 0;
+    int turns = 0;
     for (var feedback in feedbackDetailsList) {
       if (feedback.currentScoreCollected != null) {
         totalScore += feedback.currentScoreCollected!;
+        turns++;
       }
     }
+    // print("total score before");
+    // print(totalScore);
+    // print(turns);
+    totalScore = ((totalScore / (20 * turns)) * 100).toInt();
+    // print("total score after");
+    // print(totalScore);
+    // print(turns);
     return totalScore;
   }
 
@@ -63,6 +133,15 @@ class EventFeedbackProvider extends ChangeNotifier {
   void resetEventFeedback() async {
     _feedbackDetails = EventFeedbackModel();
     _feedbackDetailsList = [];
+    notifyListeners();
+  }
+
+  Future<void> resetScoreEventFeedback() async {
+    _totalScoresList.clear();
+    _totalScoresList.length = 0;
+    // print("test reset score");
+    // print(_totalScoresList.length);
+    // print("======");
     notifyListeners();
   }
 }
