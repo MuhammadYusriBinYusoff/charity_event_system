@@ -37,6 +37,8 @@ class _RegisterVolunteerFormPageState extends State<RegisterVolunteerFormPage> {
   Widget build(BuildContext context) {
     EventVolunteerProvider eventVolunteer =
         Provider.of<EventVolunteerProvider>(context);
+    EventDetailsProvider eventDetailsFile =
+        Provider.of<EventDetailsProvider>(context);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -105,9 +107,13 @@ class _RegisterVolunteerFormPageState extends State<RegisterVolunteerFormPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EventPostingDescriptionPage(
-                                  index: widget.index,
-                                )),
+                          builder: (context) => WhatsAppPage(
+                            groupLink: eventDetailsFile
+                                .eventDetailsList[widget.index ?? 0]
+                                .groupLinkUrl,
+                            index: widget.index,
+                          ),
+                        ),
                       );
                     } else {
                       showDialog(
