@@ -249,16 +249,15 @@ class _EventPostingDescriptionPageState
                       CircleIcon(
                           icon: Icons.people,
                           onTap: () {
-                            eventCollaboration.resetCollaborationDetails();
-                            eventCollaboration.resetCollaborationDetailsList();
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => EventCollaborationPage(
-                                        selectedOrganizerId: eventDetailsFile
-                                            .eventDetailsList[widget.index ?? 0]
-                                            .id,
-                                      )),
+                                builder: (context) => CollabPassPage(
+                                  index: widget.index,
+                                  password: eventDetailsFile
+                              .eventDetailsList[widget.index ?? 0].passwordCollaboration,
+                                ),
+                              ),
                             );
                           }),
                       Text(

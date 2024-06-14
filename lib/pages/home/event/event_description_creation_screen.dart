@@ -15,6 +15,7 @@ class EventDescriptionPage extends StatefulWidget {
   final String? description;
   final String? session;
   final String? groupLink;
+  final String? collabPass;
 
   const EventDescriptionPage({
     Key? key,
@@ -23,6 +24,7 @@ class EventDescriptionPage extends StatefulWidget {
     this.description,
     this.session,
     this.groupLink,
+    this.collabPass,
   }) : super(key: key);
 
   @override
@@ -36,6 +38,8 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
       TextEditingController();
   final TextEditingController _charityEventGroupLinkController =
       TextEditingController();
+  final TextEditingController _charityCollabPassController =
+      TextEditingController();
 
   String? bannerImageUrl;
   bool isLoading = false;
@@ -47,6 +51,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
     _charityEventDescriptionController.text = widget.description ?? "";
     bannerImageUrl = widget.imageUrl ?? "";
     _charityEventGroupLinkController.text = widget.groupLink ?? "";
+    _charityCollabPassController.text = widget.collabPass ?? "";
   }
 
   Future<XFile?> pickImage() async {
@@ -152,6 +157,11 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                     multiLine: true,
                   ),
                   SpacerV(value: Dimens.space24),
+                  CustomTextField(
+                    controller: _charityCollabPassController,
+                    labelText: "Collaboration Password",
+                  ),
+                  SpacerV(value: Dimens.space24),
                   SizedBox(
                     width: double.infinity,
                     height: Dimens.space40,
@@ -167,6 +177,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                                 type: "organizer",
                                 photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
                                 groupLinkUrl: _charityEventGroupLinkController.text,
+                                passwordCollaboration: _charityCollabPassController.text,
                               );
                               eventDetailsFile.updateEventDetails(newEvent);
 
@@ -205,6 +216,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                                   type: "organizer",
                                   photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
                                   groupLinkUrl: _charityEventGroupLinkController.text,
+                                  passwordCollaboration: "",
                                 );
 
                                 await eventDetailsFile.createEventDetails(newEvent);
@@ -255,6 +267,8 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
   void dispose() {
     _charityEventTitleController.dispose();
     _charityEventDescriptionController.dispose();
+    _charityEventGroupLinkController.dispose();
+    _charityCollabPassController.dispose();
     super.dispose();
   }
 }

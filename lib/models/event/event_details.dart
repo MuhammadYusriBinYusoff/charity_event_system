@@ -7,6 +7,7 @@ class EventDetailsModel {
   final String? type;
   final String? photoEventUrl;
   final String? groupLinkUrl;
+  final String? passwordCollaboration;
 
   EventDetailsModel({
     this.id,
@@ -15,6 +16,7 @@ class EventDetailsModel {
     this.type,
     this.photoEventUrl,
     this.groupLinkUrl,
+    this.passwordCollaboration,
   });
 
   static EventDetailsModel fromSnapshot(
@@ -26,6 +28,7 @@ class EventDetailsModel {
       type: snapshot['type'],
       photoEventUrl: snapshot['photoEventUrl'],
       groupLinkUrl: snapshot['groupLinkUrl'],
+      passwordCollaboration: snapshot['passwordCollaboration'],
     );
   }
 
@@ -37,6 +40,7 @@ class EventDetailsModel {
       "type": type,
       "photoEventUrl": photoEventUrl,
       "groupLinkUrl": groupLinkUrl,
+      "passwordCollaboration": passwordCollaboration,
     };
   }
 }
