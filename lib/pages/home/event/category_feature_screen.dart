@@ -130,6 +130,7 @@ class CategoryCard extends StatelessWidget {
                     title: eventDetailsFile.eventDetails.eventName,
                     description: eventDetailsFile.eventDetails.eventDescription,
                     groupLink: eventDetailsFile.eventDetails.groupLinkUrl,
+                    collabPass: eventDetailsFile.eventDetails.passwordCollaboration,
                     session: "update"),
               ),
             );

@@ -6,3 +6,4 @@ export 'event_feedback_score_viewscreen.dart';
 export 'event_live_background_screen.dart';
 export 'event_feedback_form_screen.dart';
 export 'event_whatsapp_redirect.dart';
+export 'event_password_collaboration_screen.dart';
