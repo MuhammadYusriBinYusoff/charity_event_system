@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:charity_event_system/common/common.dart';
+import 'package:charity_event_system/models/models.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class EventPostingDescriptionPage extends StatefulWidget {
   final int? index;
@@ -22,6 +28,46 @@ class EventPostingDescriptionPage extends StatefulWidget {
 
 class _EventPostingDescriptionPageState
     extends State<EventPostingDescriptionPage> {
+  String? pdfUrl;
+  String? pdfName;
+  bool isLoading = false;
+  bool isUploaded = false;
+
+  Future<FilePickerResult?> pickPDF() async {
+    return await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+  }
+
+  Future<void> uploadPDF(PlatformFile file, String? userId) async {
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirPDFs =
+        referenceRoot.child('receiptPayment').child(userId ?? '');
+    Reference referencePDFToUpload = referenceDirPDFs.child(file.name);
+
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      File fileToUpload = File(file.path!);
+      await referencePDFToUpload.putFile(fileToUpload);
+      String url = await referencePDFToUpload.getDownloadURL();
+      setState(() {
+        pdfUrl = url;
+        pdfName = file.name;
+        isLoading = false;
+        isUploaded = true;
+      });
+    } catch (error) {
+      setState(() {
+        isLoading = false;
+        isUploaded = false;
+      });
+      print(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     EventDetailsProvider eventDetailsFile =
@@ -31,9 +77,17 @@ class _EventPostingDescriptionPageState
     EventItemsProvider eventItem = Provider.of<EventItemsProvider>(context);
     EventCollaborationProvider eventCollaboration =
         Provider.of<EventCollaborationProvider>(context);
+    OrganizerProvider organizationUser =
+        Provider.of<OrganizerProvider>(context);
+    EventTransactionProvider eventTransactionFile =
+        Provider.of<EventTransactionProvider>(context);
 
     return Scaffold(
-      appBar: const CustomAppBar(showPreviousButton: false, showCustomPreviousButton: true, targetPage: MyHomePage(),),
+      appBar: const CustomAppBar(
+        showPreviousButton: false,
+        showCustomPreviousButton: true,
+        targetPage: MyHomePage(),
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -255,7 +309,8 @@ class _EventPostingDescriptionPageState
                                 builder: (context) => CollabPassPage(
                                   index: widget.index,
                                   password: eventDetailsFile
-                              .eventDetailsList[widget.index ?? 0].passwordCollaboration,
+                                      .eventDetailsList[widget.index ?? 0]
+                                      .passwordCollaboration,
                                 ),
                               ),
                             );
@@ -288,7 +343,7 @@ class _EventPostingDescriptionPageState
                           }),
                       Text(
                         Translation.manageLiveProfile.getString(context),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.bold,
                             color: Palette.black),
@@ -324,6 +379,7 @@ class _EventPostingDescriptionPageState
                       style: const TextStyle(
                         fontSize: 15,
                       ),
+                      textAlign: TextAlign.justify,
                     ),
                     SpacerV(value: Dimens.space16),
                     Text(
@@ -332,6 +388,22 @@ class _EventPostingDescriptionPageState
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
                           color: Palette.greyDark),
+                          textAlign: TextAlign.justify,
+                    ),
+                    SpacerV(value: Dimens.space32),
+                    const Text(
+                      "How to Donate?",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SpacerV(value: Dimens.space16),
+                    const Text(
+                      "1. Scan the Qr Code\n2. Upload the receipt\n(Step 2 is important to ensure organizer noticed and record)\n\nThank you and may God bless you",
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
                     SpacerV(value: Dimens.space16),
                     Text(
@@ -356,6 +428,14 @@ class _EventPostingDescriptionPageState
                       "${Translation.donationBankAccount.getString(context)}: ${eventDonationsFile.donationDetailsList[widget.index ?? 0].bankAccount}",
                     ),
                     SpacerV(value: Dimens.space24),
+                    const Text(
+                      "Step 1: Scan Qr code",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SpacerV(value: Dimens.space16,),
                     CachedNetworkImage(
                       imageUrl: eventDonationsFile
                               .donationDetailsList[widget.index ?? 0]
@@ -364,6 +444,102 @@ class _EventPostingDescriptionPageState
                       width: double.infinity,
                       fit: BoxFit.fill,
                     ),
+                    SpacerV(
+                      value: Dimens.space24,
+                    ),
+                    const Text(
+                      "Step 2: Upload the Receipt (.pdf)",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SpacerV(
+                      value: Dimens.space16,
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (isUploaded) {
+                          
+                        } else {
+                          FilePickerResult? result = await pickPDF();
+                          if (result != null) {
+                            PlatformFile file = result.files.first;
+                            await uploadPDF(
+                                file,
+                                eventDetailsFile
+                                    .eventDetailsList[widget.index ?? 0].id);
+
+                            String newId = const Uuid().v4();
+                            final currentUserName =
+                                organizationUser.organizers.picName;
+
+                            final newItem = EventTransactionModel(
+                                id: newId,
+                                pdfUrls: pdfUrl,
+                                pdfName: pdfName,
+                                donatorName: currentUserName);
+
+                            eventTransactionFile.createTransactionDetails(
+                                newItem,
+                                eventDetailsFile
+                                    .eventDetailsList[widget.index ?? 0].id);
+
+                            setState(() {
+                              isUploaded =
+                                  true; 
+                            });
+
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Upload successful!"),
+                                backgroundColor: Colors.green,
+                                duration: Duration(seconds: 3),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isUploaded
+                            ? Palette.greenIndicator
+                            : Palette.purpleMain,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(Dimens.space8),
+                        ),
+                      ),
+                      child: Text(
+                        isUploaded ? "Successful" : "Upload PDF",
+                        style: const TextStyle(color: Palette.white),
+                      ),
+                    ),
+                    SpacerV(value: Dimens.space24,),
+
+                    // if (pdfUrl != null) ...[  //ini untuk kegunaan nnti
+                    //   SizedBox(height: 20),
+                    //   GestureDetector(
+                    //     onTap: () {
+                    //       // Navigator.push(
+                    //       //   context,
+                    //       //   MaterialPageRoute(
+                    //       //     builder: (context) =>
+                    //       //         PDFViewerPage(pdfUrl: pdfUrl!),
+                    //       //   ),
+                    //       // );
+                    //     },
+                    //     child: Row(
+                    //       children: [
+                    //         Icon(Icons.picture_as_pdf,
+                    //             size: 30, color: Colors.red),
+                    //         SizedBox(height: 5),
+                    //         Text(pdfName ?? 'PDF Document',
+                    //             style: TextStyle(fontSize: 12)),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ],
                   ],
                 ))
           ],
