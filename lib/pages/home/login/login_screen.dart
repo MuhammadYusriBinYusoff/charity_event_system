@@ -41,6 +41,8 @@ class _LoginPageState extends State<LoginPage> {
         Provider.of<EventFeedbackProvider>(context);
     EventOrganizationBackgroundProvider eventOrganizationBackground =
         Provider.of<EventOrganizationBackgroundProvider>(context);
+    EventTransactionProvider eventTransactionFile =
+        Provider.of<EventTransactionProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -135,6 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                             await eventGalleryFile.fetchEventGalleryData();
                             await eventVolunteerFile.fetchEventVolunteerData();
                             await eventItems.fetchEventItemData();
+                            await eventTransactionFile.fetchEventTransactionData();
                             await eventCollaboration
                                 .fetchEventCollaborationData(null);
                             await eventDetailsFile.fetchAllEventDetails();

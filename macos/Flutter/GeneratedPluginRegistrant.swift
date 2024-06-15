@@ -5,6 +5,7 @@
 import FlutterMacOS
 import Foundation
 
+import advance_pdf_viewer2
 import cloud_firestore
 import file_selector_macos
 import firebase_auth
@@ -17,6 +18,7 @@ import sqflite
 import url_launcher_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
+  FlutterPluginPdfViewerPlugin.register(with: registry.registrar(forPlugin: "FlutterPluginPdfViewerPlugin"))
   FLTFirebaseFirestorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseFirestorePlugin"))
   FileSelectorPlugin.register(with: registry.registrar(forPlugin: "FileSelectorPlugin"))
   FLTFirebaseAuthPlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseAuthPlugin"))

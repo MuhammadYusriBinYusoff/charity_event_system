@@ -28,6 +28,7 @@ class CategoryPage extends StatelessWidget {
       CategoryItem(
           Images.splashIcon, Translation.feedbackCollection.getString(context)),
       CategoryItem(Images.splashIcon, Translation.manageLiveProfile.getString(context)),
+      CategoryItem(Images.splashIcon, "Transaction History"),
       CategoryItem(
           Images.splashIcon, Translation.deleteCollection.getString(context)),
     ];
@@ -93,6 +94,8 @@ class CategoryCard extends StatelessWidget {
         Provider.of<EventHistoryProvider>(context);
     EventOrganizationBackgroundProvider eventOrganizationBackground =
         Provider.of<EventOrganizationBackgroundProvider>(context);
+    EventTransactionProvider eventTransactionFile =
+        Provider.of<EventTransactionProvider>(context);
 
     return Card(
       elevation: 4.0,
@@ -210,6 +213,13 @@ class CategoryCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const MyHomePage()),
+            );
+          }else if (categoryItem.name ==
+              "Transaction History") {
+            await eventTransactionFile.fetchEventTransactionData();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ViewTransactionPage()),
             );
           }
         },
