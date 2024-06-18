@@ -95,6 +95,7 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextField(
+              maxWords: 20,
               controller: _backLogTitleController,
               labelText: Translation.taskTitle.getString(context),
               onChanged: (value){

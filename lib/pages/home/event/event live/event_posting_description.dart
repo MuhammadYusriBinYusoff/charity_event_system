@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -168,38 +169,44 @@ class _EventPostingDescriptionPageState
                   ),
                   Column(
                     children: [
-                      CircleIcon(
-                          icon: Icons.menu_book_outlined,
-                          onTap: () {
-                            User? user = FirebaseAuth.instance.currentUser;
-                            String? userId = user?.uid;
-                            if (eventDetailsFile
-                                    .eventDetailsList[widget.index ?? 0].id ==
-                                userId) {
-                              showDialog(
-                                context: context,
-                                builder: (context) => ErrorAlertDialog(
-                                  title:
-                                      Translation.errorTitle.getString(context),
-                                  content: Translation
-                                      .errorOrganizerEnterOwnEvent
-                                      .getString(context),
-                                ),
-                              );
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => UserFeedbackPage(
-                                          id: eventDetailsFile
-                                              .eventDetailsList[
-                                                  widget.index ?? 0]
-                                              .id,
-                                          index: widget.index,
-                                        )),
-                              );
-                            }
-                          }),
+                      GestureDetector(
+                        onTap: () {
+                          User? user = FirebaseAuth.instance.currentUser;
+                          String? userId = user?.uid;
+                          if (eventDetailsFile
+                                  .eventDetailsList[widget.index ?? 0].id ==
+                              userId) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => ErrorAlertDialog(
+                                title:
+                                    Translation.errorTitle.getString(context),
+                                content: Translation.errorOrganizerEnterOwnEvent
+                                    .getString(context),
+                              ),
+                            );
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserFeedbackPage(
+                                        id: eventDetailsFile
+                                            .eventDetailsList[widget.index ?? 0]
+                                            .id,
+                                        index: widget.index,
+                                      )),
+                            );
+                          }
+                        },
+                        child: SvgPicture.asset(
+                          Images.feedback,
+                          width: 55,
+                          height: 55,
+                        ),
+                      ),
+                      SpacerV(
+                        value: Dimens.space8,
+                      ),
                       Text(
                         Translation.feedbackCollection.getString(context),
                         style: const TextStyle(
@@ -214,24 +221,32 @@ class _EventPostingDescriptionPageState
                   ),
                   Column(
                     children: [
-                      CircleIcon(
-                          icon: Icons.food_bank_outlined,
-                          onTap: () async {
-                            await eventItem.fetchAllItemDetails(
-                              eventDetailsFile
-                                  .eventDetailsList[widget.index ?? 0].id,
-                            );
-                            // ignore: use_build_context_synchronously
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ItemQueryPage(
-                                        id: eventDetailsFile
-                                            .eventDetailsList[widget.index ?? 0]
-                                            .id,
-                                      )),
-                            );
-                          }),
+                      GestureDetector(
+                        onTap: () async {
+                          await eventItem.fetchAllItemDetails(
+                            eventDetailsFile
+                                .eventDetailsList[widget.index ?? 0].id,
+                          );
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ItemQueryPage(
+                                      id: eventDetailsFile
+                                          .eventDetailsList[widget.index ?? 0]
+                                          .id,
+                                    )),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          Images.item,
+                          width: 55,
+                          height: 55,
+                        ),
+                      ),
+                      SpacerV(
+                        value: Dimens.space8,
+                      ),
                       Text(
                         Translation.items.getString(context),
                         style: const TextStyle(
@@ -246,21 +261,28 @@ class _EventPostingDescriptionPageState
                   ),
                   Column(
                     children: [
-                      CircleIcon(
-                          icon: Icons.emoji_people_outlined,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      RegisterVolunteerFormPage(
-                                        id: eventDetailsFile
-                                            .eventDetailsList[widget.index ?? 0]
-                                            .id,
-                                        index: widget.index,
-                                      )),
-                            );
-                          }),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterVolunteerFormPage(
+                                      id: eventDetailsFile
+                                          .eventDetailsList[widget.index ?? 0]
+                                          .id,
+                                      index: widget.index,
+                                    )),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          Images.volunteer,
+                          width: 55,
+                          height: 55,
+                        ),
+                      ),
+                      SpacerV(
+                        value: Dimens.space8,
+                      ),
                       Text(
                         Translation.manageVolunteer.getString(context),
                         style: const TextStyle(
@@ -275,17 +297,25 @@ class _EventPostingDescriptionPageState
                   ),
                   Column(
                     children: [
-                      CircleIcon(
-                          icon: Icons.photo_outlined,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => GalleryPage(
-                                        index: widget.index,
-                                      )),
-                            );
-                          }),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => GalleryPage(
+                                      index: widget.index,
+                                    )),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          Images.gallery,
+                          width: 55,
+                          height: 55,
+                        ),
+                      ),
+                      SpacerV(
+                        value: Dimens.space8,
+                      ),
                       Text(
                         Translation.manageGallery.getString(context),
                         style: const TextStyle(
@@ -300,21 +330,29 @@ class _EventPostingDescriptionPageState
                   ),
                   Column(
                     children: [
-                      CircleIcon(
-                          icon: Icons.people,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CollabPassPage(
-                                  index: widget.index,
-                                  password: eventDetailsFile
-                                      .eventDetailsList[widget.index ?? 0]
-                                      .passwordCollaboration,
-                                ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CollabPassPage(
+                                index: widget.index,
+                                password: eventDetailsFile
+                                    .eventDetailsList[widget.index ?? 0]
+                                    .passwordCollaboration,
                               ),
-                            );
-                          }),
+                            ),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          Images.team,
+                          width: 55,
+                          height: 55,
+                        ),
+                      ),
+                      SpacerV(
+                        value: Dimens.space8,
+                      ),
                       Text(
                         Translation.teamPlanning.getString(context),
                         style: const TextStyle(
@@ -329,18 +367,26 @@ class _EventPostingDescriptionPageState
                   ),
                   Column(
                     children: [
-                      CircleIcon(
-                          icon: Icons.add_location,
-                          onTap: () async {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EventLiveBackgroundPage(
-                                  index: widget.index,
-                                ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EventLiveBackgroundPage(
+                                index: widget.index,
                               ),
-                            );
-                          }),
+                            ),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          Images.profile,
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
+                      SpacerV(
+                        value: Dimens.space8,
+                      ),
                       Text(
                         Translation.manageLiveProfile.getString(context),
                         style: const TextStyle(
@@ -388,19 +434,19 @@ class _EventPostingDescriptionPageState
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
                           color: Palette.greyDark),
-                          textAlign: TextAlign.justify,
+                      textAlign: TextAlign.justify,
                     ),
                     SpacerV(value: Dimens.space32),
-                    const Text(
-                      "How to Donate?",
+                    Text(
+                      Translation.stepDonate.getString(context),
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SpacerV(value: Dimens.space16),
-                    const Text(
-                      "1. Scan the Qr Code\n2. Upload the receipt\n(Step 2 is important to ensure organizer noticed and record)\n\nThank you and may God bless you",
+                    Text(
+                      Translation.donateInstruction.getString(context),
                       style: TextStyle(
                         fontSize: 16,
                       ),
@@ -428,14 +474,16 @@ class _EventPostingDescriptionPageState
                       "${Translation.donationBankAccount.getString(context)}: ${eventDonationsFile.donationDetailsList[widget.index ?? 0].bankAccount}",
                     ),
                     SpacerV(value: Dimens.space24),
-                    const Text(
-                      "Step 1: Scan Qr code",
-                      style: TextStyle(
+                    Text(
+                      Translation.donateInst1.getString(context),
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SpacerV(value: Dimens.space16,),
+                    SpacerV(
+                      value: Dimens.space16,
+                    ),
                     CachedNetworkImage(
                       imageUrl: eventDonationsFile
                               .donationDetailsList[widget.index ?? 0]
@@ -447,9 +495,9 @@ class _EventPostingDescriptionPageState
                     SpacerV(
                       value: Dimens.space24,
                     ),
-                    const Text(
-                      "Step 2: Upload the Receipt (.pdf)",
-                      style: TextStyle(
+                    Text(
+                      Translation.donateInst2.getString(context),
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -460,7 +508,6 @@ class _EventPostingDescriptionPageState
                     ElevatedButton(
                       onPressed: () async {
                         if (isUploaded) {
-                          
                         } else {
                           FilePickerResult? result = await pickPDF();
                           if (result != null) {
@@ -486,8 +533,7 @@ class _EventPostingDescriptionPageState
                                     .eventDetailsList[widget.index ?? 0].id);
 
                             setState(() {
-                              isUploaded =
-                                  true; 
+                              isUploaded = true;
                             });
 
                             // ignore: use_build_context_synchronously
@@ -515,31 +561,9 @@ class _EventPostingDescriptionPageState
                         style: const TextStyle(color: Palette.white),
                       ),
                     ),
-                    SpacerV(value: Dimens.space24,),
-
-                    // if (pdfUrl != null) ...[  //ini untuk kegunaan nnti
-                    //   SizedBox(height: 20),
-                    //   GestureDetector(
-                    //     onTap: () {
-                    //       // Navigator.push(
-                    //       //   context,
-                    //       //   MaterialPageRoute(
-                    //       //     builder: (context) =>
-                    //       //         PDFViewerPage(pdfUrl: pdfUrl!),
-                    //       //   ),
-                    //       // );
-                    //     },
-                    //     child: Row(
-                    //       children: [
-                    //         Icon(Icons.picture_as_pdf,
-                    //             size: 30, color: Colors.red),
-                    //         SizedBox(height: 5),
-                    //         Text(pdfName ?? 'PDF Document',
-                    //             style: TextStyle(fontSize: 12)),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ],
+                    SpacerV(
+                      value: Dimens.space24,
+                    ),
                   ],
                 ))
           ],

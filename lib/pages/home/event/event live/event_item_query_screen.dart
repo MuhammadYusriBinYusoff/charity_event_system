@@ -47,7 +47,7 @@ class _ItemQueryPageState extends State<ItemQueryPage> {
                 buildDataColumn(Translation.itemQuantity.getString(context),
                     MediaQuery.of(context).size.width * 0.2, 0, 0),
                 buildDataColumn(
-                    Translation.itemUnit.getString(context), MediaQuery.of(context).size.width * 0.2, 0, 0),
+                    Translation.itemUnit.getString(context), MediaQuery.of(context).size.width * 0.38, 0, 0),
                 buildDataColumn(
                     Translation.itemDate.getString(context), MediaQuery.of(context).size.width * 0.3, 0, 8),
               ],

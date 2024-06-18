@@ -92,7 +92,7 @@ class _GanntChartScreenState extends State<GanntChartScreen> {
                         color: eventColor,
                         child: Center(
                           child: Text(
-                            "CEMS $cardId: $title",
+                            "CEMS $cardId",
                             style: const TextStyle(color: Palette.white),
                           ),
                         ),

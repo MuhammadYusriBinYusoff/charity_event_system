@@ -16,6 +16,9 @@ class EventDetailsProvider extends ChangeNotifier {
         .collection("eventDetails")
         .doc(newEventDetails.id)
         .set(_eventDetails.toJson());
+
+    // Add the new event to the list
+    _eventDetailsList.add(newEventDetails);
     notifyListeners();
   }
 

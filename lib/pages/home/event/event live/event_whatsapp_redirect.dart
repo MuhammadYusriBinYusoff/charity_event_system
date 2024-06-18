@@ -15,7 +15,7 @@ class WhatsAppPage extends StatelessWidget {
   }) : super(key: key);
 
   Future<void> _openLink() async {
-  final defaultUrl = "https://www.youtube.com/watch?v=wI1IroOdVvE&list=PLpeOWJ81yOvbxtJWU4z8jzhl_DRjuG1Jv&index=26";
+  const defaultUrl = "https://www.youtube.com/watch?v=wI1IroOdVvE&list=PLpeOWJ81yOvbxtJWU4z8jzhl_DRjuG1Jv&index=26";
   final whatsappUrl = Uri.parse(groupLink ?? defaultUrl);
 
   try {
@@ -71,7 +71,7 @@ class WhatsAppPage extends StatelessWidget {
                     Text(
                       Translation.titleWhatsApp.getString(context),
                       style: const TextStyle(
-                        fontSize: 32,
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

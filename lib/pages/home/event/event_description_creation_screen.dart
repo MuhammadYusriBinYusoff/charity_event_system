@@ -141,6 +141,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
+                    maxWords: 30,
                     controller: _charityEventTitleController,
                     labelText: Translation.eventTitle.getString(context),
                   ),
@@ -158,6 +159,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
+                    maxWords: 25,
                     controller: _charityCollabPassController,
                     labelText: "Collaboration Password",
                   ),

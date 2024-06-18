@@ -167,11 +167,13 @@ class _EventDonationManagementPageState
                   ),
                   SpacerV(value: Dimens.space20),
                   CustomTextField(
+                    isDigitOnly: true,
                     controller: _targetMoneyController,
                     labelText: Translation.donationTarget.getString(context),
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
+                    isDigitOnly: true,
                     controller: _currentCollectedController,
                     labelText: Translation.donationCurrent.getString(context),
                   ),

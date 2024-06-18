@@ -14,23 +14,23 @@ class CategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<CategoryItem> categories = [
       CategoryItem(
-          Images.splashIcon, Translation.manageDesciption.getString(context)),
+          Images.fileOrganizer, Translation.manageDesciption.getString(context)),
       CategoryItem(
-          Images.splashIcon, Translation.manageItem.getString(context)),
+          Images.itemOrganizer, Translation.manageItem.getString(context)),
       CategoryItem(
-          Images.splashIcon, Translation.manageDonation.getString(context)),
+          Images.donationOrganizer, Translation.manageDonation.getString(context)),
       CategoryItem(
-          Images.splashIcon, Translation.manageVolunteer.getString(context)),
+          Images.volunteerOrganizer, Translation.manageVolunteer.getString(context)),
       CategoryItem(
-          Images.splashIcon, Translation.teamPlanning.getString(context)),
+          Images.colllaborationOrganizer, Translation.teamPlanning.getString(context)),
       CategoryItem(
-          Images.splashIcon, Translation.manageGallery.getString(context)),
+          Images.galleryOrganizer, Translation.manageGallery.getString(context)),
       CategoryItem(
-          Images.splashIcon, Translation.feedbackCollection.getString(context)),
-      CategoryItem(Images.splashIcon, Translation.manageLiveProfile.getString(context)),
-      CategoryItem(Images.splashIcon, "Transaction History"),
+          Images.feedbackOrganizer, Translation.feedbackCollection.getString(context)),
+      CategoryItem(Images.profileOrganizer, Translation.manageLiveProfile.getString(context)),
+      CategoryItem(Images.transactionOrganizer, "Transaction History"),
       CategoryItem(
-          Images.splashIcon, Translation.deleteCollection.getString(context)),
+          Images.binOrganizer, Translation.deleteCollection.getString(context)),
     ];
 
     final screenWidth = MediaQuery.of(context).size.width;

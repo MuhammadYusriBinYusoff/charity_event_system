@@ -82,16 +82,19 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                   ),
                   SpacerV(value: Dimens.space20),
                   CustomTextField(
+                    maxWords: 15,
                     controller: _itemNameController,
                     labelText: Translation.itemName.getString(context),
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
+                    maxWords: 4,
                     controller: _itemQuantityController,
                     labelText: Translation.itemQuantity.getString(context),
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
+                    maxWords: 10,
                     controller: _itemUnitController,
                     labelText: Translation.itemUnit.getString(context),
                   ),

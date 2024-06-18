@@ -45,26 +45,26 @@ class _CollabPassPageState extends State<CollabPassPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SpacerV(
-              value: Dimens.space100,
+              value: Dimens.space50,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(45),
               color: Colors.transparent,
-              child: const Center(
+              child: Center(
                 child: Column(
                   children: [
                     Text(
-                      "Welcome to SpiraCollaboration",
-                      style: TextStyle(
-                        fontSize: 32,
+                      Translation.welcomeSpiraCollab.getString(context),
+                      style: const TextStyle(
+                        fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
                     ),
                     Text(
-                      "User need to enter the valid password to enter the organizer-volunteer platform",
-                      style: TextStyle(fontSize: 16),
+                      Translation.subTitleSpiraCollab.getString(context),
+                      style: const TextStyle(fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -79,6 +79,7 @@ class _CollabPassPageState extends State<CollabPassPage> {
                 children: [
                   CustomTextField(
                     controller: _CollabPassController,
+                    obscureText: true,
                     labelText: "Password",
                   ),
                   SpacerV(
