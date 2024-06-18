@@ -54,7 +54,7 @@ class _EventDonationManagementPageState
     _startDateController.text = widget.startDate ?? "";
     _endDateController.text = widget.endDate ?? "";
     _bankAccountController.text = widget.bankAccount ?? "";
-    qrImageUrl = widget.photoEventUrl ?? "";
+    qrImageUrl = widget.photoEventUrl ?? "https://www.caspianpolicy.org/no-image.png";
   }
 
   Future<XFile?> pickImage() async {
@@ -100,6 +100,40 @@ class _EventDonationManagementPageState
     EventOrganizationBackgroundProvider eventOrganizationBackground =
         Provider.of<EventOrganizationBackgroundProvider>(context);
 
+    DateTime? selectedDate;
+
+    Future<void> selectStartDate(BuildContext context) async {
+      final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: selectedDate ?? DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+      if (pickedDate != null && pickedDate != selectedDate) {
+        setState(() {
+          selectedDate = pickedDate;
+          _startDateController.text =
+              "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}";
+        });
+      }
+    }
+
+    Future<void> selectEndDate(BuildContext context) async {
+      final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: selectedDate ?? DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+      if (pickedDate != null && pickedDate != selectedDate) {
+        setState(() {
+          selectedDate = pickedDate;
+          _endDateController.text =
+              "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}";
+        });
+      }
+    }
+
     return Scaffold(
       backgroundColor: Palette.lightGrey,
       appBar: const CustomAppBar(),
@@ -142,14 +176,24 @@ class _EventDonationManagementPageState
                     labelText: Translation.donationCurrent.getString(context),
                   ),
                   SpacerV(value: Dimens.space24),
-                  CustomTextField(
-                    controller: _startDateController,
-                    labelText: Translation.donationStartDate.getString(context),
+                  GestureDetector(
+                    onTap: () => selectStartDate(context),
+                    child: AbsorbPointer(
+                      child: CustomTextField(
+                        controller: _startDateController,
+                        labelText: "Start Date",
+                      ),
+                    ),
                   ),
                   SpacerV(value: Dimens.space24),
-                  CustomTextField(
-                    controller: _endDateController,
-                    labelText: Translation.donationEndDate.getString(context),
+                  GestureDetector(
+                    onTap: () => selectEndDate(context),
+                    child: AbsorbPointer(
+                      child: CustomTextField(
+                        controller: _endDateController,
+                        labelText: "End Date",
+                      ),
+                    ),
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
@@ -221,7 +265,7 @@ class _EventDonationManagementPageState
                               style: const TextStyle(color: Palette.white),
                             ),
                           )
-                        : ElevatedButton(   
+                        : ElevatedButton(
                             onPressed: () async {
                               final userUID = organizationUser.organizers.id;
                               final newDonation = EventDonationModel(
@@ -247,11 +291,12 @@ class _EventDonationManagementPageState
                                 comment: "",
                               );
 
-                              final newEventBackground = EventOrganizationBackgroundModel(
+                              final newEventBackground =
+                                  EventOrganizationBackgroundModel(
                                 id: userUID,
-                                backgroundDescription:
-                                    "No contents",
-                                photoEventUrl: 'https://www.caspianpolicy.org/no-image.png',
+                                backgroundDescription: "No contents",
+                                photoEventUrl:
+                                    'https://www.caspianpolicy.org/no-image.png',
                               );
 
                               await eventDonation
@@ -259,7 +304,8 @@ class _EventDonationManagementPageState
                               await eventFeedback
                                   .createFeedbackDetails(newFeedback);
                               await eventOrganizationBackground
-                                  .createEventOrganizationBackground(newEventBackground);
+                                  .createEventOrganizationBackground(
+                                      newEventBackground);
 
                               Navigator.push(
                                 context,

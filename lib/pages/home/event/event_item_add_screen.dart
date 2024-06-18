@@ -31,6 +31,24 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
         Provider.of<OrganizerProvider>(context);
     EventItemsProvider eventItems = Provider.of<EventItemsProvider>(context);
 
+    DateTime? selectedDate;
+
+    Future<void> selectRequestDate(BuildContext context) async {
+      final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: selectedDate ?? DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+      if (pickedDate != null && pickedDate != selectedDate) {
+        setState(() {
+          selectedDate = pickedDate;
+          _itemDateController.text =
+              "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}";
+        });
+      }
+    }
+
     return Scaffold(
       backgroundColor: Palette.lightGrey,
       appBar: const CustomAppBar(),
@@ -78,9 +96,14 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                     labelText: Translation.itemUnit.getString(context),
                   ),
                   SpacerV(value: Dimens.space24),
-                  CustomTextField(
-                    controller: _itemDateController,
-                    labelText: Translation.itemDate.getString(context),
+                  GestureDetector(
+                    onTap: () => selectRequestDate(context),
+                    child: AbsorbPointer(
+                      child: CustomTextField(
+                        controller: _itemDateController,
+                        labelText: Translation.itemDate.getString(context),
+                      ),
+                    ),
                   ),
                   SpacerV(value: Dimens.space24),
                   SizedBox(

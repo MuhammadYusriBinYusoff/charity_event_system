@@ -177,6 +177,8 @@ mixin Translation{
   static const String background = 'background';
   static const String backgroundSubtitle = 'backgroundSubtitle';
   static const String backgroundDescription = 'backgroundDescription';
+  static const String titleWhatsApp = 'titleWhatsApp';
+  static const String subTitleWhatsApp = 'subTitleWhatsApp';
   
 
   static const Map<String,dynamic> EN = {
@@ -348,6 +350,8 @@ mixin Translation{
     background: 'Backgrounds',
     backgroundSubtitle: 'Organization can tell the their background for user to know more about organizer. This is strategy could help organizer to get user engagement better',
     backgroundDescription: 'Background Description',
+    titleWhatsApp: 'Congratulation!',
+    subTitleWhatsApp: 'Here our Whatsapp group.Click the icon given',
 
   };
 
@@ -519,7 +523,9 @@ mixin Translation{
     feedbackComment: 'Komen',
     background: 'Latar Belakang',
     backgroundSubtitle: 'Penganjur boleh memberitahu latar belakang mereka untuk pengguna mengetahui lebih lanjut tentang penganjur. Strategi ini boleh membantu penganjur untuk mendapatkan penglibatan pengguna dengan lebih baik',
-    backgroundDescription: 'Deskripsi Latar Belakang'
+    backgroundDescription: 'Deskripsi Latar Belakang',
+    titleWhatsApp: 'Tahniah!',
+    subTitleWhatsApp: 'Ini Whatsapp group kami. Sile tekan gambar yang berikut'
 
   };
 }

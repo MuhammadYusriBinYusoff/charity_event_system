@@ -209,6 +209,7 @@ class CategoryCard extends StatelessWidget {
             await eventDetailsFile.deleteEventDetails(userId);
             await eventDonationsFile.deleteDonationDetails(userId);
             await eventFeedback.deleteFeedbackDetails(userId);
+            await eventTransactionFile.deleteAllEventTransaction();
             //ignore: use_build_context_synchronously
             Navigator.push(
               context,

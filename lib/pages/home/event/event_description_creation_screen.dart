@@ -49,7 +49,7 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
     super.initState();
     _charityEventTitleController.text = widget.title ?? "";
     _charityEventDescriptionController.text = widget.description ?? "";
-    bannerImageUrl = widget.imageUrl ?? "";
+    bannerImageUrl = widget.imageUrl ?? "https://www.caspianpolicy.org/no-image.png";
     _charityEventGroupLinkController.text = widget.groupLink ?? "";
     _charityCollabPassController.text = widget.collabPass ?? "";
   }
@@ -175,9 +175,12 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                                 eventDescription:
                                     _charityEventDescriptionController.text,
                                 type: "organizer",
-                                photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
-                                groupLinkUrl: _charityEventGroupLinkController.text,
-                                passwordCollaboration: _charityCollabPassController.text,
+                                photoEventUrl: bannerImageUrl ??
+                                    'https://www.caspianpolicy.org/no-image.png',
+                                groupLinkUrl:
+                                    _charityEventGroupLinkController.text,
+                                passwordCollaboration:
+                                    _charityCollabPassController.text,
                               );
                               eventDetailsFile.updateEventDetails(newEvent);
 
@@ -206,6 +209,10 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                               if (_charityEventTitleController
                                       .text.isNotEmpty &&
                                   _charityEventDescriptionController
+                                      .text.isNotEmpty &&
+                                  _charityEventGroupLinkController
+                                      .text.isNotEmpty &&
+                                  _charityCollabPassController
                                       .text.isNotEmpty) {
                                 final userUID = organizationUser.organizers.id;
                                 final newEvent = EventDetailsModel(
@@ -214,18 +221,20 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                                   eventDescription:
                                       _charityEventDescriptionController.text,
                                   type: "organizer",
-                                  photoEventUrl: bannerImageUrl ?? 'https://www.caspianpolicy.org/no-image.png',
-                                  groupLinkUrl: _charityEventGroupLinkController.text,
-                                  passwordCollaboration: "",
+                                  photoEventUrl: bannerImageUrl ??
+                                      'https://www.caspianpolicy.org/no-image.png',
+                                  groupLinkUrl:
+                                      _charityEventGroupLinkController.text,
+                                  passwordCollaboration: _charityCollabPassController.text,
                                 );
 
-                                await eventDetailsFile.createEventDetails(newEvent);
+                                await eventDetailsFile
+                                    .createEventDetails(newEvent);
 
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        EventGalleryPage(),
+                                    builder: (context) => EventGalleryPage(),
                                   ),
                                 );
                               } else {

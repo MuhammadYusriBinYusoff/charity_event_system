@@ -1,4 +1,3 @@
-
 import 'package:advance_pdf_viewer2/advance_pdf_viewer.dart';
 import 'package:charity_event_system/pages/widgets/custom_app_bar.dart';
 import 'package:charity_event_system/providers/providers.dart';
@@ -18,7 +17,7 @@ class _ViewTransactionPageState extends State<ViewTransactionPage> {
     super.initState();
   }
 
-    void showPDFDialog(String url) async {
+  void showPDFDialog(String url) async {
     PDFDocument document;
     try {
       document = await PDFDocument.fromURL(url);
@@ -50,37 +49,42 @@ class _ViewTransactionPageState extends State<ViewTransactionPage> {
         Provider.of<EventTransactionProvider>(context);
 
     return Scaffold(
-      appBar: const CustomAppBar(title: "Transaction History",),
-      body: ListView.builder(
-        itemCount: eventTransactionFile.transactionDetailsList.length,
-        itemBuilder: (context, index) {
-          final transaction =
-              eventTransactionFile.transactionDetailsList[index];
-          return Container(
-            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey, width: 1),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: ListTile(
-              leading: Icon(Icons.picture_as_pdf),
-              title: Text(transaction.pdfName ?? 'No Name'),
-              subtitle: Text("donated by: ${transaction.donatorName}" ?? ""),
-              onTap: () async {
-               
-                String? url = transaction.pdfUrls;
-                if (url != null) {
-                  showPDFDialog(url);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('No PDF URL found')),
-                  );
-                }
+      appBar: const CustomAppBar(
+        title: "Transaction History",
+      ),
+      body: eventTransactionFile.transactionDetailsList.isEmpty
+          ? const Center(child: Text('No transactions found', style: TextStyle(fontSize: 16),))
+          : ListView.builder(
+              itemCount: eventTransactionFile.transactionDetailsList.length,
+              itemBuilder: (context, index) {
+                final transaction =
+                    eventTransactionFile.transactionDetailsList[index];
+                return Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey, width: 1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: ListTile(
+                    leading: Icon(Icons.picture_as_pdf),
+                    title: Text(transaction.pdfName ?? 'No Name'),
+                    subtitle:
+                        Text("donated by: ${transaction.donatorName}" ?? ""),
+                    onTap: () async {
+                      String? url = transaction.pdfUrls;
+                      if (url != null) {
+                        showPDFDialog(url);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('No PDF URL found')),
+                        );
+                      }
+                    },
+                  ),
+                );
               },
             ),
-          );
-        },
-      ),
     );
   }
 }

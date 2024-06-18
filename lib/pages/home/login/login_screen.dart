@@ -127,6 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                               organizationUser.organizers.verify == null) {
                             eventVolunteerFile.resetEventVolunteer();
                             eventItems.resetEventItem();
+                            eventTransactionFile.resetEventTransaction();
                             eventDonationsFile.resetEventDonation();
                             eventGalleryFile.resetEventGallery();
                             await organizationUser.fetchAllOrganizers();

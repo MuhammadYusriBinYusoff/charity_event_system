@@ -15,14 +15,19 @@ class WhatsAppPage extends StatelessWidget {
   }) : super(key: key);
 
   Future<void> _openLink() async {
-    final whatsappUrl = Uri.parse(groupLink ??
-        "https://www.youtube.com/watch?v=wI1IroOdVvE&list=PLpeOWJ81yOvbxtJWU4z8jzhl_DRjuG1Jv&index=26");
+  final defaultUrl = "https://www.youtube.com/watch?v=wI1IroOdVvE&list=PLpeOWJ81yOvbxtJWU4z8jzhl_DRjuG1Jv&index=26";
+  final whatsappUrl = Uri.parse(groupLink ?? defaultUrl);
+
+  try {
     if (await canLaunchUrl(whatsappUrl)) {
       await launchUrl(whatsappUrl);
     } else {
-      throw 'Could not launch $whatsappUrl';
+      print('Could not launch $whatsappUrl');
     }
+  } catch (e) {
+    print('Error launching URL: $e');
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -34,21 +39,24 @@ class WhatsAppPage extends StatelessWidget {
         showCustomPreviousButton: true,
         colorCustomPreviousButton: Palette.black,
         targetPage: EventPostingDescriptionPage(
-                              index: index,
-                            ),
+          index: index,
+        ),
       ),
       body: Stack(
         children: [
           Center(
-            child: IconButton(
-                icon: const Icon(
-                  Icons.phone,
-                  size: 200.0,
-                  color: Colors.green,
-                ),
-                onPressed: () async {
-                  await _openLink();
-                }),
+            child: Container(
+              padding: const EdgeInsets.only(top: 100.0),
+              child: IconButton(
+                  icon: Image.asset(
+                    Images.whatsappIconPng,
+                    width: 177,
+                    height: 184,
+                  ),
+                  onPressed: () async {
+                    await _openLink();
+                  }),
+            ),
           ),
           SpacerV(value: Dimens.space32),
           Positioned(
@@ -57,19 +65,19 @@ class WhatsAppPage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(45),
               color: Colors.transparent,
-              child: const Center(
+              child: Center(
                 child: Column(
                   children: [
                     Text(
-                      "Congratulation!",
-                      style: TextStyle(
+                      Translation.titleWhatsApp.getString(context),
+                      style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "Here our Whatsapp group. Click the icon given",
-                      style: TextStyle(fontSize: 16),
+                      Translation.subTitleWhatsApp.getString(context),
+                      style: const TextStyle(fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
                   ],

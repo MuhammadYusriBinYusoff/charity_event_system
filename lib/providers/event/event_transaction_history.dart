@@ -64,6 +64,22 @@ class EventTransactionProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteAllEventTransaction() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseFirestore.instance
+            .collection("transaction")
+            .doc(user.uid)
+            .delete();
+
+        notifyListeners();
+      }
+    } catch (error) {
+      print('Error deleting transaction: $error');
+    }
+  }
+
 
   void resetEventTransaction() async{
     _transactionDetails = EventTransactionModel();
