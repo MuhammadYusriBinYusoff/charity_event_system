@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                             await eventGalleryFile.fetchEventGalleryData();
                             await eventVolunteerFile.fetchEventVolunteerData();
                             await eventItems.fetchEventItemData();
-                            await eventTransactionFile.fetchEventTransactionData();
+                            await eventTransactionFile.fetchEventTransactionData(null);
                             await eventCollaboration
                                 .fetchEventCollaborationData(null);
                             await eventDetailsFile.fetchAllEventDetails();

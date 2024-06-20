@@ -224,6 +224,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   builder: (context) =>
                                       EventPostingDescriptionPage(
                                     index: i,
+                                    id: eventDetailsFile
+                                    .eventDetailsList[i].id,
                                   ),
                                 ),
                               );

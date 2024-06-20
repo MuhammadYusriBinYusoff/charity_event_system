@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
@@ -159,7 +161,7 @@ class CategoryCard extends StatelessWidget {
               Translation.manageItem.getString(context)) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => EventItemAddPage()),
+              MaterialPageRoute(builder: (context) => const EventItemAddPage()),
             );
           } else if (categoryItem.name ==
               Translation.teamPlanning.getString(context)) {
@@ -217,7 +219,7 @@ class CategoryCard extends StatelessWidget {
             );
           }else if (categoryItem.name ==
               "Transaction History") {
-            await eventTransactionFile.fetchEventTransactionData();
+            await eventTransactionFile.fetchEventTransactionData(null);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ViewTransactionPage()),

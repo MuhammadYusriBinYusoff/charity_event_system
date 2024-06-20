@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:charity_event_system/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,11 +9,45 @@ class EventTransactionProvider extends ChangeNotifier {
   List<EventTransactionModel> _transactionDetailsList = [];
 
   EventTransactionModel get transactionDetails => _transactionDetails;
-  List<EventTransactionModel> get transactionDetailsList => _transactionDetailsList;
+  List<EventTransactionModel> get transactionDetailsList =>
+      _transactionDetailsList;
 
-  Future<void> createTransactionDetails(EventTransactionModel newTransactionDetails, String? userId) async {
+  late Stream<List<EventTransactionModel>> transactionDataStream;
+  final _transactionDataController =
+      StreamController<List<EventTransactionModel>>.broadcast();
+  Timer? _debounce;
+
+  EventTransactionProvider() {
+    transactionDataStream = _transactionDataController.stream;
+    _init();
+  }
+
+  void _init() async {
+    await fetchEventTransactionData(null);
+  }
+
+  void _updateTransactionData(List<EventTransactionModel> data) {
+    if (!_areListsEqual(_transactionDetailsList, data)) {
+      data.sort((a, b) => a.id!.compareTo(b.id!));
+      _transactionDetailsList = data;
+      _transactionDataController.add(data);
+      notifyListeners();
+    }
+  }
+
+  bool _areListsEqual(
+      List<EventTransactionModel> list1, List<EventTransactionModel> list2) {
+    if (list1.length != list2.length) return false;
+    for (int i = 0; i < list1.length; i++) {
+      if (list1[i].id != list2[i].id) return false;
+    }
+    return true;
+  }
+
+  Future<void> createTransactionDetails(
+      EventTransactionModel newTransactionDetails, String? userId) async {
     _transactionDetails = newTransactionDetails;
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection("transaction")
         .doc(userId)
         .collection("list transaction")
@@ -21,34 +56,33 @@ class EventTransactionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchEventTransactionData() async {
+  Future<void> fetchEventTransactionData(String? curr) async {
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      String eventTransactionId = user.uid;
-      try {
-        QuerySnapshot<Map<String, dynamic>> querySnapshot =
-            await FirebaseFirestore.instance
-                .collection('transaction')
-                .doc(eventTransactionId)
-                .collection("list transaction")
-                .get();
+      //String eventTransactionId = user.uid;
+      String eventTransactionId = curr ?? user.uid;
 
-        _transactionDetailsList = querySnapshot.docs
-            .map((doc) => EventTransactionModel.fromSnapshot(doc))
-            .toList();
-
-        notifyListeners();
-      } catch (error) {
-        print('Error fetching transaction List: $error');
-      }
+      FirebaseFirestore.instance
+          .collection('transaction')
+          .doc(eventTransactionId)
+          .collection("list transaction")
+          .snapshots()
+          .listen((snapshot) {
+        // Debounce the updates to avoid frequent UI updates
+        if (_debounce?.isActive ?? false) _debounce!.cancel();
+        _debounce = Timer(const Duration(milliseconds: 500), () {
+          _updateTransactionData(snapshot.docs
+              .map((doc) => EventTransactionModel.fromSnapshot(doc))
+              .toList());
+        });
+      });
     } else {
-      print('No user signed in.');
+      print('No transaction.');
     }
   }
 
   Future<void> fetchAllTransactionDetails(String? id) async {
-    print("test");
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance
@@ -59,6 +93,7 @@ class EventTransactionProvider extends ChangeNotifier {
       _transactionDetailsList = querySnapshot.docs
           .map((doc) => EventTransactionModel.fromSnapshot(doc))
           .toList();
+      notifyListeners();
     } catch (error) {
       print('Error fetching transaction List: $error');
     }
@@ -72,7 +107,6 @@ class EventTransactionProvider extends ChangeNotifier {
             .collection("transaction")
             .doc(user.uid)
             .delete();
-
         notifyListeners();
       }
     } catch (error) {
@@ -80,10 +114,15 @@ class EventTransactionProvider extends ChangeNotifier {
     }
   }
 
-
-  void resetEventTransaction() async{
+  void resetEventTransaction() {
     _transactionDetails = EventTransactionModel();
     notifyListeners();
   }
-  
+
+  @override
+  void dispose() {
+    _transactionDataController.close();
+    _debounce?.cancel();
+    super.dispose();
+  }
 }

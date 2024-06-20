@@ -185,6 +185,9 @@ mixin Translation{
   static const String donateInst2 = 'donateInst2';
   static const String welcomeSpiraCollab = 'welcomeSpiraCollab';
   static const String subTitleSpiraCollab = 'subTitleSpiraCollab';
+  static const String donatorList = 'donatorList';
+  static const String uploadSucessfully = 'uploadSuccessfully';
+  static const String noTransaction = 'noTransaction';
   
 
   static const Map<String,dynamic> EN = {
@@ -314,7 +317,7 @@ mixin Translation{
     deleteGalleryImageQuestion: 'Are you sure you want to delete this image?',
     galleryInfoTitle: 'Gallery Information',
     galleryInfoSub: 'What organizer can do on this page \n1. Organizer can upload and view their image \n2. To delete image, organizer need to hold pressed the picture they want to delete',
-    spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff, owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
+    spiralCareDisclaimer: "Spiral Care Disclaimer: Hi, I'm Muhammad Yusri Bin Yusoff (+6011-23238869), owner of the Spiral Care application. On behalf of the event organizers, we're seeking your support. Rest assured, all organizations registered in our app undergo thorough background checks and approval by Spiral Care dedicated team.",
     volunteerRegisterTitle: 'Volunteer Registration Form',
     volunteerOrganizerView: 'Volunteer Checklist',
     volunteerInfoTitle: 'Volunteer Name',
@@ -364,6 +367,9 @@ mixin Translation{
     donateInst2: 'Step 2: Upload the Receipt (.pdf)',
     welcomeSpiraCollab: 'Welcome to SpiraCollaboration',
     subTitleSpiraCollab: 'User need to enter the valid password to enter the organizer-volunteer platform',
+    donatorList: 'List of Donator',
+    uploadSucessfully: 'Receipt uploaded successfully',
+    noTransaction: 'No transaction has been made yet',
 
   };
 
@@ -544,6 +550,9 @@ mixin Translation{
     donateInst2: 'Langkah 2: Muat naik Resit (.pdf)',
     welcomeSpiraCollab: 'Selamat Datang ke SpiraCollaboration',
     subTitleSpiraCollab: 'Pengguna perlu memasukkan kata laluan yang sah untuk memasuki platform penganjur-sukarelawan',
+    donatorList: 'Senarai Penderma',
+    uploadSucessfully: 'Resit telah berjaya dimuat naik',
+    noTransaction: 'Tiada transaksi lagi',
 
   };
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,14 +14,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart';
 
 class EventPostingDescriptionPage extends StatefulWidget {
   final int? index;
+  final String? id;
 
   const EventPostingDescriptionPage({
     Key? key,
     this.index,
+    this.id,
   }) : super(key: key);
 
   @override
@@ -33,6 +38,7 @@ class _EventPostingDescriptionPageState
   String? pdfName;
   bool isLoading = false;
   bool isUploaded = false;
+  bool displaySnackbar = true;
 
   Future<FilePickerResult?> pickPDF() async {
     return await FilePicker.platform.pickFiles(
@@ -69,6 +75,33 @@ class _EventPostingDescriptionPageState
     }
   }
 
+  Future<void> _openLink(String? qrCodeLink) async {
+    const defaultUrl =
+        "https://www.youtube.com/watch?v=wI1IroOdVvE&list=PLpeOWJ81yOvbxtJWU4z8jzhl_DRjuG1Jv&index=26";
+    final qrUrl = Uri.parse(qrCodeLink ?? defaultUrl);
+
+    try {
+      if (await canLaunchUrl(qrUrl)) {
+        await launchUrl(qrUrl);
+      } else {
+        print('Could not launch $qrUrl');
+      }
+    } catch (e) {
+      print('Error launching URL: $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      EventTransactionProvider eventTransactionFile =
+          Provider.of<EventTransactionProvider>(context, listen: false);
+      await eventTransactionFile.fetchEventTransactionData(widget.id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     EventDetailsProvider eventDetailsFile =
@@ -82,6 +115,7 @@ class _EventPostingDescriptionPageState
         Provider.of<OrganizerProvider>(context);
     EventTransactionProvider eventTransactionFile =
         Provider.of<EventTransactionProvider>(context);
+    PersonnelProvider personnelUser = Provider.of<PersonnelProvider>(context);
 
     return Scaffold(
       appBar: const CustomAppBar(
@@ -439,7 +473,7 @@ class _EventPostingDescriptionPageState
                     SpacerV(value: Dimens.space32),
                     Text(
                       Translation.stepDonate.getString(context),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -447,7 +481,7 @@ class _EventPostingDescriptionPageState
                     SpacerV(value: Dimens.space16),
                     Text(
                       Translation.donateInstruction.getString(context),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
@@ -484,13 +518,20 @@ class _EventPostingDescriptionPageState
                     SpacerV(
                       value: Dimens.space16,
                     ),
-                    CachedNetworkImage(
-                      imageUrl: eventDonationsFile
-                              .donationDetailsList[widget.index ?? 0]
-                              .photoEventUrl ??
-                          'https://www.caspianpolicy.org/no-image.png', // Replace with your image URL
-                      width: double.infinity,
-                      fit: BoxFit.fill,
+                    GestureDetector(
+                      onLongPress: () async {
+                        await _openLink(eventDonationsFile
+                            .donationDetailsList[widget.index ?? 0]
+                            .photoEventUrl);
+                      },
+                      child: CachedNetworkImage(
+                        imageUrl: eventDonationsFile
+                                .donationDetailsList[widget.index ?? 0]
+                                .photoEventUrl ??
+                            'https://www.caspianpolicy.org/no-image.png', // Replace with your image URL
+                        width: double.infinity,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                     SpacerV(
                       value: Dimens.space24,
@@ -508,40 +549,61 @@ class _EventPostingDescriptionPageState
                     ElevatedButton(
                       onPressed: () async {
                         if (isUploaded) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(Translation.uploadSucessfully
+                                  .getString(context)),
+                              backgroundColor: Colors.green,
+                              duration: const Duration(seconds: 3),
+                            ),
+                          );
                         } else {
                           FilePickerResult? result = await pickPDF();
                           if (result != null) {
+                            setState(() {
+                              displaySnackbar = true;
+                            });
                             PlatformFile file = result.files.first;
                             await uploadPDF(
-                                file,
-                                eventDetailsFile
-                                    .eventDetailsList[widget.index ?? 0].id);
+                              file,
+                              eventDetailsFile
+                                  .eventDetailsList[widget.index ?? 0].id,
+                            );
 
                             String newId = const Uuid().v4();
-                            final currentUserName =
-                                organizationUser.organizers.picName;
+                            String? currentUserName;
+                            if (organizationUser.organizers.id != null) {
+                              currentUserName =
+                                  organizationUser.organizers.picName;
+                            } else {
+                              currentUserName =
+                                  personnelUser.personnels.personnelName;
+                            }
 
                             final newItem = EventTransactionModel(
-                                id: newId,
-                                pdfUrls: pdfUrl,
-                                pdfName: pdfName,
-                                donatorName: currentUserName);
+                              id: newId,
+                              pdfUrls: pdfUrl,
+                              pdfName: pdfName,
+                              donatorName: currentUserName,
+                            );
 
-                            eventTransactionFile.createTransactionDetails(
-                                newItem,
-                                eventDetailsFile
-                                    .eventDetailsList[widget.index ?? 0].id);
+                            await eventTransactionFile.createTransactionDetails(
+                              newItem,
+                              eventDetailsFile
+                                  .eventDetailsList[widget.index ?? 0].id,
+                            );
 
                             setState(() {
                               isUploaded = true;
                             });
 
-                            // ignore: use_build_context_synchronously
+                            // Show Snackbar for successful upload
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Upload successful!"),
-                                backgroundColor: Colors.green,
-                                duration: Duration(seconds: 3),
+                              SnackBar(
+                                content: Text(Translation.uploadSucessfully
+                                    .getString(context)),
+                                backgroundColor: Palette.greenIndicator,
+                                duration: const Duration(seconds: 3),
                               ),
                             );
                           }
@@ -560,6 +622,85 @@ class _EventPostingDescriptionPageState
                         isUploaded ? "Successful" : "Upload PDF",
                         style: const TextStyle(color: Palette.white),
                       ),
+                    ),
+                    SpacerV(
+                      value: Dimens.space24,
+                    ),
+                    Text(
+                      Translation.donatorList.getString(context),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SpacerV(
+                      value: Dimens.space8,
+                    ),
+                    StreamBuilder<List<EventTransactionModel>>(
+                      stream: eventTransactionFile.transactionDataStream,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                                ConnectionState.active &&
+                            snapshot.hasData) {
+                          final donatorNames = snapshot.data!
+                              .map((transaction) =>
+                                  transaction.donatorName ?? 'Unknown')
+                              .toList();
+
+                          if (donatorNames.isEmpty) {
+                            return Center(
+                              child: Text(
+                                Translation.noTransaction.getString(context),
+                                style: const TextStyle(
+                                    fontSize: 12),
+                              ),
+                            );
+                          }
+
+                          return SizedBox(
+                            height: Dimens.space200,
+                            child: Scrollbar(
+                              trackVisibility: true,
+                              thickness: 6,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemCount: donatorNames.length,
+                                itemBuilder: (context, index) {
+                                  final donatorName = donatorNames[index];
+                                  return Container(
+                                    margin:
+                                        EdgeInsets.only(bottom: Dimens.space1),
+                                    padding: EdgeInsets.all(Dimens.space4),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Palette.purpleMain,
+                                          width: Dimens.space2),
+                                    ),
+                                    child: Text(
+                                      '${index + 1}) $donatorName',
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          );
+                        }
+
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+
+                        return Center(
+                          child: Text(
+                            Translation.noTransaction.getString(context),
+                            style: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      },
                     ),
                     SpacerV(
                       value: Dimens.space24,
