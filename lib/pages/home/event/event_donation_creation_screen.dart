@@ -296,7 +296,7 @@ class _EventDonationManagementPageState
                               final newEventBackground =
                                   EventOrganizationBackgroundModel(
                                 id: userUID,
-                                backgroundDescription: "No contents",
+                                backgroundDescription: "About Us:\n\nContact Us:\n\nAddress:",
                                 photoEventUrl:
                                     'https://www.caspianpolicy.org/no-image.png',
                               );
