@@ -14,13 +14,18 @@ class EventVolunteerProvider extends ChangeNotifier {
       VolunteerModel newVolunteerDetails, String? organizerId) async {
     _volunteerDetails = newVolunteerDetails;
 
-    FirebaseFirestore.instance
+    try{
+      FirebaseFirestore.instance
         .collection("volunteer")
         .doc(organizerId)
         .collection("list volunteer")
         .doc(newVolunteerDetails.id)
         .set(_volunteerDetails.toJson());
     notifyListeners();
+    print("Volunteer Data sucessfully created");
+    }catch (error) {
+      print('Error creating volunteer: $error');
+    }
   }
 
   Future<void> fetchEventVolunteerData() async {

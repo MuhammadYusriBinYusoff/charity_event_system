@@ -12,13 +12,19 @@ class EventItemsProvider extends ChangeNotifier {
 
   Future<void> createItemDetails(EventItemsModel newItemDetails, String? userId) async {
     _itemDetails = newItemDetails;
-    FirebaseFirestore.instance
+    try{
+      FirebaseFirestore.instance
         .collection("item")
         .doc(userId)
         .collection("list item")
         .doc(newItemDetails.id)
         .set(_itemDetails.toJson());
     notifyListeners();
+    print("Item Data sucessfully created");
+    } catch (error) {
+      print('Error creating item: $error');
+    }
+    
   }
 
   Future<void> fetchEventItemData() async {
@@ -48,7 +54,6 @@ class EventItemsProvider extends ChangeNotifier {
   }
 
   Future<void> fetchAllItemDetails(String? id) async {
-    print("test");
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance

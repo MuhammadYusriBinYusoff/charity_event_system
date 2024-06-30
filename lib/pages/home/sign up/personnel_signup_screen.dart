@@ -117,6 +117,7 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
                 controller: _personnelNameController,
                 labelText: Translation.personnelName.getString(context),
                 compulsory: true,
+                maxWords: 13,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(

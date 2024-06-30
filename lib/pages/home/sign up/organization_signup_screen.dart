@@ -116,6 +116,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 controller: _organizationNumberController,
                 labelText: Translation.organizationNumber.getString(context),
                 compulsory: true,
+                maxWords: 30,
               ),
               SpacerV(
                 value: Dimens.space16,
@@ -124,18 +125,21 @@ class _SignUpPageState extends State<SignUpPage> {
                 controller: _organizationNameController,
                 labelText: Translation.organizationName.getString(context),
                 compulsory: true,
+                multiLine: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _organizationContactController,
                 labelText: Translation.organizationContact.getString(context),
                 compulsory: true,
+                maxWords: 12,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _organizationAdressController,
                 labelText: Translation.organizationAdress.getString(context),
                 compulsory: true,
+                multiLine: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(

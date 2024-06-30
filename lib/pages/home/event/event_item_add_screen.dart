@@ -82,18 +82,21 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                   ),
                   SpacerV(value: Dimens.space20),
                   CustomTextField(
+                    compulsory: true,
                     maxWords: 15,
                     controller: _itemNameController,
                     labelText: Translation.itemName.getString(context),
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
+                    compulsory: true,
                     maxWords: 4,
                     controller: _itemQuantityController,
                     labelText: Translation.itemQuantity.getString(context),
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
+                    compulsory: true,
                     maxWords: 10,
                     controller: _itemUnitController,
                     labelText: Translation.itemUnit.getString(context),
@@ -114,25 +117,39 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                     height: Dimens.space40,
                     child: ElevatedButton(
                       onPressed: () {
-                        final userUID = organizationUser.organizers.id;
-                        String newId = const Uuid().v4();
-                        final newItem = EventItemsModel(
-                          id: newId,
-                          itemName: _itemNameController.text,
-                          itemQuantity: _itemQuantityController.text,
-                          itemUnit: _itemUnitController.text,
-                          itemDate: _itemDateController.text,
-                        );
+                        if (_itemNameController.text != "" &&
+                            _itemQuantityController.text != "" &&
+                            _itemDateController.text != "" &&
+                            _itemUnitController.text != "") {
+                          final userUID = organizationUser.organizers.id;
+                          String newId = const Uuid().v4();
+                          final newItem = EventItemsModel(
+                            id: newId,
+                            itemName: _itemNameController.text,
+                            itemQuantity: _itemQuantityController.text,
+                            itemUnit: _itemUnitController.text,
+                            itemDate: _itemDateController.text,
+                          );
 
-                        eventItems.createItemDetails(newItem, userUID);
+                          eventItems.createItemDetails(newItem, userUID);
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EventItemAddPage(
-                                    session: widget.session,
-                                  )),
-                        );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EventItemAddPage(
+                                      session: widget.session,
+                                    )),
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => ErrorAlertDialog(
+                              title: Translation.errorTitle.getString(context),
+                              content: Translation.errorFieldNotFilled
+                                  .getString(context),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Palette.purpleMain,

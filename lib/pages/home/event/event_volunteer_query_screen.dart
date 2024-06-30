@@ -63,12 +63,12 @@ class _VolunteerQueryPageState extends State<VolunteerQueryPage> {
                         'Id', MediaQuery.of(context).size.width * 0.1, 8, 0),
                     buildDataColumn(
                         Translation.personnelName.getString(context),
-                        MediaQuery.of(context).size.width * 0.6,
+                        MediaQuery.of(context).size.width * 0.65,
                         0,
                         0),
                     buildDataColumn(
                         Translation.personnelContact.getString(context),
-                        MediaQuery.of(context).size.width * 0.3,
+                        MediaQuery.of(context).size.width * 0.4,
                         0,
                         0),
                     buildDataColumn(Translation.personnelIc.getString(context),

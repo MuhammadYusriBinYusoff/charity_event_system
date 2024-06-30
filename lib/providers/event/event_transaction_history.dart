@@ -47,13 +47,18 @@ class EventTransactionProvider extends ChangeNotifier {
   Future<void> createTransactionDetails(
       EventTransactionModel newTransactionDetails, String? userId) async {
     _transactionDetails = newTransactionDetails;
-    await FirebaseFirestore.instance
-        .collection("transaction")
-        .doc(userId)
-        .collection("list transaction")
-        .doc(newTransactionDetails.id)
-        .set(_transactionDetails.toJson());
-    notifyListeners();
+    try {
+      await FirebaseFirestore.instance
+          .collection("transaction")
+          .doc(userId)
+          .collection("list transaction")
+          .doc(newTransactionDetails.id)
+          .set(_transactionDetails.toJson());
+      notifyListeners();
+      print("Transaction Data sucessfully created");
+    } catch (error) {
+      print('Error creating transaction: $error');
+    }
   }
 
   Future<void> fetchEventTransactionData(String? curr) async {

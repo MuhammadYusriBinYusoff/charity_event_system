@@ -170,12 +170,14 @@ class _EventDonationManagementPageState
                     isDigitOnly: true,
                     controller: _targetMoneyController,
                     labelText: Translation.donationTarget.getString(context),
+                    maxWords: 8,
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
                     isDigitOnly: true,
                     controller: _currentCollectedController,
                     labelText: Translation.donationCurrent.getString(context),
+                    maxWords: 8,
                   ),
                   SpacerV(value: Dimens.space24),
                   GestureDetector(
@@ -202,6 +204,7 @@ class _EventDonationManagementPageState
                     controller: _bankAccountController,
                     labelText:
                         Translation.donationBankAccount.getString(context),
+                    maxWords: 20,
                   ),
                   SpacerV(value: Dimens.space24),
                   Text(

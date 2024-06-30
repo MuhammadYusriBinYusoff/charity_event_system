@@ -12,16 +12,23 @@ class EventGalleryProvider extends ChangeNotifier {
 
   Future<void> createEventGallery(EventGalleryModel newEventGallery) async {
     _eventGallery = newEventGallery;
-    await FirebaseFirestore.instance
+    try{
+      await FirebaseFirestore.instance
         .collection("eventGallery")
         .doc(newEventGallery.id)
         .set(_eventGallery.toJson());
     notifyListeners();
+    print("Gallery Data sucessfully created");
+
+    } catch (error) {
+      print('Error creating gallery: $error');
+    }
   }
 
   Future<void> updateEventGallery(EventGalleryModel newEventGallery) async {
     _eventGallery = newEventGallery;
-    await FirebaseFirestore.instance
+    try{
+      await FirebaseFirestore.instance
         .collection("eventGallery")
         .doc(newEventGallery.id)
         .update(_eventGallery.toJson());
@@ -32,8 +39,11 @@ class EventGalleryProvider extends ChangeNotifier {
     } else {
       _eventGalleryList.add(newEventGallery);
     }
-
     notifyListeners();
+    print("Gallery Data sucessfully Updated");
+    } catch (error) {
+      print('Error update gallery: $error');
+    }
   }
 
   Future<void> fetchEventGalleryData() async {

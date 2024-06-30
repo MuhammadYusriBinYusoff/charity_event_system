@@ -4,19 +4,28 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 class EventOrganizationBackgroundProvider extends ChangeNotifier {
-  EventOrganizationBackgroundModel _eventOrganizationBackground= EventOrganizationBackgroundModel();
+  EventOrganizationBackgroundModel _eventOrganizationBackground =
+      EventOrganizationBackgroundModel();
   List<EventOrganizationBackgroundModel> _eventOrganizationBackgroundList = [];
 
-  EventOrganizationBackgroundModel get eventOrganizationBackground => _eventOrganizationBackground;
-   List<EventOrganizationBackgroundModel> get eventOrganizationBackgroundList => _eventOrganizationBackgroundList;
+  EventOrganizationBackgroundModel get eventOrganizationBackground =>
+      _eventOrganizationBackground;
+  List<EventOrganizationBackgroundModel> get eventOrganizationBackgroundList =>
+      _eventOrganizationBackgroundList;
 
-  Future<void> createEventOrganizationBackground(EventOrganizationBackgroundModel newEventOrganizationBackground) async {
+  Future<void> createEventOrganizationBackground(
+      EventOrganizationBackgroundModel newEventOrganizationBackground) async {
     _eventOrganizationBackground = newEventOrganizationBackground;
-    await FirebaseFirestore.instance
-        .collection("eventOrganizationBackground")
-        .doc(newEventOrganizationBackground.id)
-        .set(_eventOrganizationBackground.toJson());
-    notifyListeners();
+    try {
+      await FirebaseFirestore.instance
+          .collection("eventOrganizationBackground")
+          .doc(newEventOrganizationBackground.id)
+          .set(_eventOrganizationBackground.toJson());
+      notifyListeners();
+      print("Organizer Background Data sucessfully created");
+    } catch (error) {
+      print('Error creating organizers background: $error');
+    }
   }
 
   Future<void> fetchEventOrganizationBackgroundData() async {
@@ -27,12 +36,15 @@ class EventOrganizationBackgroundProvider extends ChangeNotifier {
       String eventOrganizationBackgroundId = user.uid;
       CollectionReference eventOrganizationBackgroundCollection =
           FirebaseFirestore.instance.collection('eventOrganizationBackground');
-      DocumentSnapshot<Map<String, dynamic>> eventOrganizationBackgroundData = await eventOrganizationBackgroundCollection
-          .doc(eventOrganizationBackgroundId)
-          .get() as DocumentSnapshot<Map<String, dynamic>>;
+      DocumentSnapshot<Map<String, dynamic>> eventOrganizationBackgroundData =
+          await eventOrganizationBackgroundCollection
+              .doc(eventOrganizationBackgroundId)
+              .get() as DocumentSnapshot<Map<String, dynamic>>;
 
       if (eventOrganizationBackgroundData.exists) {
-        _eventOrganizationBackground = EventOrganizationBackgroundModel.fromSnapshot(eventOrganizationBackgroundData);
+        _eventOrganizationBackground =
+            EventOrganizationBackgroundModel.fromSnapshot(
+                eventOrganizationBackgroundData);
         notifyListeners();
       } else {
         print('Event Organization Background data not found.');
@@ -42,48 +54,58 @@ class EventOrganizationBackgroundProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateEventOrganizationBackground(EventOrganizationBackgroundModel newEventOrganizationBackground) async {
+  Future<void> updateEventOrganizationBackground(
+      EventOrganizationBackgroundModel newEventOrganizationBackground) async {
     _eventOrganizationBackground = newEventOrganizationBackground;
-    await FirebaseFirestore.instance
-        .collection("eventOrganizationBackground")
-        .doc(newEventOrganizationBackground.id)
-        .update(_eventOrganizationBackground.toJson());
+    try {
+      await FirebaseFirestore.instance
+          .collection("eventOrganizationBackground")
+          .doc(newEventOrganizationBackground.id)
+          .update(_eventOrganizationBackground.toJson());
 
-    int index = _eventOrganizationBackgroundList.indexWhere((background) => background.id == newEventOrganizationBackground.id);
-    if (index != -1) {
-      _eventOrganizationBackgroundList[index] = newEventOrganizationBackground;
-    } else {
-      _eventOrganizationBackgroundList.add(newEventOrganizationBackground);
+      int index = _eventOrganizationBackgroundList.indexWhere(
+          (background) => background.id == newEventOrganizationBackground.id);
+      if (index != -1) {
+        _eventOrganizationBackgroundList[index] =
+            newEventOrganizationBackground;
+      } else {
+        _eventOrganizationBackgroundList.add(newEventOrganizationBackground);
+      }
+
+      notifyListeners();
+      print("Organizer Background Data sucessfully updated");
+    } catch (error) {
+      print('Error update organizers background: $error');
     }
-
-    notifyListeners();
   }
 
   Future<void> fetchAllEventOrganizationBackground() async {
     try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
-          .collection('eventOrganizationBackground')
-          .get();
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('eventOrganizationBackground')
+              .get();
 
       _eventOrganizationBackgroundList = querySnapshot.docs
           .map((doc) => EventOrganizationBackgroundModel.fromSnapshot(doc))
           .toList();
-
     } catch (error) {
       print('Error fetching event Organization Background List: $error');
     }
   }
 
-  Future<void> deleteEventOrganizationBackground(String? eventOrganizationBackgroundId) async {
+  Future<void> deleteEventOrganizationBackground(
+      String? eventOrganizationBackgroundId) async {
     try {
       await FirebaseFirestore.instance
           .collection('eventOrganizationBackground')
           .doc(eventOrganizationBackgroundId)
           .delete();
 
-      _eventOrganizationBackgroundList.removeWhere((event) => event.id == eventOrganizationBackgroundId);
+      _eventOrganizationBackgroundList
+          .removeWhere((event) => event.id == eventOrganizationBackgroundId);
       if (_eventOrganizationBackground.id == eventOrganizationBackgroundId) {
-        _eventOrganizationBackground = EventOrganizationBackgroundModel(); 
+        _eventOrganizationBackground = EventOrganizationBackgroundModel();
       }
 
       notifyListeners();
@@ -92,9 +114,8 @@ class EventOrganizationBackgroundProvider extends ChangeNotifier {
     }
   }
 
-  void resetEventOrganizationBackground() async{
+  void resetEventOrganizationBackground() async {
     _eventOrganizationBackground = EventOrganizationBackgroundModel();
     notifyListeners();
   }
-  
 }

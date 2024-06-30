@@ -56,18 +56,21 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                 controller: _picNameController,
                 labelText: Translation.picFullname.getString(context),
                 compulsory: true,
+                maxWords: 13,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picContactController,
                 labelText: Translation.picContact.getString(context),
                 compulsory: true,
+                maxWords: 12,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picIcController,
                 labelText: Translation.picIcNumber.getString(context),
                 compulsory: true,
+                maxWords: 12
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
@@ -125,7 +128,7 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                           verify: "Not Verified",
                         );
 
-                        organizationUser.createOrganizer(newUser);
+                        await organizationUser.createOrganizer(newUser);
 
                         Navigator.push(
                           context,

@@ -108,6 +108,11 @@ class _LoginPageState extends State<LoginPage> {
                       if (user != null) {
                         String? role = await getUserCategory(user.uid);
 
+                        print("User Email: ${_usernameController.text}");
+                        print("User Password: ${_passwordController.text}");
+                        print("Id tracker: ${user.uid}");
+                        print("role: $role");
+
                         if (role == "Admin") {
                           Navigator.pushReplacement(
                             context,
@@ -153,6 +158,13 @@ class _LoginPageState extends State<LoginPage> {
                               await eventFeedback.fetchAllFeedbackDetails(
                                   eventDetailsFile.eventDetailsList[i].id);
                               await eventFeedback.fetchAndStoreScores(eventFeedback.getTotalCurrentScore());
+                            }
+                            if (organizationUser.organizers.id != null) {
+                              print("Organization ID check: True");
+                            } else if(personnelUser.personnels.id != null){
+                              print("Personnel user ID check: True");
+                            }else{
+                              print("No user");
                             }
                             Navigator.push(
                               context,

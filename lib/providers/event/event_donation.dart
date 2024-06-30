@@ -13,16 +13,22 @@ class EventDonationProvider extends ChangeNotifier {
   Future<void> createDonationDetails(
       EventDonationModel newDonationDetails) async {
     _donationDetails = newDonationDetails;
-    await FirebaseFirestore.instance
+    try{
+      await FirebaseFirestore.instance
         .collection("moneyDonation")
         .doc(newDonationDetails.id)
         .set(_donationDetails.toJson());
     notifyListeners();
+    print("Donation Data sucessfully created");
+    } catch (error) {
+      print('Error creating donation: $error');
+    }
   }
 
   Future<void> updateDonationDetails(EventDonationModel newDonationDetails) async {
     _donationDetails = newDonationDetails;
-    await FirebaseFirestore.instance
+    try{
+      await FirebaseFirestore.instance
         .collection("moneyDonation")
         .doc(newDonationDetails.id)
         .update(_donationDetails.toJson());
@@ -35,6 +41,11 @@ class EventDonationProvider extends ChangeNotifier {
     }
 
     notifyListeners();
+    print('Donation data succesfully updated');
+    } catch (error) {
+      print('Error update donation: $error');
+    }
+    
   }
 
   Future<void> fetchEventDonationData() async {
