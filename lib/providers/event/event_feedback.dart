@@ -102,7 +102,7 @@ class EventFeedbackProvider extends ChangeNotifier {
   }
 
   Future<void> fetchAndStoreScores(int score) async {
-    _totalScoresList.add(score);
+    totalScoresList.add(score);
     notifyListeners();
   }
 
@@ -132,16 +132,22 @@ class EventFeedbackProvider extends ChangeNotifier {
 
   void resetEventFeedback() async {
     _feedbackDetails = EventFeedbackModel();
-    _feedbackDetailsList = [];
+    _feedbackDetailsList.clear;
     notifyListeners();
   }
 
   Future<void> resetScoreEventFeedback() async {
     _totalScoresList.clear();
-    _totalScoresList.length = 0;
-    // print("test reset score");
-    // print(_totalScoresList.length);
-    // print("======");
+    totalScoresList.clear();
+    for(int i = 0; i < totalScoresList.length; i++){
+      _totalScoresList.removeAt(i);
+      totalScoresList.removeAt(i);
+
+    }
+    print("test reset score");
+    print(_totalScoresList.length);
+    print(totalScoresList.length);
+    print("======");
     notifyListeners();
   }
 }

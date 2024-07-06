@@ -156,6 +156,7 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
               CustomTextField(
                 controller: _personnelAdressController,
                 labelText: Translation.personnelAdress.getString(context),
+                multiLine: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(

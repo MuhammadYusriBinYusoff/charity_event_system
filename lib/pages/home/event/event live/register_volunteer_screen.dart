@@ -63,6 +63,7 @@ class _RegisterVolunteerFormPageState extends State<RegisterVolunteerFormPage> {
                 controller: _volunteerAdressController,
                 labelText: Translation.personnelAdress.getString(context),
                 compulsory: true,
+                maxWords: 35,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(

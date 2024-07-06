@@ -15,21 +15,22 @@ class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<CategoryItem> categories = [
-      CategoryItem(
-          Images.fileOrganizer, Translation.manageDesciption.getString(context)),
+      CategoryItem(Images.fileOrganizer,
+          Translation.manageDesciption.getString(context)),
       CategoryItem(
           Images.itemOrganizer, Translation.manageItem.getString(context)),
-      CategoryItem(
-          Images.donationOrganizer, Translation.manageDonation.getString(context)),
-      CategoryItem(
-          Images.volunteerOrganizer, Translation.manageVolunteer.getString(context)),
-      CategoryItem(
-          Images.colllaborationOrganizer, Translation.teamPlanning.getString(context)),
-      CategoryItem(
-          Images.galleryOrganizer, Translation.manageGallery.getString(context)),
-      CategoryItem(
-          Images.feedbackOrganizer, Translation.feedbackCollection.getString(context)),
-      CategoryItem(Images.profileOrganizer, Translation.manageLiveProfile.getString(context)),
+      CategoryItem(Images.donationOrganizer,
+          Translation.manageDonation.getString(context)),
+      CategoryItem(Images.volunteerOrganizer,
+          Translation.manageVolunteer.getString(context)),
+      CategoryItem(Images.colllaborationOrganizer,
+          Translation.teamPlanning.getString(context)),
+      CategoryItem(Images.galleryOrganizer,
+          Translation.manageGallery.getString(context)),
+      CategoryItem(Images.feedbackOrganizer,
+          Translation.feedbackCollection.getString(context)),
+      CategoryItem(Images.profileOrganizer,
+          Translation.manageLiveProfile.getString(context)),
       CategoryItem(Images.transactionOrganizer, "Transaction History"),
       CategoryItem(
           Images.binOrganizer, Translation.deleteCollection.getString(context)),
@@ -42,7 +43,12 @@ class CategoryPage extends StatelessWidget {
     final cardWidth = (screenWidth - crossAxisSpacing - padding * 2) / 2;
 
     return Scaffold(
-      appBar: CustomAppBar(title: Translation.myEventTitle.getString(context), showPreviousButton: false, targetPage: const MyHomePage(), showCustomPreviousButton: true,),
+      appBar: CustomAppBar(
+        title: Translation.myEventTitle.getString(context),
+        showPreviousButton: false,
+        targetPage: const MyHomePage(),
+        showCustomPreviousButton: true,
+      ),
       body: Container(
         padding: EdgeInsets.only(top: Dimens.space16),
         child: GridView.count(
@@ -135,7 +141,8 @@ class CategoryCard extends StatelessWidget {
                     title: eventDetailsFile.eventDetails.eventName,
                     description: eventDetailsFile.eventDetails.eventDescription,
                     groupLink: eventDetailsFile.eventDetails.groupLinkUrl,
-                    collabPass: eventDetailsFile.eventDetails.passwordCollaboration,
+                    collabPass:
+                        eventDetailsFile.eventDetails.passwordCollaboration,
                     session: "update"),
               ),
             );
@@ -194,31 +201,76 @@ class CategoryCard extends StatelessWidget {
                         overalTotalScore: overalTotalScore,
                       )),
             );
-          } else if (categoryItem.name == Translation.manageLiveProfile.getString(context)) {
+          } else if (categoryItem.name ==
+              Translation.manageLiveProfile.getString(context)) {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => EventOrganizationBackgroundPage(
-                    imageUrl: eventOrganizationBackground.eventOrganizationBackground.photoEventUrl,
-                    description: eventOrganizationBackground.eventOrganizationBackground.backgroundDescription,
+                    imageUrl: eventOrganizationBackground
+                        .eventOrganizationBackground.photoEventUrl,
+                    description: eventOrganizationBackground
+                        .eventOrganizationBackground.backgroundDescription,
                     session: "update"),
               ),
             );
           } else if (categoryItem.name ==
               Translation.deleteCollection.getString(context)) {
-            User? user = FirebaseAuth.instance.currentUser;
-            String? userId = user?.uid;
-            await eventDetailsFile.deleteEventDetails(userId);
-            await eventDonationsFile.deleteDonationDetails(userId);
-            await eventFeedback.deleteFeedbackDetails(userId);
-            await eventTransactionFile.deleteAllEventTransaction();
-            //ignore: use_build_context_synchronously
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const MyHomePage()),
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Delete Confirmation'),
+                  content:
+                      Text('Are you sure you want to delete this collection?'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('Cancel'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    TextButton(
+                      child: Text('Delete'),
+                      onPressed: () async {
+                        User? user = FirebaseAuth.instance.currentUser;
+                        String? userId = user?.uid;
+                        await eventDonationsFile.deleteDonationDetails(userId);
+                        await eventFeedback.deleteFeedbackDetails(userId);
+                        await eventTransactionFile.deleteAllEventTransaction();
+                        await eventGalleryFile.deleteEventGallery(userId);
+                        await eventDetailsFile.deleteEventDetails(userId);
+                        eventFeedback.resetEventFeedback();
+                        await eventFeedback.resetScoreEventFeedback();
+
+                        for (int i = 0;
+                            i < eventDetailsFile.eventDetailsList.length;
+                            i++) {
+                          await eventFeedback.fetchAllFeedbackDetails(
+                              eventDetailsFile.eventDetailsList[i].id);
+                          await eventFeedback.fetchAndStoreScores(
+                              eventFeedback.getTotalCurrentScore());
+                        }
+                        //ignore: use_build_context_synchronously
+                        Future.delayed(Duration(milliseconds: 300), () {
+                          // Ensure context is still mounted
+                          //if (context.mounted) {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyHomePage(),
+                              ),
+                              (Route<dynamic> route) => false,
+                            );
+                          //}
+                        });
+                      },
+                    ),
+                  ],
+                );
+              },
             );
-          }else if (categoryItem.name ==
-              "Transaction History") {
+          } else if (categoryItem.name == "Transaction History") {
             await eventTransactionFile.fetchEventTransactionData(null);
             Navigator.push(
               context,
@@ -229,11 +281,10 @@ class CategoryCard extends StatelessWidget {
         child: Container(
           width: cardWidth,
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 2,
-              color: Palette.purpleMain,
-            )
-          ),
+              border: Border.all(
+            width: 2,
+            color: Palette.purpleMain,
+          )),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

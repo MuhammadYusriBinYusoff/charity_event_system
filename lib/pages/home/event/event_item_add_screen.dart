@@ -9,10 +9,12 @@ import 'package:uuid/uuid.dart';
 
 class EventItemAddPage extends StatefulWidget {
   final String? session;
+  final EventDetailsModel? newEvent;
 
   const EventItemAddPage({
     Key? key,
     this.session = 'update',
+    this.newEvent,
   }) : super(key: key);
 
   @override
@@ -138,6 +140,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                             MaterialPageRoute(
                                 builder: (context) => EventItemAddPage(
                                       session: widget.session,
+                                      newEvent: widget.newEvent,
                                     )),
                           );
                         } else {
@@ -260,7 +263,7 @@ class _EventItemAddPageState extends State<EventItemAddPage> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const EventDonationManagementPage()),
+                                    EventDonationManagementPage(newEvent: widget.newEvent)),
                           );
                         },
                         style: ElevatedButton.styleFrom(

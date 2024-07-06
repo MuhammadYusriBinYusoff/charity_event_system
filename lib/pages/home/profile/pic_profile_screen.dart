@@ -86,6 +86,7 @@ class _PicProfilePageState extends State<PicProfilePage> {
               CustomTextField(
                 controller: _picAdressController,
                 labelText: Translation.picAdress.getString(context),
+                multiLine: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(

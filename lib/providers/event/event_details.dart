@@ -19,7 +19,7 @@ class EventDetailsProvider extends ChangeNotifier {
         .set(_eventDetails.toJson());
 
     // Add the new event to the list
-    _eventDetailsList.add(newEventDetails);
+   // _eventDetailsList.add(newEventDetails);
     notifyListeners();
     print("Event Data sucessfully created");
     } catch (error) {
@@ -107,6 +107,7 @@ class EventDetailsProvider extends ChangeNotifier {
 
   void resetEventDetails() async{
     _eventDetails = EventDetailsModel();
+    _eventDetailsList.clear();
     notifyListeners();
   }
   

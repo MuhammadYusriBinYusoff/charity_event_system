@@ -77,6 +77,7 @@ class _PICSignUpPageState extends State<PICSignUpPage> {
                 controller: _picAdressController,
                 labelText: Translation.picAdress.getString(context),
                 compulsory: true,
+                multiLine: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(

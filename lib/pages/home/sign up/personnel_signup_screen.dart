@@ -130,6 +130,7 @@ class _PersonnelSignUpPageState extends State<PersonnelSignUpPage> {
                 controller: _personnelAdressController,
                 labelText: Translation.personnelAdress.getString(context),
                 compulsory: true,
+                multiLine: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(

@@ -89,77 +89,79 @@ class _AddBacklogItemScreenState extends State<AddBacklogItemScreen> {
         
     return Scaffold(
       appBar: const CustomAppBar(title: "Edit"),
-      body: Padding(
+      body: Container(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomTextField(
-              maxWords: 20,
-              controller: _backLogTitleController,
-              labelText: Translation.taskTitle.getString(context),
-              onChanged: (value){
-                eventCollaboration.updateTitle((widget.item.id ?? ''), value, widget.selectedOrganizerId);
-              },
-            ),
-            SpacerV(value: Dimens.space16),
-            CustomTextField(
-              controller: _backLogDescriptionController,
-              multiLine: true,
-              labelText: Translation.taskDescription.getString(context),
-              onChanged: (value){
-                eventCollaboration.updateDescription((widget.item.id ?? ''), value, widget.selectedOrganizerId);
-              },
-            ),
-            SpacerV(value: Dimens.space16),
-            GestureDetector(
-              onTap: () => selectStartDate(context),
-              child: AbsorbPointer(
-                child: CustomTextField(
-                  controller: _dateStartController,
-                  labelText: "Select Start Date",
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomTextField(
+                maxWords: 20,
+                controller: _backLogTitleController,
+                labelText: Translation.taskTitle.getString(context),
+                onChanged: (value){
+                  eventCollaboration.updateTitle((widget.item.id ?? ''), value, widget.selectedOrganizerId);
+                },
+              ),
+              SpacerV(value: Dimens.space16),
+              CustomTextField(
+                controller: _backLogDescriptionController,
+                multiLine: true,
+                labelText: Translation.taskDescription.getString(context),
+                onChanged: (value){
+                  eventCollaboration.updateDescription((widget.item.id ?? ''), value, widget.selectedOrganizerId);
+                },
+              ),
+              SpacerV(value: Dimens.space16),
+              GestureDetector(
+                onTap: () => selectStartDate(context),
+                child: AbsorbPointer(
+                  child: CustomTextField(
+                    controller: _dateStartController,
+                    labelText: "Select Start Date",
+                  ),
                 ),
               ),
-            ),
-            SpacerV(value: Dimens.space16),
-            GestureDetector(
-              onTap: () => selectEndDate(context),
-              child: AbsorbPointer(
-                child: CustomTextField(
-                  controller: _dateEndController,
-                  labelText: "Select End Date",
+              SpacerV(value: Dimens.space16),
+              GestureDetector(
+                onTap: () => selectEndDate(context),
+                child: AbsorbPointer(
+                  child: CustomTextField(
+                    controller: _dateEndController,
+                    labelText: "Select End Date",
+                  ),
                 ),
               ),
-            ),
-            CustomDropdownFormField(
-              items: storyPointBelong,
-              hintText: storyPointData,
-              onChanged: (value) {
-                storyPointData = (value ?? storyPointData);
-                eventCollaboration.updateStoryPoint((widget.item.id ?? ''), storyPointData, widget.selectedOrganizerId);
-              },
-              validator: (value) {
-                if (value == null) {
-                  return Translation.feedbackCheck.getString(context);
-                }
-                return null;
-              },
-            ),
-            CustomDropdownFormField(
-              items: columnBelong,
-              hintText: columnBelongData,
-              onChanged: (value) {
-                columnBelongData = (value ?? columnBelongData);
-                eventCollaboration.updateColumnBelong((widget.item.id ?? ''), columnBelongData, widget.selectedOrganizerId);
-              },
-              validator: (value) {
-                if (value == null) {
-                  return Translation.feedbackCheck.getString(context);
-                }
-                return null;
-              },
-            ),
-          ],
+              CustomDropdownFormField(
+                items: storyPointBelong,
+                hintText: storyPointData,
+                onChanged: (value) {
+                  storyPointData = (value ?? storyPointData);
+                  eventCollaboration.updateStoryPoint((widget.item.id ?? ''), storyPointData, widget.selectedOrganizerId);
+                },
+                validator: (value) {
+                  if (value == null) {
+                    return Translation.feedbackCheck.getString(context);
+                  }
+                  return null;
+                },
+              ),
+              CustomDropdownFormField(
+                items: columnBelong,
+                hintText: columnBelongData,
+                onChanged: (value) {
+                  columnBelongData = (value ?? columnBelongData);
+                  eventCollaboration.updateColumnBelong((widget.item.id ?? ''), columnBelongData, widget.selectedOrganizerId);
+                },
+                validator: (value) {
+                  if (value == null) {
+                    return Translation.feedbackCheck.getString(context);
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

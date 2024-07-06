@@ -124,7 +124,9 @@ class _LoginPageState extends State<LoginPage> {
                           eventDetailsFile.resetEventDetails();
                           eventOrganizationBackground.resetEventOrganizationBackground();
                           organizationUser.resetOrganizersDetails();
-                          personnelUser.resetPersonnelsDetails();                          
+                          personnelUser.resetPersonnelsDetails();
+                          eventFeedback.resetEventFeedback();
+                          await eventFeedback.resetScoreEventFeedback();                          
                           await organizationUser.fetchOrganizerData();
 
                           if (organizationUser.organizers.verify ==
@@ -161,6 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                             }
                             if (organizationUser.organizers.id != null) {
                               print("Organization ID check: True");
+                             // print(eventFeedback.totalScoresList[13]);
                             } else if(personnelUser.personnels.id != null){
                               print("Personnel user ID check: True");
                             }else{

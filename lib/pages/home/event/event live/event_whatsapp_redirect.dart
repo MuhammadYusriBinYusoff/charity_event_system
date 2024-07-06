@@ -14,7 +14,7 @@ class WhatsAppPage extends StatelessWidget {
     this.index,
   }) : super(key: key);
 
-  Future<void> _openLink() async {
+  Future<void> _openLink(BuildContext context) async {
   const defaultUrl = "https://www.youtube.com/watch?v=wI1IroOdVvE&list=PLpeOWJ81yOvbxtJWU4z8jzhl_DRjuG1Jv&index=26";
   final whatsappUrl = Uri.parse(groupLink ?? defaultUrl);
 
@@ -22,12 +22,19 @@ class WhatsAppPage extends StatelessWidget {
     if (await canLaunchUrl(whatsappUrl)) {
       await launchUrl(whatsappUrl);
     } else {
-      print('Could not launch $whatsappUrl');
+      _showError(context, 'Could not launch url due to invalid');
     }
   } catch (e) {
-    print('Error launching URL: $e');
+    _showError(context, 'Error launching URL: $e');
   }
 }
+
+void _showError(BuildContext context, String message) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text(message)),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +61,7 @@ class WhatsAppPage extends StatelessWidget {
                     height: 184,
                   ),
                   onPressed: () async {
-                    await _openLink();
+                    await _openLink(context);
                   }),
             ),
           ),

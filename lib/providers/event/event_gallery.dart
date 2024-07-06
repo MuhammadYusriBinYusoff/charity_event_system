@@ -68,6 +68,24 @@ class EventGalleryProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteEventGallery(String? eventGalleryId) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('eventGallery')
+          .doc(eventGalleryId)
+          .delete();
+
+      _eventGalleryList.removeWhere((event) => event.id == eventGalleryId);
+      if (_eventGallery.id == eventGalleryId) {
+        _eventGallery = EventGalleryModel(); 
+      }
+
+      notifyListeners();
+    } catch (error) {
+      print('Error deleting event gallery: $error');
+    }
+  }
+
   Future<void> fetchAllEventGallery() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =

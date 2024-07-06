@@ -230,13 +230,10 @@ class _EventDescriptionPageState extends State<EventDescriptionPage> {
                                   passwordCollaboration: _charityCollabPassController.text,
                                 );
 
-                                await eventDetailsFile
-                                    .createEventDetails(newEvent);
-
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => EventGalleryPage(),
+                                    builder: (context) => EventGalleryPage(newEvent: newEvent,),
                                   ),
                                 );
                               } else {

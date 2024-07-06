@@ -131,9 +131,13 @@ class _EventPostingDescriptionPageState
             Column(
               children: [
                 CachedNetworkImage(
-                  imageUrl: eventDetailsFile
-                          .eventDetailsList[widget.index ?? 0].photoEventUrl ??
-                      'https://www.caspianpolicy.org/no-image.png',
+                  imageUrl: (widget.index != null &&
+                          widget.index! <
+                              eventDetailsFile.eventDetailsList.length)
+                      ? eventDetailsFile
+                              .eventDetailsList[widget.index!].photoEventUrl ??
+                          'https://www.caspianpolicy.org/no-image.png'
+                      : 'https://www.caspianpolicy.org/no-image.png',
                   width: double.infinity,
                   height: Dimens.space200,
                   fit: BoxFit.fill,
@@ -179,7 +183,7 @@ class _EventPostingDescriptionPageState
                           ),
                         ),
                         Text(
-                          "RM ${eventDonationsFile.donationDetailsList[widget.index ?? 0].currentCollected?.toStringAsFixed(2) ?? ''}",
+                          "RM ${widget.index != null && widget.index! < eventDonationsFile.donationDetailsList.length ? eventDonationsFile.donationDetailsList[widget.index!].currentCollected?.toStringAsFixed(2) ?? '' : ''}",
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -443,9 +447,13 @@ class _EventPostingDescriptionPageState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      eventDetailsFile
-                              .eventDetailsList[widget.index ?? 0].eventName ??
-                          '',
+                      (widget.index != null &&
+                              widget.index! <
+                                  eventDetailsFile.eventDetailsList.length)
+                          ? eventDetailsFile
+                                  .eventDetailsList[widget.index!].eventName ??
+                              ''
+                          : '',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -453,9 +461,13 @@ class _EventPostingDescriptionPageState
                     ),
                     SpacerV(value: Dimens.space8),
                     Text(
-                      eventDetailsFile.eventDetailsList[widget.index ?? 0]
-                              .eventDescription ??
-                          '',
+                      (widget.index != null &&
+                              widget.index! <
+                                  eventDetailsFile.eventDetailsList.length)
+                          ? eventDetailsFile.eventDetailsList[widget.index!]
+                                  .eventDescription ??
+                              ''
+                          : '',
                       style: const TextStyle(
                         fontSize: 15,
                       ),
@@ -487,25 +499,29 @@ class _EventPostingDescriptionPageState
                     ),
                     SpacerV(value: Dimens.space16),
                     Text(
-                      'RM ${eventDonationsFile.donationDetailsList[widget.index ?? 0].targetMoney?.toStringAsFixed(2) ?? ''}',
+                      'RM ${widget.index != null && widget.index! < eventDonationsFile.donationDetailsList.length ? eventDonationsFile.donationDetailsList[widget.index!].targetMoney?.toStringAsFixed(2) ?? '' : ''}',
                       style: const TextStyle(fontSize: 14),
                     ),
                     SpacerV(value: Dimens.space4),
                     ProgressBarIndicator(
-                      value: ((eventDonationsFile
-                                  .donationDetailsList[widget.index ?? 0]
-                                  .currentCollected ??
-                              0) /
-                          (eventDonationsFile
-                                  .donationDetailsList[widget.index ?? 0]
-                                  .targetMoney ??
-                              1)),
+                      value: (widget.index != null &&
+                              widget.index! <
+                                  eventDonationsFile.donationDetailsList.length)
+                          ? ((eventDonationsFile
+                                      .donationDetailsList[widget.index!]
+                                      .currentCollected ??
+                                  0) /
+                              (eventDonationsFile
+                                      .donationDetailsList[widget.index!]
+                                      .targetMoney ??
+                                  1))
+                          : 0, // Default to 0 if index is null or out of range
                       width: MediaQuery.of(context).size.width * 0.75,
                       height: 12,
                     ),
                     SpacerV(value: Dimens.space4),
                     Text(
-                      "${Translation.donationBankAccount.getString(context)}: ${eventDonationsFile.donationDetailsList[widget.index ?? 0].bankAccount}",
+                      "${Translation.donationBankAccount.getString(context)}: ${widget.index != null && widget.index! < eventDonationsFile.donationDetailsList.length ? eventDonationsFile.donationDetailsList[widget.index!].bankAccount ?? '' : ''}",
                     ),
                     SpacerV(value: Dimens.space24),
                     Text(
@@ -525,10 +541,15 @@ class _EventPostingDescriptionPageState
                             .photoEventUrl);
                       },
                       child: CachedNetworkImage(
-                        imageUrl: eventDonationsFile
-                                .donationDetailsList[widget.index ?? 0]
-                                .photoEventUrl ??
-                            'https://www.caspianpolicy.org/no-image.png', // Replace with your image URL
+                        imageUrl: (widget.index != null &&
+                                widget.index! <
+                                    eventDonationsFile
+                                        .donationDetailsList.length)
+                            ? eventDonationsFile
+                                    .donationDetailsList[widget.index!]
+                                    .photoEventUrl ??
+                                'https://www.caspianpolicy.org/no-image.png'
+                            : 'https://www.caspianpolicy.org/no-image.png',
                         width: double.infinity,
                         fit: BoxFit.fill,
                       ),
@@ -648,8 +669,7 @@ class _EventPostingDescriptionPageState
                             return Center(
                               child: Text(
                                 Translation.noTransaction.getString(context),
-                                style: const TextStyle(
-                                    fontSize: 12),
+                                style: const TextStyle(fontSize: 12),
                               ),
                             );
                           }

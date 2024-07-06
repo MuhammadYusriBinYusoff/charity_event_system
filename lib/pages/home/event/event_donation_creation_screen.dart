@@ -17,6 +17,7 @@ class EventDonationManagementPage extends StatefulWidget {
   final String? bankAccount;
   final String? photoEventUrl;
   final String? session;
+  final EventDetailsModel? newEvent;
 
   const EventDonationManagementPage({
     Key? key,
@@ -27,6 +28,7 @@ class EventDonationManagementPage extends StatefulWidget {
     this.bankAccount,
     this.photoEventUrl,
     this.session,
+    this.newEvent,
   }) : super(key: key);
 
   @override
@@ -99,6 +101,8 @@ class _EventDonationManagementPageState
         Provider.of<EventFeedbackProvider>(context);
     EventOrganizationBackgroundProvider eventOrganizationBackground =
         Provider.of<EventOrganizationBackgroundProvider>(context);
+    EventDetailsProvider eventDetailsFile =
+        Provider.of<EventDetailsProvider>(context);
 
     DateTime? selectedDate;
 
@@ -296,6 +300,19 @@ class _EventDonationManagementPageState
                                 comment: "",
                               );
 
+                              final newEventBackup = EventDetailsModel(
+                                  id: userUID,
+                                  eventName: "Backup",
+                                  eventDescription:
+                                      "Backup",
+                                  type: "organizer",
+                                  photoEventUrl:
+                                      'https://www.caspianpolicy.org/no-image.png',
+                                  groupLinkUrl:
+                                      "Backup",
+                                  passwordCollaboration: "Backup",
+                                );
+
                               final newEventBackground =
                                   EventOrganizationBackgroundModel(
                                 id: userUID,
@@ -311,6 +328,20 @@ class _EventDonationManagementPageState
                               await eventOrganizationBackground
                                   .createEventOrganizationBackground(
                                       newEventBackground);
+                              await eventDetailsFile
+                                    .createEventDetails(widget.newEvent ?? newEventBackup);
+                              await eventDetailsFile.fetchAllEventDetails();
+                              await eventDonation.fetchAllDonationDetails();
+                              eventFeedback.resetEventFeedback();
+                              await eventFeedback.resetScoreEventFeedback();
+
+                              for (int i = 0;
+                                i < eventDetailsFile.eventDetailsList.length;
+                                i++) {
+                              await eventFeedback.fetchAllFeedbackDetails(
+                                  eventDetailsFile.eventDetailsList[i].id);
+                              await eventFeedback.fetchAndStoreScores(eventFeedback.getTotalCurrentScore());
+                            }   
 
                               Navigator.push(
                                 context,
