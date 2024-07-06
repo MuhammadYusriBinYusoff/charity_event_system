@@ -41,6 +41,8 @@ class _LoginPageState extends State<LoginPage> {
         Provider.of<EventFeedbackProvider>(context);
     EventOrganizationBackgroundProvider eventOrganizationBackground =
         Provider.of<EventOrganizationBackgroundProvider>(context);
+    EventTransactionProvider eventTransactionFile =
+        Provider.of<EventTransactionProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -106,6 +108,11 @@ class _LoginPageState extends State<LoginPage> {
                       if (user != null) {
                         String? role = await getUserCategory(user.uid);
 
+                        print("User Email: ${_usernameController.text}");
+                        print("User Password: ${_passwordController.text}");
+                        print("Id tracker: ${user.uid}");
+                        print("role: $role");
+
                         if (role == "Admin") {
                           Navigator.pushReplacement(
                             context,
@@ -117,7 +124,9 @@ class _LoginPageState extends State<LoginPage> {
                           eventDetailsFile.resetEventDetails();
                           eventOrganizationBackground.resetEventOrganizationBackground();
                           organizationUser.resetOrganizersDetails();
-                          personnelUser.resetPersonnelsDetails();                          
+                          personnelUser.resetPersonnelsDetails();
+                          eventFeedback.resetEventFeedback();
+                          await eventFeedback.resetScoreEventFeedback();                          
                           await organizationUser.fetchOrganizerData();
 
                           if (organizationUser.organizers.verify ==
@@ -125,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                               organizationUser.organizers.verify == null) {
                             eventVolunteerFile.resetEventVolunteer();
                             eventItems.resetEventItem();
+                            eventTransactionFile.resetEventTransaction();
                             eventDonationsFile.resetEventDonation();
                             eventGalleryFile.resetEventGallery();
                             await organizationUser.fetchAllOrganizers();
@@ -135,6 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                             await eventGalleryFile.fetchEventGalleryData();
                             await eventVolunteerFile.fetchEventVolunteerData();
                             await eventItems.fetchEventItemData();
+                            await eventTransactionFile.fetchEventTransactionData(null);
                             await eventCollaboration
                                 .fetchEventCollaborationData(null);
                             await eventDetailsFile.fetchAllEventDetails();
@@ -149,6 +160,14 @@ class _LoginPageState extends State<LoginPage> {
                               await eventFeedback.fetchAllFeedbackDetails(
                                   eventDetailsFile.eventDetailsList[i].id);
                               await eventFeedback.fetchAndStoreScores(eventFeedback.getTotalCurrentScore());
+                            }
+                            if (organizationUser.organizers.id != null) {
+                              print("Organization ID check: True");
+                             // print(eventFeedback.totalScoresList[13]);
+                            } else if(personnelUser.personnels.id != null){
+                              print("Personnel user ID check: True");
+                            }else{
+                              print("No user");
                             }
                             Navigator.push(
                               context,

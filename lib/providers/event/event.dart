@@ -7,3 +7,4 @@ export 'event_feedback.dart';
 export 'event_collaboration.dart';
 export 'event_history.dart';
 export 'event_organization_backgrounds.dart';
+export 'event_transaction_history.dart';

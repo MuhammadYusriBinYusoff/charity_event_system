@@ -68,32 +68,25 @@ class _PicProfilePageState extends State<PicProfilePage> {
               CustomTextField(
                 controller: _picNameController,
                 labelText: Translation.picFullname.getString(context),
+                maxWords: 13,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picContactController,
                 labelText: Translation.picContact.getString(context),
+                maxWords: 12,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picIcController,
                 labelText: Translation.picIcNumber.getString(context),
+                maxWords: 12,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _picAdressController,
                 labelText: Translation.picAdress.getString(context),
-              ),
-              SpacerV(value: Dimens.space16),
-              CustomTextField(
-                controller: _picEmailController,
-                labelText: Translation.picEmail.getString(context),
-              ),
-              SpacerV(value: Dimens.space16),
-              CustomTextField(
-                controller: _picPasswordController,
-                labelText: Translation.picPassword.getString(context),
-                obscureText: true,
+                multiLine: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(
@@ -104,9 +97,7 @@ class _PicProfilePageState extends State<PicProfilePage> {
                     if (_picNameController.text.isNotEmpty &&
                         _picContactController.text.isNotEmpty &&
                         _picIcController.text.isNotEmpty &&
-                        _picAdressController.text.isNotEmpty &&
-                        _picEmailController.text.isNotEmpty &&
-                        _picPasswordController.text.isNotEmpty) {
+                        _picAdressController.text.isNotEmpty) {
                       try {
                         String? userId = organizationUser.organizers.id;
 
@@ -115,8 +106,8 @@ class _PicProfilePageState extends State<PicProfilePage> {
                           'picContact': _picContactController.text,
                           'picIc': _picIcController.text,
                           'picAdress': _picAdressController.text,
-                          'picEmail': _picEmailController.text,
-                          'picPassword': _picPasswordController.text,
+                          'picEmail': widget.picEmail,
+                          'picPassword': widget.picPassword,
                         };
 
                         await organizationUser.updatePicData(

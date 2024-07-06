@@ -35,7 +35,7 @@ class _EventOrganizationBackgroundPageState extends State<EventOrganizationBackg
   @override
   void initState() {
     super.initState();
-   _organizationBackgroundDescriptionController.text = widget.description ?? "";
+   _organizationBackgroundDescriptionController.text = widget.description ?? "About Us:\n\nContact Us:\n\nAddress:";
     bannerImageUrl = widget.imageUrl ?? "";
   }
 

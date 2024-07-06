@@ -12,11 +12,16 @@ class PersonnelProvider extends ChangeNotifier {
 
   Future<void> createPersonnel(PersonnelModel newPersonnel) async {
     _personnels  = newPersonnel;
-    await FirebaseFirestore.instance
+    try{
+      await FirebaseFirestore.instance
         .collection("personnelAccount")
         .doc(newPersonnel.id)
         .set(_personnels .toJson());
     notifyListeners();
+    print("Personnel Data sucessfully created");
+    } catch (error) {
+      print('Error creating personnel: $error');
+    }
   }
 
   Future<void> fetchPersonnelData() async {
@@ -44,7 +49,8 @@ class PersonnelProvider extends ChangeNotifier {
 
   Future<void> updatePersonnelData(
       String? personnelId, Map<String, dynamic> dataToUpdate) async {
-    await FirebaseFirestore.instance
+    try{
+      await FirebaseFirestore.instance
         .collection("personnelAccount")
         .doc(personnelId)
         .update(dataToUpdate);
@@ -56,6 +62,10 @@ class PersonnelProvider extends ChangeNotifier {
     _personnels.personnelPassword = dataToUpdate['personnelPassword'] ?? '';
     _personnels.profileImageLink = dataToUpdate['profileImageLink'] ?? '';
     notifyListeners();
+    print('Personnel data succesfully updated');
+    } catch (error) {
+      print('Error update personnel: $error');
+    }
   }
 
   void resetPersonnelsDetails() async{

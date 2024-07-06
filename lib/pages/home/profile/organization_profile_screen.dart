@@ -150,11 +150,13 @@ class _OrganizationProfilePageState extends State<OrganizationProfilePage> {
               CustomTextField(
                 controller: _organizationContactController,
                 labelText: Translation.organizationContact.getString(context),
+                maxWords: 12,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _organizationAdressController,
                 labelText: Translation.organizationAdress.getString(context),
+                multiLine: true,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(

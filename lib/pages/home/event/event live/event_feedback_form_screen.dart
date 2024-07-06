@@ -35,6 +35,8 @@ class _UserFeedbackPageState extends State<UserFeedbackPage> {
   @override
   Widget build(BuildContext context) {
     EventFeedbackProvider eventFeedback = Provider.of<EventFeedbackProvider>(context);
+    EventDetailsProvider eventDetailsFile =
+        Provider.of<EventDetailsProvider>(context);
     
     return Scaffold(
       appBar:
@@ -140,6 +142,17 @@ class _UserFeedbackPageState extends State<UserFeedbackPage> {
                         );
 
                         eventFeedback.createFeedbackDetails(newFeedback);
+                        eventFeedback.resetEventFeedback();
+                        await eventFeedback.resetScoreEventFeedback();
+
+                        for (int i = 0;
+                            i < eventDetailsFile.eventDetailsList.length;
+                            i++) {
+                          await eventFeedback.fetchAllFeedbackDetails(
+                              eventDetailsFile.eventDetailsList[i].id);
+                          await eventFeedback.fetchAndStoreScores(
+                              eventFeedback.getTotalCurrentScore());
+                        }
 
                         Navigator.push(
                           context,

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:charity_event_system/common/common.dart';
 import 'package:charity_event_system/pages/pages.dart';
 import 'package:charity_event_system/providers/providers.dart';
@@ -13,23 +15,25 @@ class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<CategoryItem> categories = [
+      CategoryItem(Images.fileOrganizer,
+          Translation.manageDesciption.getString(context)),
       CategoryItem(
-          Images.splashIcon, Translation.manageDesciption.getString(context)),
+          Images.itemOrganizer, Translation.manageItem.getString(context)),
+      CategoryItem(Images.donationOrganizer,
+          Translation.manageDonation.getString(context)),
+      CategoryItem(Images.volunteerOrganizer,
+          Translation.manageVolunteer.getString(context)),
+      CategoryItem(Images.colllaborationOrganizer,
+          Translation.teamPlanning.getString(context)),
+      CategoryItem(Images.galleryOrganizer,
+          Translation.manageGallery.getString(context)),
+      CategoryItem(Images.feedbackOrganizer,
+          Translation.feedbackCollection.getString(context)),
+      CategoryItem(Images.profileOrganizer,
+          Translation.manageLiveProfile.getString(context)),
+      CategoryItem(Images.transactionOrganizer, "Transaction History"),
       CategoryItem(
-          Images.splashIcon, Translation.manageItem.getString(context)),
-      CategoryItem(
-          Images.splashIcon, Translation.manageDonation.getString(context)),
-      CategoryItem(
-          Images.splashIcon, Translation.manageVolunteer.getString(context)),
-      CategoryItem(
-          Images.splashIcon, Translation.teamPlanning.getString(context)),
-      CategoryItem(
-          Images.splashIcon, Translation.manageGallery.getString(context)),
-      CategoryItem(
-          Images.splashIcon, Translation.feedbackCollection.getString(context)),
-      CategoryItem(Images.splashIcon, Translation.manageLiveProfile.getString(context)),
-      CategoryItem(
-          Images.splashIcon, Translation.deleteCollection.getString(context)),
+          Images.binOrganizer, Translation.deleteCollection.getString(context)),
     ];
 
     final screenWidth = MediaQuery.of(context).size.width;
@@ -39,7 +43,12 @@ class CategoryPage extends StatelessWidget {
     final cardWidth = (screenWidth - crossAxisSpacing - padding * 2) / 2;
 
     return Scaffold(
-      appBar: CustomAppBar(title: Translation.myEventTitle.getString(context), showPreviousButton: false, targetPage: const MyHomePage(), showCustomPreviousButton: true,),
+      appBar: CustomAppBar(
+        title: Translation.myEventTitle.getString(context),
+        showPreviousButton: false,
+        targetPage: const MyHomePage(),
+        showCustomPreviousButton: true,
+      ),
       body: Container(
         padding: EdgeInsets.only(top: Dimens.space16),
         child: GridView.count(
@@ -93,6 +102,8 @@ class CategoryCard extends StatelessWidget {
         Provider.of<EventHistoryProvider>(context);
     EventOrganizationBackgroundProvider eventOrganizationBackground =
         Provider.of<EventOrganizationBackgroundProvider>(context);
+    EventTransactionProvider eventTransactionFile =
+        Provider.of<EventTransactionProvider>(context);
 
     return Card(
       elevation: 4.0,
@@ -130,7 +141,8 @@ class CategoryCard extends StatelessWidget {
                     title: eventDetailsFile.eventDetails.eventName,
                     description: eventDetailsFile.eventDetails.eventDescription,
                     groupLink: eventDetailsFile.eventDetails.groupLinkUrl,
-                    collabPass: eventDetailsFile.eventDetails.passwordCollaboration,
+                    collabPass:
+                        eventDetailsFile.eventDetails.passwordCollaboration,
                     session: "update"),
               ),
             );
@@ -156,7 +168,7 @@ class CategoryCard extends StatelessWidget {
               Translation.manageItem.getString(context)) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => EventItemAddPage()),
+              MaterialPageRoute(builder: (context) => const EventItemAddPage()),
             );
           } else if (categoryItem.name ==
               Translation.teamPlanning.getString(context)) {
@@ -189,38 +201,90 @@ class CategoryCard extends StatelessWidget {
                         overalTotalScore: overalTotalScore,
                       )),
             );
-          } else if (categoryItem.name == Translation.manageLiveProfile.getString(context)) {
+          } else if (categoryItem.name ==
+              Translation.manageLiveProfile.getString(context)) {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => EventOrganizationBackgroundPage(
-                    imageUrl: eventOrganizationBackground.eventOrganizationBackground.photoEventUrl,
-                    description: eventOrganizationBackground.eventOrganizationBackground.backgroundDescription,
+                    imageUrl: eventOrganizationBackground
+                        .eventOrganizationBackground.photoEventUrl,
+                    description: eventOrganizationBackground
+                        .eventOrganizationBackground.backgroundDescription,
                     session: "update"),
               ),
             );
           } else if (categoryItem.name ==
               Translation.deleteCollection.getString(context)) {
-            User? user = FirebaseAuth.instance.currentUser;
-            String? userId = user?.uid;
-            await eventDetailsFile.deleteEventDetails(userId);
-            await eventDonationsFile.deleteDonationDetails(userId);
-            await eventFeedback.deleteFeedbackDetails(userId);
-            //ignore: use_build_context_synchronously
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Delete Confirmation'),
+                  content:
+                      Text('Are you sure you want to delete this collection?'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('Cancel'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    TextButton(
+                      child: Text('Delete'),
+                      onPressed: () async {
+                        User? user = FirebaseAuth.instance.currentUser;
+                        String? userId = user?.uid;
+                        await eventDonationsFile.deleteDonationDetails(userId);
+                        await eventFeedback.deleteFeedbackDetails(userId);
+                        await eventTransactionFile.deleteAllEventTransaction();
+                        await eventGalleryFile.deleteEventGallery(userId);
+                        await eventDetailsFile.deleteEventDetails(userId);
+                        eventFeedback.resetEventFeedback();
+                        await eventFeedback.resetScoreEventFeedback();
+
+                        for (int i = 0;
+                            i < eventDetailsFile.eventDetailsList.length;
+                            i++) {
+                          await eventFeedback.fetchAllFeedbackDetails(
+                              eventDetailsFile.eventDetailsList[i].id);
+                          await eventFeedback.fetchAndStoreScores(
+                              eventFeedback.getTotalCurrentScore());
+                        }
+                        //ignore: use_build_context_synchronously
+                        Future.delayed(Duration(milliseconds: 300), () {
+                          // Ensure context is still mounted
+                          //if (context.mounted) {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyHomePage(),
+                              ),
+                              (Route<dynamic> route) => false,
+                            );
+                          //}
+                        });
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          } else if (categoryItem.name == "Transaction History") {
+            await eventTransactionFile.fetchEventTransactionData(null);
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const MyHomePage()),
+              MaterialPageRoute(builder: (context) => ViewTransactionPage()),
             );
           }
         },
         child: Container(
           width: cardWidth,
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 2,
-              color: Palette.purpleMain,
-            )
-          ),
+              border: Border.all(
+            width: 2,
+            color: Palette.purpleMain,
+          )),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

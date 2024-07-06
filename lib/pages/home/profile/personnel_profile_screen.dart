@@ -38,10 +38,6 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
       TextEditingController();
   final TextEditingController _personnelAdressController =
       TextEditingController();
-  final TextEditingController _personnelEmailController =
-      TextEditingController();
-  final TextEditingController _personnelPasswordController =
-      TextEditingController();
 
   String? imageUrl;
   bool isLoading = false;
@@ -84,8 +80,6 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
     _personnelNameController.text = widget.personnelName ?? "";
     _personnelContactController.text = widget.personnelContact ?? "";
     _personnelAdressController.text = widget.personnelAdress ?? "";
-    _personnelEmailController.text = widget.personnelEmail ?? "";
-    _personnelPasswordController.text = widget.personnelPassword ?? "";
     imageUrl = widget.profileImageLink;
   }
 
@@ -150,26 +144,19 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
               CustomTextField(
                 controller: _personnelNameController,
                 labelText: Translation.personnelName.getString(context),
+                maxWords: 13,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _personnelContactController,
                 labelText: Translation.personnelContact.getString(context),
+                maxWords: 12,
               ),
               SpacerV(value: Dimens.space16),
               CustomTextField(
                 controller: _personnelAdressController,
                 labelText: Translation.personnelAdress.getString(context),
-              ),
-              SpacerV(value: Dimens.space16),
-              CustomTextField(
-                controller: _personnelEmailController,
-                labelText: Translation.personnelEmail.getString(context),
-              ),
-              SpacerV(value: Dimens.space16),
-              CustomTextField(
-                controller: _personnelPasswordController,
-                labelText: Translation.personnelPassword.getString(context),
+                multiLine: true,
               ),
               SpacerV(value: Dimens.space16),
               SizedBox(
@@ -177,9 +164,7 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
                 height: Dimens.space40,
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (_personnelEmailController.text.isNotEmpty &&
-                        _personnelPasswordController.text.isNotEmpty &&
-                        _personnelNameController.text.isNotEmpty &&
+                    if (_personnelNameController.text.isNotEmpty &&
                         _personnelContactController.text.isNotEmpty &&
                         _personnelAdressController.text.isNotEmpty) {
                       try {
@@ -189,9 +174,9 @@ class _PersonnelProfilePageState extends State<PersonnelProfilePage> {
                           'personnelName': _personnelNameController.text,
                           'personnelContact': _personnelContactController.text,
                           'personnelAdress': _personnelAdressController.text,
-                          'personnelEmail': _personnelEmailController.text,
+                          'personnelEmail': widget.personnelEmail,
                           'personnelPassword':
-                              _personnelPasswordController.text,
+                              widget.personnelPassword,
                           'profileImageLink': imageUrl,
                         };
 

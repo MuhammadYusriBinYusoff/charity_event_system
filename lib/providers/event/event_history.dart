@@ -14,13 +14,18 @@ class EventHistoryProvider extends ChangeNotifier {
   Future<void> createHistoryDetails(
       EventHistoryModel newHistoryDetails) async {
     _historyDetails = newHistoryDetails;
-    FirebaseFirestore.instance
+    try{
+      FirebaseFirestore.instance
         .collection("history")
         .doc(newHistoryDetails.id)
         .collection("list history")
         .doc()
         .set(_historyDetails.toJson());
     notifyListeners();
+    print("History Data sucessfully created");
+    } catch (error) {
+      print('Error creating history: $error');
+    }
   }
 
   Future<bool> fetchAllHistoryDetails(String? id) async {
@@ -48,8 +53,6 @@ class EventHistoryProvider extends ChangeNotifier {
 
   Future<void> fetchAndStoreScores(int score) async {
     _totalScoresList.add(score);
-    //print("Current Score Length");
-    // print(_totalScoresList.length);
     notifyListeners();
   }
 
@@ -62,16 +65,11 @@ class EventHistoryProvider extends ChangeNotifier {
         turns++;
       }
     }
-    // print("total score before");
-    // print(totalScore);
-    // print(turns);
     if (turns == 0) {
     return 0; // or some other default value
     }
     totalScore = ((totalScore / (20 * turns)) * 100).toInt();
-    // print("total score after");
-    // print(totalScore);
-    // print(turns);
+    print("Total history score $totalScore");
     return totalScore;
   }
 

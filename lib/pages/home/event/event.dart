@@ -13,3 +13,4 @@ export 'event_collaboration_backlog_screen.dart';
 export 'event_collaboration_backlog_data_managed.dart';
 export 'event_gantt_chart.dart';
 export 'event_organization_background_screen.dart';
+export 'event_view_transaction_screen.dart';

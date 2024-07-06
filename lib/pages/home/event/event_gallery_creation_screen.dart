@@ -12,11 +12,13 @@ import 'package:provider/provider.dart';
 class EventGalleryPage extends StatefulWidget {
   final List<String>? imageUrlList;
   final String? session;
+  final EventDetailsModel? newEvent;
 
   const EventGalleryPage({
     Key? key,
     this.imageUrlList,
     this.session,
+    this.newEvent,
   }) : super(key: key);
 
   @override
@@ -199,7 +201,7 @@ class _EventGalleryPageState extends State<EventGalleryPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EventItemAddPage(session: 'none',),
+                            builder: (context) => EventItemAddPage(session: 'none',newEvent:widget.newEvent),
                           ),
                         );
                       },

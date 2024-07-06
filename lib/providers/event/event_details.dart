@@ -12,11 +12,19 @@ class EventDetailsProvider extends ChangeNotifier {
 
   Future<void> createEventDetails(EventDetailsModel newEventDetails) async {
     _eventDetails = newEventDetails;
-    await FirebaseFirestore.instance
+    try{
+      await FirebaseFirestore.instance
         .collection("eventDetails")
         .doc(newEventDetails.id)
         .set(_eventDetails.toJson());
+
+    // Add the new event to the list
+   // _eventDetailsList.add(newEventDetails);
     notifyListeners();
+    print("Event Data sucessfully created");
+    } catch (error) {
+      print('Error creating event: $error');
+    }
   }
 
   Future<void> fetchEventDetailsData() async {
@@ -44,7 +52,8 @@ class EventDetailsProvider extends ChangeNotifier {
 
   Future<void> updateEventDetails(EventDetailsModel newEventDetails) async {
     _eventDetails = newEventDetails;
-    await FirebaseFirestore.instance
+    try{
+      await FirebaseFirestore.instance
         .collection("eventDetails")
         .doc(newEventDetails.id)
         .update(_eventDetails.toJson());
@@ -57,6 +66,10 @@ class EventDetailsProvider extends ChangeNotifier {
     }
 
     notifyListeners();
+    print('Events data succesfully updated');
+    } catch (error) {
+      print('Error update event: $error');
+    }
   }
 
   Future<void> fetchAllEventDetails() async {
@@ -94,6 +107,7 @@ class EventDetailsProvider extends ChangeNotifier {
 
   void resetEventDetails() async{
     _eventDetails = EventDetailsModel();
+    _eventDetailsList.clear();
     notifyListeners();
   }
   

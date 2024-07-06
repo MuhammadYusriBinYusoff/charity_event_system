@@ -76,7 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                             ),
                             Text(
-                              organizationUser.organizers.organizationName ?? 'Donor/Volunteer',
+                              organizationUser.organizers.organizationName ??
+                                  'Donor/Volunteer',
                               style: const TextStyle(
                                 fontSize: 18,
                                 color: Palette.white,
@@ -139,34 +140,45 @@ class _MyHomePageState extends State<MyHomePage> {
                       ],
                     ),
                   ),
-                  if (organizationUser.organizers.id != null) 
-                  Positioned(
-                    left: MediaQuery.of(context).size.width *
-                        0.21, // Centers the container horizontally
-                    top: (MediaQuery.of(context).size.height * 0.15 ), // Centers the container vertically based on a height of 100
-                    child: Container(
-                      padding: EdgeInsets.all(Dimens.space8),
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: 72,
-                      decoration: BoxDecoration(
-                        color: Palette.lightGrey,
-                        border: Border.all(
-                          color: Palette.purpleMain,
-                          width: 2,
+                  if (organizationUser.organizers.id != null)
+                    Positioned(
+                      left: MediaQuery.of(context).size.width *
+                          0.21, // Centers the container horizontally
+                      top: (MediaQuery.of(context).size.height *
+                          0.15), // Centers the container vertically based on a height of 100
+                      child: Container(
+                        padding: EdgeInsets.all(Dimens.space8),
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        height: 72,
+                        decoration: BoxDecoration(
+                          color: Palette.lightGrey,
+                          border: Border.all(
+                            color: Palette.purpleMain,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(7),
                         ),
-                        borderRadius: BorderRadius.circular(7),
-                      ),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            SpacerV(value: Dimens.space6,),
-                            Text(Translation.currentCollect.getString(context), style: TextStyle(fontWeight: FontWeight.bold),),
-                            Text("RM ${eventDonationsFile.donationDetails.currentCollected?.toStringAsFixed(2) ?? 0}", style: TextStyle(color: Palette.redButton, fontWeight: FontWeight.bold),),
-                          ],
+                        child: Center(
+                          child: Column(
+                            children: [
+                              SpacerV(
+                                value: Dimens.space6,
+                              ),
+                              Text(
+                                Translation.currentCollect.getString(context),
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "RM ${eventDonationsFile.donationDetails.currentCollected?.toStringAsFixed(2) ?? 0}",
+                                style: TextStyle(
+                                    color: Palette.redButton,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -197,11 +209,13 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         for (int i = 0;
                             i < eventDetailsFile.eventDetailsList.length;
-                            i++)...[
+                            i++) ...[
                           ProductCard(
                             isEventListClicked: true,
                             indexCard: i,
-                            totalScore: eventFeedback.totalScoresList[i], //To DO: Yusri Need to check back later
+                            totalScore: i < eventFeedback.totalScoresList.length
+                                ? eventFeedback.totalScoresList[i]
+                                : 0, //To DO: Yusri Need to check back later
                             imageUrl: eventDetailsFile
                                     .eventDetailsList[i].photoEventUrl ??
                                 'https://www.caspianpolicy.org/no-image.png',
@@ -209,27 +223,61 @@ class _MyHomePageState extends State<MyHomePage> {
                                     .eventDetailsList[i].eventName ??
                                 '',
                             description:
-                                'RM ${eventDonationsFile.donationDetailsList[i].targetMoney?.toStringAsFixed(2)}',
-                            valueIndicatorProgress: ((eventDonationsFile
-                                        .donationDetailsList[i]
-                                        .currentCollected ??
+                                'RM ${i < eventDonationsFile.donationDetailsList.length ? eventDonationsFile.donationDetailsList[i].targetMoney?.toStringAsFixed(2) : eventDonationsFile.donationDetailsList.isNotEmpty ? eventDonationsFile.donationDetailsList.last.targetMoney?.toStringAsFixed(2) : '0.00'}',
+                            valueIndicatorProgress: ((i <
+                                            eventDonationsFile
+                                                .donationDetailsList.length
+                                        ? eventDonationsFile
+                                            .donationDetailsList[i]
+                                            .currentCollected
+                                        : eventDonationsFile
+                                                .donationDetailsList.isNotEmpty
+                                            ? eventDonationsFile
+                                                .donationDetailsList
+                                                .last
+                                                .currentCollected
+                                            : 0) ??
                                     0) /
-                                (eventDonationsFile
-                                        .donationDetailsList[i].targetMoney ??
-                                    1)),
+                                ((i <
+                                            eventDonationsFile
+                                                .donationDetailsList.length
+                                        ? eventDonationsFile
+                                            .donationDetailsList[i].targetMoney
+                                        : eventDonationsFile
+                                                .donationDetailsList.isNotEmpty
+                                            ? eventDonationsFile
+                                                .donationDetailsList
+                                                .last
+                                                .targetMoney
+                                            : 1) ??
+                                    1),
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      EventPostingDescriptionPage(
-                                    index: i,
+                              if (i >= 0 &&
+                                  i <
+                                      eventDetailsFile
+                                          .eventDetailsList.length) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        EventPostingDescriptionPage(
+                                      index: i,
+                                      id: eventDetailsFile
+                                          .eventDetailsList[i].id,
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              } else {
+                                print("Index out of bounds: $i");
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(
+                                          'Error: Invalid event selected.')),
+                                );
+                              }
                             },
                           ),
-                          SpacerH(value:Dimens.space8),
+                          SpacerH(value: Dimens.space8),
                         ],
                       ],
                     ),

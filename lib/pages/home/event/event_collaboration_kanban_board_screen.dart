@@ -490,6 +490,7 @@ class _RichTextCardState extends State<RichTextCard> {
             mainAxisSize: MainAxisSize.min,
             children: [
               CustomTextField(
+                maxWords: 20,
                 controller: titleController,
                 labelText: Translation.taskTitle.getString(context),
               ),

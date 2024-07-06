@@ -17,6 +17,7 @@ class EventDonationManagementPage extends StatefulWidget {
   final String? bankAccount;
   final String? photoEventUrl;
   final String? session;
+  final EventDetailsModel? newEvent;
 
   const EventDonationManagementPage({
     Key? key,
@@ -27,6 +28,7 @@ class EventDonationManagementPage extends StatefulWidget {
     this.bankAccount,
     this.photoEventUrl,
     this.session,
+    this.newEvent,
   }) : super(key: key);
 
   @override
@@ -54,7 +56,7 @@ class _EventDonationManagementPageState
     _startDateController.text = widget.startDate ?? "";
     _endDateController.text = widget.endDate ?? "";
     _bankAccountController.text = widget.bankAccount ?? "";
-    qrImageUrl = widget.photoEventUrl ?? "";
+    qrImageUrl = widget.photoEventUrl ?? "https://www.caspianpolicy.org/no-image.png";
   }
 
   Future<XFile?> pickImage() async {
@@ -99,6 +101,42 @@ class _EventDonationManagementPageState
         Provider.of<EventFeedbackProvider>(context);
     EventOrganizationBackgroundProvider eventOrganizationBackground =
         Provider.of<EventOrganizationBackgroundProvider>(context);
+    EventDetailsProvider eventDetailsFile =
+        Provider.of<EventDetailsProvider>(context);
+
+    DateTime? selectedDate;
+
+    Future<void> selectStartDate(BuildContext context) async {
+      final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: selectedDate ?? DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+      if (pickedDate != null && pickedDate != selectedDate) {
+        setState(() {
+          selectedDate = pickedDate;
+          _startDateController.text =
+              "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}";
+        });
+      }
+    }
+
+    Future<void> selectEndDate(BuildContext context) async {
+      final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: selectedDate ?? DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2101),
+      );
+      if (pickedDate != null && pickedDate != selectedDate) {
+        setState(() {
+          selectedDate = pickedDate;
+          _endDateController.text =
+              "${selectedDate?.year}-${selectedDate?.month.toString().padLeft(2, '0')}-${selectedDate?.day.toString().padLeft(2, '0')}";
+        });
+      }
+    }
 
     return Scaffold(
       backgroundColor: Palette.lightGrey,
@@ -133,29 +171,44 @@ class _EventDonationManagementPageState
                   ),
                   SpacerV(value: Dimens.space20),
                   CustomTextField(
+                    isDigitOnly: true,
                     controller: _targetMoneyController,
                     labelText: Translation.donationTarget.getString(context),
+                    maxWords: 8,
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
+                    isDigitOnly: true,
                     controller: _currentCollectedController,
                     labelText: Translation.donationCurrent.getString(context),
+                    maxWords: 8,
                   ),
                   SpacerV(value: Dimens.space24),
-                  CustomTextField(
-                    controller: _startDateController,
-                    labelText: Translation.donationStartDate.getString(context),
+                  GestureDetector(
+                    onTap: () => selectStartDate(context),
+                    child: AbsorbPointer(
+                      child: CustomTextField(
+                        controller: _startDateController,
+                        labelText: "Start Date",
+                      ),
+                    ),
                   ),
                   SpacerV(value: Dimens.space24),
-                  CustomTextField(
-                    controller: _endDateController,
-                    labelText: Translation.donationEndDate.getString(context),
+                  GestureDetector(
+                    onTap: () => selectEndDate(context),
+                    child: AbsorbPointer(
+                      child: CustomTextField(
+                        controller: _endDateController,
+                        labelText: "End Date",
+                      ),
+                    ),
                   ),
                   SpacerV(value: Dimens.space24),
                   CustomTextField(
                     controller: _bankAccountController,
                     labelText:
                         Translation.donationBankAccount.getString(context),
+                    maxWords: 20,
                   ),
                   SpacerV(value: Dimens.space24),
                   Text(
@@ -221,7 +274,7 @@ class _EventDonationManagementPageState
                               style: const TextStyle(color: Palette.white),
                             ),
                           )
-                        : ElevatedButton(   
+                        : ElevatedButton(
                             onPressed: () async {
                               final userUID = organizationUser.organizers.id;
                               final newDonation = EventDonationModel(
@@ -247,11 +300,25 @@ class _EventDonationManagementPageState
                                 comment: "",
                               );
 
-                              final newEventBackground = EventOrganizationBackgroundModel(
+                              final newEventBackup = EventDetailsModel(
+                                  id: userUID,
+                                  eventName: "Backup",
+                                  eventDescription:
+                                      "Backup",
+                                  type: "organizer",
+                                  photoEventUrl:
+                                      'https://www.caspianpolicy.org/no-image.png',
+                                  groupLinkUrl:
+                                      "Backup",
+                                  passwordCollaboration: "Backup",
+                                );
+
+                              final newEventBackground =
+                                  EventOrganizationBackgroundModel(
                                 id: userUID,
-                                backgroundDescription:
-                                    "No contents",
-                                photoEventUrl: 'https://www.caspianpolicy.org/no-image.png',
+                                backgroundDescription: "About Us:\n\nContact Us:\n\nAddress:",
+                                photoEventUrl:
+                                    'https://www.caspianpolicy.org/no-image.png',
                               );
 
                               await eventDonation
@@ -259,7 +326,22 @@ class _EventDonationManagementPageState
                               await eventFeedback
                                   .createFeedbackDetails(newFeedback);
                               await eventOrganizationBackground
-                                  .createEventOrganizationBackground(newEventBackground);
+                                  .createEventOrganizationBackground(
+                                      newEventBackground);
+                              await eventDetailsFile
+                                    .createEventDetails(widget.newEvent ?? newEventBackup);
+                              await eventDetailsFile.fetchAllEventDetails();
+                              await eventDonation.fetchAllDonationDetails();
+                              eventFeedback.resetEventFeedback();
+                              await eventFeedback.resetScoreEventFeedback();
+
+                              for (int i = 0;
+                                i < eventDetailsFile.eventDetailsList.length;
+                                i++) {
+                              await eventFeedback.fetchAllFeedbackDetails(
+                                  eventDetailsFile.eventDetailsList[i].id);
+                              await eventFeedback.fetchAndStoreScores(eventFeedback.getTotalCurrentScore());
+                            }   
 
                               Navigator.push(
                                 context,

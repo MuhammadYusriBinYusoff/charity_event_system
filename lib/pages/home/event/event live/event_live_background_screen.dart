@@ -60,10 +60,11 @@ class _EventLiveBackgroundPageState extends State<EventLiveBackgroundPage> {
                   children: [
                     Text(
                       Translation.background.getString(context),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.justify,
                     ),
                     SpacerV(value: Dimens.space8),
                     Text(
@@ -75,6 +76,7 @@ class _EventLiveBackgroundPageState extends State<EventLiveBackgroundPage> {
                       style: const TextStyle(
                         fontSize: 15,
                       ),
+                      textAlign: TextAlign.justify,
                     ),
                   ],
                 ))

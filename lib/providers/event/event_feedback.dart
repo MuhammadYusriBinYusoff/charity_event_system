@@ -14,13 +14,20 @@ class EventFeedbackProvider extends ChangeNotifier {
   Future<void> createFeedbackDetails(
       EventFeedbackModel newFeedbackDetails) async {
     _feedbackDetails = newFeedbackDetails;
-    FirebaseFirestore.instance
+    try{
+      FirebaseFirestore.instance
         .collection("feedback")
         .doc(newFeedbackDetails.id)
         .collection("list feedback")
         .doc()
         .set(_feedbackDetails.toJson());
     notifyListeners();
+    print("Feedback Data sucessfully created");
+
+    } catch (error) {
+      print('Error creating feedback: $error');
+    }
+    
   }
 
   Future<void> fetchAllFeedbackDetails(String? id) async {
@@ -95,9 +102,7 @@ class EventFeedbackProvider extends ChangeNotifier {
   }
 
   Future<void> fetchAndStoreScores(int score) async {
-    _totalScoresList.add(score);
-    //print("Current Score Length");
-    // print(_totalScoresList.length);
+    totalScoresList.add(score);
     notifyListeners();
   }
 
@@ -110,13 +115,8 @@ class EventFeedbackProvider extends ChangeNotifier {
         turns++;
       }
     }
-    // print("total score before");
-    // print(totalScore);
-    // print(turns);
     totalScore = ((totalScore / (20 * turns)) * 100).toInt();
-    // print("total score after");
-    // print(totalScore);
-    // print(turns);
+    print("Total Current score $totalScore");
     return totalScore;
   }
 
@@ -132,16 +132,22 @@ class EventFeedbackProvider extends ChangeNotifier {
 
   void resetEventFeedback() async {
     _feedbackDetails = EventFeedbackModel();
-    _feedbackDetailsList = [];
+    _feedbackDetailsList.clear;
     notifyListeners();
   }
 
   Future<void> resetScoreEventFeedback() async {
     _totalScoresList.clear();
-    _totalScoresList.length = 0;
-    // print("test reset score");
-    // print(_totalScoresList.length);
-    // print("======");
+    totalScoresList.clear();
+    for(int i = 0; i < totalScoresList.length; i++){
+      _totalScoresList.removeAt(i);
+      totalScoresList.removeAt(i);
+
+    }
+    print("test reset score");
+    print(_totalScoresList.length);
+    print(totalScoresList.length);
+    print("======");
     notifyListeners();
   }
 }
